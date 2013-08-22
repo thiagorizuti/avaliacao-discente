@@ -1,0 +1,9 @@
+<?page title="Home" contentType="text/html;charset=UTF-8"?>
+
+<zk>
+	<div apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('br.ufjf.controller.HomeCoordenadorController')">
+		<window title="Home" border="normal">
+			<separator />Bem Vindo Coordenador!<separator />
+		</window>
+	</div>
+</zk>

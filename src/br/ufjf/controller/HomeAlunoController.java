@@ -9,7 +9,7 @@ import org.zkoss.zk.ui.Sessions;
 import br.ufjf.model.Usuario;
 import br.ufjf.business.LoginUsuarioBusiness;
 
-public class HomeUsuarioController {
+public class HomeAlunoController {
 	
 	private Usuario usuarioCommon;
 	private Session session = Sessions.getCurrent();
@@ -22,7 +22,7 @@ public class HomeUsuarioController {
 			loginUsuarioBusiness = new LoginUsuarioBusiness();
 			usuarioCommon = loginUsuarioBusiness.loginUsuario(usuarioCommon.getEmail(),
 					usuarioCommon.getSenha());
-			if (usuarioCommon != null) {
+			if (usuarioCommon != null && (!usuarioCommon.isCoordenador())) {
 				return;
 			}
 		}

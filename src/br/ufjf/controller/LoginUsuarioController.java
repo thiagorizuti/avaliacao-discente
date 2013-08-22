@@ -25,7 +25,10 @@ public class LoginUsuarioController {
 			String senha = usuario.getSenha();
 			usuario = login.loginUsuario(usuario.getEmail(), senha);
 			if (usuario != null && usuario.getIdUsuario() > 0) {
-				Executions.sendRedirect("/homeUsuario.zul");
+				if (!usuario.isCoordenador())
+					Executions.sendRedirect("/homeAluno.zul");
+				else
+					Executions.sendRedirect("/homeCoordenador.zul");
 			}
 		}
 	}

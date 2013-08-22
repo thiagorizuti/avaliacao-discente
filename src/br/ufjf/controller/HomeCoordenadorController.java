@@ -1,29 +1,28 @@
 package br.ufjf.controller;
 
-import javax.servlet.http.HttpSession;
-
 import org.hibernate.HibernateException;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.Session;
+import org.zkoss.zk.ui.Sessions;
 
 import br.ufjf.model.Usuario;
-import br.ufjf.controller.LoginController;
+import br.ufjf.business.LoginUsuarioBusiness;
 
-public class HomeController {
+public class HomeCoordenadorController {
 	
 	private Usuario usuarioCommon;
-	private HttpSession session = (HttpSession) (Executions.getCurrent())
-			.getDesktop().getSession().getNativeSession();
-	private LoginController loginController;
+	private Session session = Sessions.getCurrent();
+	private LoginUsuarioBusiness loginUsuarioBusiness;
 	
 	@Init
 	public void testaLogado() throws HibernateException, Exception {
 		usuarioCommon = (Usuario) session.getAttribute("usuario");
 		if (usuarioCommon != null) {
-			loginController = new LoginController();
-			usuarioCommon = loginController.login(usuarioCommon.getEmail(),
+			loginUsuarioBusiness = new LoginUsuarioBusiness();
+			usuarioCommon = loginUsuarioBusiness.loginUsuario(usuarioCommon.getEmail(),
 					usuarioCommon.getSenha());
-			if (usuarioCommon != null) {
+			if (usuarioCommon != null && (usuarioCommon.isCoordenador())) {
 				return;
 			}
 		}

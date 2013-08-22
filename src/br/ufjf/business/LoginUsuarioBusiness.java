@@ -30,4 +30,6 @@ public class LoginUsuarioBusiness {
 		}
 		return usuario;
 	}
+
+	
 }
