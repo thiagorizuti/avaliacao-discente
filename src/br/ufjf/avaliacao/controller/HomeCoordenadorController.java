@@ -19,7 +19,7 @@ public class HomeCoordenadorController {
 	public void testaLogado() throws HibernateException, Exception {
 		usuario = (Usuario) session.getAttribute("usuario");
 		usuarioBusiness = new UsuarioBusiness();
-		if (!usuarioBusiness.checaLogin(usuario) || usuario.isCoordenador()==false) {
+		if (!usuarioBusiness.checaLogin(usuario)|| usuario.getTipoUsuario()!= 0) {
 			Executions.sendRedirect("/index.zul");
 			usuario = new Usuario();
 		}

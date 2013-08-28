@@ -6,24 +6,23 @@ import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
 
-import br.ufjf.avaliacao.business.ProfessorBusiness;
-import br.ufjf.avaliacao.model.Professor;
-
+import br.ufjf.avaliacao.business.UsuarioBusiness;
+import br.ufjf.avaliacao.model.Usuario;
 
 public class HomeProfessorController {
 	
-	private Professor professor;
+	private Usuario usuario;
 	private Session session = Sessions.getCurrent();
-	private ProfessorBusiness professorBusiness;
+	private UsuarioBusiness usuarioBusiness;
 	
 	@Init
 	public void testaLogado() throws HibernateException, Exception {
-		professor = (Professor) session.getAttribute("professor");
-		professorBusiness = new ProfessorBusiness();
-		if (!professorBusiness.checaLogin(professor)) {
+		usuario = (Usuario) session.getAttribute("usuario");
+		usuarioBusiness = new UsuarioBusiness();
+		if (!usuarioBusiness.checaLogin(usuario)|| usuario.getTipoUsuario()!= 1) {
 			Executions.sendRedirect("/index.zul");
-			professor = new Professor();
+			usuario = new Usuario();
 		}
 	}
-
+	
 }

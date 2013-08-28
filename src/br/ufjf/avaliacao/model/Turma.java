@@ -42,12 +42,12 @@ public class Turma implements Serializable{
 	private int idTurma;
 	
 	/**
-	 * Campo com o nome da turma. Relaciona com a coluna
+	 * Campo com a letra da turma. Relaciona com a coluna
 	 * {@code turma} do banco através da anotação
 	 * {@code @Column(name = "turma", length = 45, nullable = false)}
 	 * .
 	 */
-	@Column(name = "turma", length = 45, nullable = false)
+	@Column(name = "letraTurma", length = 45, nullable = false)
 	private String turma;
 	
 	/**
@@ -57,18 +57,18 @@ public class Turma implements Serializable{
 	 * .
 	 */
 	@Column(name = "semestre", nullable = false)
-	private int semestre;
+	private String semestre;
 	
 	/**
-	 * Relacionamento N para 1 entre turma e professor. Mapeando
-	 * {@link Professor} na variável {@code professor} e retorno do tipo
+	 * Relacionamento N para 1 entre turma e usuário Mapeando
+	 * {@link Usuario} na variável {@code usuario} e retorno do tipo
 	 * {@code LAZY} que indica que não será carregado automáticamente este dado
 	 * quando retornarmos o {@link Turma}.
 	 * 
 	 */
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "idProfessor", nullable = false)
-	private Professor professor;
+	@JoinColumn(name = "idUsuario", nullable = false)
+	private Usuario usuario;
 	
 	/**
 	 * Relacionamento N para 1 entre turma e disciplina. Mapeando
@@ -107,20 +107,20 @@ public class Turma implements Serializable{
 		this.turma = turma;
 	}
 
-	public int getSemestre() {
+	public String getSemestre() {
 		return semestre;
 	}
 
-	public void setSemestre(int semestre) {
+	public void setSemestre(String semestre) {
 		this.semestre = semestre;
 	}
 
-	public Professor getProfessor() {
-		return professor;
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
-	public void setProfessor(Professor professor) {
-		this.professor = professor;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	public Disciplina getDisciplina() {

@@ -74,16 +74,16 @@ public class Usuario implements Serializable{
 	 * 
 	 */
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "idCurso", nullable = false)
+	@JoinColumn(name = "idCurso", nullable = true)
 	private Curso curso;
 
 	/**
-	 * Campo com o tipo de usuário (aluno ou coordenador). Relaciona com a
-	 * coluna {@code coordenador} do banco através da anotação
-	 * {@code @Column(name = "coordenador", nullable = false)}.
+	 * Campo com o tipo de usuário (Coordenador = 0, Profesor = 1 , Aluno = 2). 
+	 * Relaciona com a coluna {@code tipoUsuario} do banco através da anotação
+	 * {@code @Column(name = "tipoUsuario", nullable = false)}.
 	 */
-	@Column(name = "coordenador", nullable = false)
-	private boolean coordenador;
+	@Column(name = "tipoUsuario", nullable = false)
+	private int tipoUsuario;
 	
 	/**
 	 * Relacionamento 1 para N entre usuário e avaliação. Mapeada em
@@ -137,12 +137,12 @@ public class Usuario implements Serializable{
 		this.curso = curso;
 	}
 
-	public boolean isCoordenador() {
-		return coordenador;
+	public int getTipoUsuario() {
+		return tipoUsuario;
 	}
 
-	public void setTipoUsuario(boolean coordenador) {
-		this.coordenador = coordenador;
+	public void setTipoUsuario(int tipoUsuario) {
+		this.tipoUsuario = tipoUsuario;
 	}
 
 	public List<Avaliacao> getAvaliacoes() {
@@ -153,7 +153,7 @@ public class Usuario implements Serializable{
 		this.avaliacoes = avaliacoes;
 	}
 
-
+	
 
 	
 	
