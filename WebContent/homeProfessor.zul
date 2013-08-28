@@ -4,6 +4,7 @@
 	<div apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('br.ufjf.avaliacao.controller.HomeProfessorController')">
 		<window title="Home" border="normal">
 		<separator />Bem Vindo Professor!<separator />
+		<button label="Sair" onClick="@command('exit')"/>
 		</window>
 	</div>
 </zk>

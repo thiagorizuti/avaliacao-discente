@@ -24,12 +24,10 @@ public class UsuarioBusiness {
 		return false;
 	}
 
-	public boolean checaLogin(Usuario usuario) throws HibernateException,
-			Exception {
+	public boolean checaLogin(Usuario usuario) throws HibernateException, Exception {
 		if (usuario != null) {
 			UsuarioDAO usuarioDAO = new UsuarioDAO();
-			usuario = usuarioDAO.retornaUsuario(usuario.getEmail(),
-					usuario.getSenha());
+			usuario = usuarioDAO.retornaUsuario(usuario.getEmail(), usuario.getSenha());
 
 			if (usuario != null) {
 				return true;

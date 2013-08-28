@@ -2,18 +2,15 @@ package br.ufjf.avaliacao.controller;
 
 import org.hibernate.HibernateException;
 import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.Init;
 import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
 
-
-
-
-
 import br.ufjf.avaliacao.business.UsuarioBusiness;
 import br.ufjf.avaliacao.model.Usuario;
-import br.ufjf.avaliacao.persistent.impl.UsuarioDAO;
+
 
 
 public class LoginController {
@@ -22,21 +19,39 @@ public class LoginController {
 	private Session session = Sessions.getCurrent();
 	private UsuarioBusiness usuarioBusiness = new UsuarioBusiness();
 	
+	@Init
+	public void testaLogado() throws HibernateException, Exception {
+		usuarioBusiness = new UsuarioBusiness();
+		usuario = (Usuario) session.getAttribute("usuario");
+		if (usuarioBusiness.checaLogin(usuario)) {
+			if (usuario.getTipoUsuario() == 0) {
+				Executions.sendRedirect("/homeCoordenador.zul");
+			}
+			else if (usuario.getTipoUsuario() == 1){
+				Executions.sendRedirect("/homeProfessor.zul");
+			}
+			else if (usuario.getTipoUsuario() == 2){
+				Executions.sendRedirect("/homeAluno.zul");
+			}
+		}
+		else {
+			usuario = new Usuario();
+		}
+	}
 	
 	@Command
 	public void submit() throws HibernateException, Exception {
 		
 		if (usuario != null && usuario.getEmail() != null && usuario.getSenha() != null) {
 			if (usuarioBusiness.login(usuario.getEmail(), usuario.getSenha())) {
-				UsuarioDAO usuarioDAO = new UsuarioDAO();
-				usuario = usuarioDAO.retornaUsuario(usuario.getEmail(),usuario.getSenha());
-				if (usuario.getTipoUsuario()== 0) {
+				usuario = (Usuario) session.getAttribute("usuario");
+				if (usuario.getTipoUsuario() == 0) {
 					Executions.sendRedirect("/homeCoordenador.zul");
 				}
-				if (usuario.getTipoUsuario()== 1){
+				else if (usuario.getTipoUsuario() == 1){
 					Executions.sendRedirect("/homeProfessor.zul");
 				}
-				if (usuario.getTipoUsuario()== 2){
+				else if (usuario.getTipoUsuario() == 2){
 					Executions.sendRedirect("/homeAluno.zul");
 				}
 			}	
@@ -45,6 +60,7 @@ public class LoginController {
 			}
 		}
 	}
+	
 	
 	
 	public Session getSession() {

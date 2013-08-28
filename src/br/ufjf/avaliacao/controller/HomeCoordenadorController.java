@@ -3,17 +3,12 @@ package br.ufjf.avaliacao.controller;
 import org.hibernate.HibernateException;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.zk.ui.Executions;
-import org.zkoss.zk.ui.Session;
-import org.zkoss.zk.ui.Sessions;
 
 import br.ufjf.avaliacao.business.UsuarioBusiness;
 import br.ufjf.avaliacao.model.Usuario;
 
-public class HomeCoordenadorController {
-	
-	private Usuario usuario;
-	private Session session = Sessions.getCurrent();
-	private UsuarioBusiness usuarioBusiness;
+
+public class HomeCoordenadorController extends GenericController  {
 	
 	@Init
 	public void testaLogado() throws HibernateException, Exception {
@@ -24,5 +19,4 @@ public class HomeCoordenadorController {
 			usuario = new Usuario();
 		}
 	}
-	
 }
