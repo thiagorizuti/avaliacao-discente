@@ -2,8 +2,27 @@
 
 <zk>
 	<div apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('br.ufjf.avaliacao.controller.HomeCoordenadorController')">
-		<window title="Home" border="normal">
-		<separator />Bem Vindo Coordenador!<separator />
-		</window>
+		
+		<div style="position:absolute; margin-right:92%; height:100%">
+		<menubar scrollable="true" orient="vertical" autodrop="true" style="height:100%" >
+ 				<menuitem label="Inicial" style="padding:10%"/>
+ 				<menuitem label="Avaliar"  style="padding:10%"/>
+ 				<menuitem label="Consultar Avaliações" style="padding:10%"/>
+ 				<menu label="Gerenciar Avaialções" style="padding:10%">
+ 					<menupopup>
+ 						<menuitem label="Editar Respostas"/>
+ 						<menuitem label="Editar Tipos de Respostas"/>
+ 					</menupopup>
+ 				</menu>	
+ 				<menuitem label="Opções" style="padding:10%"/>
+ 				<menuitem label="Sair" onClick="@command('exit')" style="padding:10%"/>
+		</menubar>
+		</div>
+		
+		<div style="position: absolute; margin-left:8%; height:100%; width:92%" >
+			Bem Vindo, <label value="@bind(vm.usuario.nome)" style="font-weight:bold"/>!
+		
+		</div>
+		
 	</div>
 </zk>

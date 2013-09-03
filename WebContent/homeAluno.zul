@@ -1,9 +1,13 @@
 <?page title="Home" contentType="text/html;charset=UTF-8"?>
-
-<menubar scrollable="true" orient="vertical" autodrop="true" style="width:8%; height:100%; ">
- 	<menuitem label="Inicial" style=""  />
- 	<menuitem label="Avaliar" />
- 	<menuitem label="Consular Avaliações" />
- 	<menuitem label="Consular Avaliações" />
- 	<menuitem label="Opções"/>
-</menubar>
+<zk>
+	<div apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('br.ufjf.avaliacao.controller.HomeAlunoController')">
+		<menubar scrollable="true" orient="vertical" autodrop="true" style="width:8%; height:100%; ">
+ 				<menuitem label="Inicial" style=""  />
+ 				<menuitem label="Avaliar" />
+ 				<menuitem label="Consular Avaliações" />
+ 				<menuitem label="Consular Avaliações" />
+ 				<menuitem label="Opções"/>
+ 				<menuitem label="Sair" onClick="@command('exit')"/>
+	</menubar>
+</div>
+</zk>
