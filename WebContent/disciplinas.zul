@@ -1,0 +1,28 @@
+<?page title="Gerenciar Disciplinas" contentType="text/html;charset=UTF-8"?>
+<zk>
+<div apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('br.ufjf.avaliacao.controller.DisciplinasController')">
+	
+		<include src="/menuCoordenador.zul"/>
+
+
+		<div style="position: absolute; margin-left:10%; height:100%; width:85%">
+			<listbox  model="@load(vm.disciplinas)">
+				<listhead>
+			    		<listheader label="ID" />
+			        	<listheader label="Disciplina" />
+			        	<listheader label="Opções" />
+			   	</listhead>
+				<template name="model">
+			            <listitem>
+			               	<listcell label="@load(each.idDisciplina)"></listcell>
+			               	<listcell label="@load(each.nomeDisciplina)" ></listcell>
+			               	<listcell ><button label="Excluir" onClick="@command('exclui',disciplina=each)"/></listcell>
+			            </listitem>
+			    </template>	
+			    <listfoot>
+			    	<listfooter>Disciplina:<textbox value="@bind(vm.nomeDisciplina)"/><button label="Cadastrar" onClick="@command('cadastra')"/></listfooter>
+			    </listfoot>	    
+			</listbox>
+		</div>	
+</div>
+</zk>
