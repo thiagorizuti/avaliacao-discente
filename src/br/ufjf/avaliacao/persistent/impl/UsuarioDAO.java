@@ -31,5 +31,25 @@ public class UsuarioDAO extends GenericoDAO implements IUsuarioDAO {
 		}
 	}
 	
+	@SuppressWarnings("finally")
+	@Override
+	public Usuario retornaUsuario(String nome) throws HibernateException, Exception {
+		Usuario usuario = null;
+		try {
+
+			Criteria criteria = getSession()
+					.createCriteria(Usuario.class, "usuario")
+					.add(Restrictions.eq("usuario.nome", nome))
+					.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+
+			usuario = (Usuario) criteria.uniqueResult();
+		} catch (HibernateException e) {
+			System.err.println(e.fillInStackTrace());
+		} finally {
+			getSession().close();
+			return usuario;
+		}
+	}
+	
 
 }

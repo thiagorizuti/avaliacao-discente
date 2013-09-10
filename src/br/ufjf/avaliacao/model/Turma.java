@@ -48,27 +48,27 @@ public class Turma implements Serializable{
 	 * .
 	 */
 	@Column(name = "letraTurma", length = 45, nullable = false)
-	private String turma;
+	private String letraTurma;
 	
 	/**
 	 * Campo com o semestre da turma. Relaciona com a coluna
 	 * {@code semestre} do banco através da anotação
-	 * {@code @Column(name = "semestre", nullable = false)}
+	 * {@code @Column(name = "semestre", length = 45, nullable = false)}
 	 * .
 	 */
-	@Column(name = "semestre", nullable = false)
+	@Column(name = "semestre", length = 45, nullable = false)
 	private String semestre;
 	
 	/**
 	 * Relacionamento N para 1 entre turma e usuário Mapeando
-	 * {@link Usuario} na variável {@code usuario} e retorno do tipo
+	 * {@link Usuario} na variável {@code professor} e retorno do tipo
 	 * {@code LAZY} que indica que não será carregado automáticamente este dado
 	 * quando retornarmos o {@link Turma}.
 	 * 
 	 */
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idUsuario", nullable = false)
-	private Usuario usuario;
+	private Usuario professor;
 	
 	/**
 	 * Relacionamento N para 1 entre turma e disciplina. Mapeando
@@ -77,7 +77,7 @@ public class Turma implements Serializable{
 	 * quando retornarmos o {@link Turma}.
 	 * 
 	 */
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idDisciplina", nullable = false)
 	private Disciplina disciplina;
 
@@ -99,12 +99,12 @@ public class Turma implements Serializable{
 		this.idTurma = idTurma;
 	}
 
-	public String getTurma() {
-		return turma;
+	public String getLetraTurma() {
+		return letraTurma;
 	}
 
-	public void setTurma(String turma) {
-		this.turma = turma;
+	public void setLetraTurma(String letraTurma) {
+		this.letraTurma = letraTurma;
 	}
 
 	public String getSemestre() {
@@ -115,12 +115,12 @@ public class Turma implements Serializable{
 		this.semestre = semestre;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
+	public Usuario getProfessor() {
+		return professor;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setProfessor(Usuario professor) {
+		this.professor = professor;
 	}
 
 	public Disciplina getDisciplina() {

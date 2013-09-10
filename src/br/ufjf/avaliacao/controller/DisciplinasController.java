@@ -20,7 +20,7 @@ public class DisciplinasController extends GenericController{
 		private DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
 		private List<Disciplina> disciplinas;
 		private Disciplina disciplina = new Disciplina();
-		private String nomeDisciplina;
+		private String nomeDisciplina = "";
 		
 		@Init
 		public void init() throws HibernateException, Exception{
@@ -36,7 +36,7 @@ public class DisciplinasController extends GenericController{
 		@Command
 		@NotifyChange("disciplinas")
 		public void cadastra() throws HibernateException, Exception{
-			if (nomeDisciplina == null){
+			if (nomeDisciplina.isEmpty() || nomeDisciplina == "" || nomeDisciplina == null){
 				Messagebox.show("Digite o nome da disciplina!");
 			}
 			else{
@@ -47,7 +47,7 @@ public class DisciplinasController extends GenericController{
 				else{
 					if (disciplinaDAO.salvar(disciplina)){
 						lista();
-						nomeDisciplina = null;
+						nomeDisciplina = "";
 						Messagebox.show("Cadastrado!");
 
 					}
