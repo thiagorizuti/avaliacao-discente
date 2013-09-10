@@ -7,26 +7,23 @@
 	<div style="position: absolute; margin-left:10%; height:100%; width:85%">
 			<listbox  model="@load(vm.turmas)">
 				<listhead>
-			    		<listheader label="ID" />
-			    		<listheader label="Semestre" />
-			        	<listheader label="Disciplina" />
-			        	<listheader label="Letra da Turma" />
-			        	<listheader label="Professor" />
+			    		<listheader label="Semestre" sort="auto(semestre)" />
+			        	<listheader label="Disciplina" sort="auto(disciplina.nomeDisciplina)" />
+			        	<listheader label="Turma" sort="auto(letraTurma)" />
+			        	<listheader label="Professor" sort="auto(professor.nome)" />
 			        	<listheader label="Opções" />
 			   	</listhead>
 				<template name="model">
 			            <listitem>
-			               	<listcell label="@load(each.idTurma)"></listcell>
 			               	<listcell label="@load(each.semestre)" ></listcell>
 			               	<listcell label="@load(each.disciplina.nomeDisciplina)"></listcell>
 			               	<listcell label="@load(each.letraTurma)"></listcell>
 			               	<listcell label="@load(each.professor.nome)"></listcell>
-			               	<listcell ><button label="Editar" onClick="@command('edita', turma=each)" />
+			               	<listcell><button label="Editar" onClick="@command('edita', turma=each)" />
 			               		<button label="Excluir" onClick="@command('exclui', turma=each)"/></listcell>
 			            </listitem>
 			    </template>	
 			    <listfoot>
-			    	<listfooter label="Cadastrar:"></listfooter>
 			    	<listfooter><textbox value="@bind(vm.turma.semestre)" /></listfooter>
 			    	<listfooter><textbox value="@bind(vm.disciplina.nomeDisciplina)" /></listfooter>
 			    	<listfooter><textbox value="@bind(vm.turma.letraTurma)" /></listfooter>

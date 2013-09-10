@@ -8,13 +8,11 @@
 		<div style="position: absolute; margin-left:10%; height:100%; width:85%">
 			<listbox  model="@load(vm.disciplinas)">
 				<listhead>
-			    		<listheader label="ID" />
-			        	<listheader label="Disciplina" />
-			        	<listheader label="Opções" />
+			        	<listheader label="Disciplina" align="center" sort="auto(nomeDisciplina)" />
+			        	<listheader label="Opções" align="center" />
 			   	</listhead>
 				<template name="model">
 			            <listitem>
-			               	<listcell label="@load(each.idDisciplina)"></listcell>
 			               	<listcell label="@load(each.nomeDisciplina)" ></listcell>
 			               	<listcell ><button label="Excluir" onClick="@command('exclui',disciplina=each)"/></listcell>
 			            </listitem>

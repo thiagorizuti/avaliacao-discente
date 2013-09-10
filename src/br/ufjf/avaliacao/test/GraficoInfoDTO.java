@@ -14,4 +14,14 @@ public class GraficoInfoDTO {
         model.setValue("Péssimo", new Double(210));
         return model;
     }
+	
+	public static PieModel getModel2(){
+        PieModel model = new SimplePieModel();
+        model.setValue("1", new Double(34));
+        model.setValue("2", new Double(40));
+        model.setValue("3", new Double(23));
+        model.setValue("4", new Double(4));
+        model.setValue("5", new Double(30));
+        return model;
+    }
 }

@@ -7,13 +7,11 @@
 			
 			<listbox  model="@bind(vm.lista)" style="width:50%; marging-left:25%; marging-right:25% ">
         		<listhead>
-            		<listheader label="ID" />
-            		<listheader label="Tipo de Pergunta" />
+            		<listheader label="Tipo de Pergunta" sort="auto(tipoPergunta)"/>
             		<listheader label="Opções"/>
        		 	</listhead>
         		<template name="model">
             		<listitem>
-                		<listcell label="@bind(each.idTipoPergunta)"></listcell>
                			<listcell label="@bind(each.tipoPergunta)"></listcell>
                			<listcell><button label="Editar"/><button label="Deletar"/></listcell>
                			
