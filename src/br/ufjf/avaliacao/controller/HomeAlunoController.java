@@ -10,6 +10,8 @@ import br.ufjf.avaliacao.model.Usuario;
 
 public class HomeAlunoController extends GenericController {
 	
+	Usuario usuario = new Usuario();
+	
 	@Init
 	public void testaLogado() throws HibernateException, Exception {
 		usuario = (Usuario) session.getAttribute("usuario");
@@ -19,4 +21,14 @@ public class HomeAlunoController extends GenericController {
 			usuario = new Usuario();
 		}
 	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+	
+	
 }
