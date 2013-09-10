@@ -4,7 +4,7 @@
 		
 		<menubar scrollable="true" orient="vertical" autodrop="true" style="height:100%" >
  				<menuitem label="Inicial" style="padding:10%" href="/homeProfessor.zul"/>
- 				<menuitem label="Consultar Avaliações" style="padding:10%" href="#"/> 
+ 				<menuitem label="Consultar Avaliações" style="padding:10%" onClick="@command('consultarAva')"/> 
  				<menuitem label="Sair" onClick="@command('exit')" style="padding:10%"/>
 		</menubar>
 		
