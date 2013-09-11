@@ -27,6 +27,7 @@ public class TurmasController extends GenericController{
 	private Turma turma = new Turma();
 	private Disciplina disciplina = new Disciplina();
 	private Usuario professor = new Usuario();
+	private List<Disciplina> disciplinas = (List<Disciplina>) disciplinaDAO.procuraTodos(Disciplina.class, -1, -1);
 	
 	@Init
 	public void init() throws HibernateException, Exception{
@@ -112,6 +113,14 @@ public class TurmasController extends GenericController{
 
 	public void setProfessor(Usuario professor) {
 		this.professor = professor;
+	}
+
+	public List<Disciplina> getDisciplinas() {
+		return disciplinas;
+	}
+
+	public void setDisciplinas(List<Disciplina> disciplinas) {
+		this.disciplinas = disciplinas;
 	}
 	
 	

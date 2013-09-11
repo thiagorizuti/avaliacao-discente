@@ -25,7 +25,11 @@
 			    </template>	
 			    <listfoot>
 			    	<listfooter><textbox value="@bind(vm.turma.semestre)" /></listfooter>
-			    	<listfooter><textbox value="@bind(vm.disciplina.nomeDisciplina)" /></listfooter>
+			    	<listfooter><combobox model="@load(vm.disciplinas)" selectedItem="@bind(vm.disciplina.nomeDisciplina)" >
+						<template name="model">
+                   	 		<comboitem label="@load(each.nomeDisciplina)" />
+                		</template>
+            		</combobox></listfooter>
 			    	<listfooter><textbox value="@bind(vm.turma.letraTurma)" /></listfooter>
 			    	<listfooter><textbox value="@bind(vm.professor.nome)" /></listfooter>
 			    	<listfooter><button label="Cadastrar" onClick="@command('cadastra')"/></listfooter>
