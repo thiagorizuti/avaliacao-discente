@@ -1,26 +1,31 @@
 <?page title="Gerenciar Disciplinas" contentType="text/html;charset=UTF-8"?>
 <zk>
-<div apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('br.ufjf.avaliacao.controller.DisciplinasController')">
+<div apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('br.ufjf.avaliacao.controller.DisciplinasController')"
+	form="@id('fm') @load(vm.disciplina) @save(vm.disciplina, before='cadastra')" id="form">
 	
 		<include src="/menuCoordenador.zul"/>
-
 
 		<div style="position: absolute; margin-left:10%; height:100%; width:85%">
 			<listbox  model="@load(vm.disciplinas)">
 				<listhead>
+						<listheader label="Código" align="center" sort="auto(codDisciplina)" />
 			        	<listheader label="Disciplina" align="center" sort="auto(nomeDisciplina)" />
 			        	<listheader label="Opções" align="center" />
 			   	</listhead>
 				<template name="model">
 			            <listitem>
+			               	<listcell label="@load(each.codDisciplina)" ></listcell>
 			               	<listcell label="@load(each.nomeDisciplina)" ></listcell>
 			               	<listcell ><button label="Excluir" onClick="@command('exclui',disciplina=each)"/></listcell>
 			            </listitem>
 			    </template>	
 			    <listfoot>
-			    	<listfooter>Disciplina:<textbox value="@bind(vm.nomeDisciplina)"/><button label="Cadastrar" onClick="@command('cadastra')"/></listfooter>
+			    	<listfooter><textbox value="@bind(fm.codDisciplina)"/></listfooter>
+			    	<listfooter><textbox value="@bind(fm.nomeDisciplina)"/></listfooter>
+			    	<listfooter><button label="Cadastrar" onClick="@command('cadastra')"/></listfooter>
 			    </listfoot>	    
 			</listbox>
 		</div>	
+		
 </div>
 </zk>

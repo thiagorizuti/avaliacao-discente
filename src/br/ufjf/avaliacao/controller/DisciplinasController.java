@@ -14,46 +14,30 @@ import br.ufjf.avaliacao.business.UsuarioBusiness;
 import br.ufjf.avaliacao.model.Disciplina;
 import br.ufjf.avaliacao.model.Usuario;
 import br.ufjf.avaliacao.persistent.impl.DisciplinaDAO;
+import br.ufjf.avaliacao.business.DisciplinaBusiness;
 
 public class DisciplinasController extends GenericController{
 	
 		private DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
-		private List<Disciplina> disciplinas;
+		private List<Disciplina> disciplinas = (List<Disciplina>) disciplinaDAO.procuraTodos(Disciplina.class, -1, -1);
 		private Disciplina disciplina = new Disciplina();
-		private String nomeDisciplina = "";
-		
-		@Init
-		public void init() throws HibernateException, Exception{
-			testaLogado();
-			lista();
-		}
-		
-		public void lista(){
-			disciplinas = (List<Disciplina>) disciplinaDAO.procuraTodos(Disciplina.class, -1, -1);
-		}
-		
 		
 		@Command
-		@NotifyChange("disciplinas")
+		@NotifyChange({"disciplinas","disciplina"})
 		public void cadastra() throws HibernateException, Exception{
-			if (nomeDisciplina.isEmpty() || nomeDisciplina == "" || nomeDisciplina == null){
-				Messagebox.show("Digite o nome da disciplina!");
+			DisciplinaBusiness disciplinaBussines = new DisciplinaBusiness();
+			if (disciplinaBussines.camposEmBranco(disciplina.getCodDisciplina(), disciplina.getNomeDisciplina()) ){
+				Messagebox.show("Preencha todos os campos!");
 			}
-			else{
-				disciplina.setNomeDisciplina(nomeDisciplina);
-				if (cadastrado(disciplina.getNomeDisciplina())){
-					Messagebox.show("Disciplina já cadastrada!");
-				}
-				else{
-					if (disciplinaDAO.salvar(disciplina)){
-						lista();
-						nomeDisciplina = "";
-						Messagebox.show("Cadastrado!");
-
-					}
-				}
+			else if (disciplinaBussines.cadastrado(disciplina.getCodDisciplina(),disciplina.getNomeDisciplina())){
+					Messagebox.show("Disciplina já cadastrada!");	
+			} 
+			else if (disciplinaDAO.salvar(disciplina)){
+					disciplinas.add(disciplina);
 			}
+			disciplina = new Disciplina();
 		}
+		
 		
 		@Command
 		@NotifyChange("disciplinas")
@@ -62,13 +46,8 @@ public class DisciplinasController extends GenericController{
 			disciplinas.remove(disciplina);
 		}
 		
-		public boolean cadastrado(String nomeDisciplina) throws HibernateException, Exception{
-			if (disciplinaDAO.retornaDisciplina(nomeDisciplina) != null){
-				return true;
-			}
-			else return false;	
-		}
 		
+		@Init
 		public void testaLogado() throws HibernateException, Exception {
 			usuario = (Usuario) session.getAttribute("usuario");
 			usuarioBusiness = new UsuarioBusiness();
@@ -90,14 +69,8 @@ public class DisciplinasController extends GenericController{
 		public void setDisciplina(Disciplina disciplina) {
 			this.disciplina = disciplina;
 		}
-
-		public String getNomeDisciplina() {
-			return nomeDisciplina;
-		}
-
-		public void setNomeDisciplina(String nomeDisciplina) {
-			this.nomeDisciplina = nomeDisciplina;
-		}
+		
+		
 		
 		
 }

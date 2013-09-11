@@ -12,13 +12,14 @@ public class DisciplinaDAO extends GenericoDAO implements IDisciplinaDAO{
 	
 	@SuppressWarnings("finally")
 	@Override
-	public Disciplina retornaDisciplina(String nomeDisciplina) throws HibernateException, Exception {
+	public Disciplina retornaDisciplina(String codDisciplina, String nomeDisciplina) throws HibernateException, Exception {
 		Disciplina disciplina = null;
 		try {
 
 			Criteria criteria = getSession()
 					.createCriteria(Disciplina.class, "disciplina")
 					.add(Restrictions.eq("disciplina.nomeDisciplina", nomeDisciplina))
+					.add(Restrictions.eq("disciplina.codDisciplina", codDisciplina))
 					.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 
 			disciplina = (Disciplina) criteria.uniqueResult();
@@ -29,4 +30,5 @@ public class DisciplinaDAO extends GenericoDAO implements IDisciplinaDAO{
 			return disciplina;
 		}
 	}
+	
 }

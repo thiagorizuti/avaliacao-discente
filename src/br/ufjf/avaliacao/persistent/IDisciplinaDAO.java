@@ -7,7 +7,7 @@ import br.ufjf.avaliacao.model.Disciplina;
 public interface IDisciplinaDAO {
 
 
-	Disciplina retornaDisciplina(String nomeDisciplina)
-			throws HibernateException, Exception;
+	Disciplina retornaDisciplina(String codDisciplina, String nomeDisciplina) throws HibernateException, Exception;
+	
 
 }

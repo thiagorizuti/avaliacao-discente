@@ -48,6 +48,8 @@ public class Disciplina implements Serializable{
 	@Column(name = "nomeDisciplina", length = 45, nullable = false)
 	private String nomeDisciplina;
 	
+	@Column(name = "codDisciplina", length = 45, nullable = false)
+	private String codDisciplina;
 	
 	/**
 	 * Relacionamento 1 para N entre disciplina e turma. Mapeada em
@@ -73,6 +75,14 @@ public class Disciplina implements Serializable{
 
 	public void setNomeDisciplina(String nomeDisciplina) {
 		this.nomeDisciplina = nomeDisciplina;
+	}
+	
+	public String getCodDisciplina() {
+		return codDisciplina;
+	}
+
+	public void setCodDisciplina(String codDisciplina) {
+		this.codDisciplina = codDisciplina;
 	}
 
 	public List<Turma> getTurmas() {
