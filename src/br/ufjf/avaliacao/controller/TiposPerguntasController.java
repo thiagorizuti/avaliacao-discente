@@ -5,24 +5,24 @@ import br.ufjf.avaliacao.persistent.impl.TipoPerguntaDAO;
 
 import java.util.List;
 
+import org.zkoss.bind.annotation.Command;
+import org.zkoss.zhtml.Messagebox;
+
 public class TiposPerguntasController {
 	
-	private TipoPergunta tipoPergunta = new TipoPergunta();
 	private TipoPerguntaDAO tipoPerguntaDAO = new TipoPerguntaDAO();
 	private List<TipoPergunta> lista = (List<TipoPergunta>) tipoPerguntaDAO.procuraTodos(TipoPergunta.class, 0, 10);
+	private TipoPergunta tipoPergunta;
 	
-	public void lista(){
-		
+	
+	@Command
+	public void deleta(int id){
+		tipoPergunta=(TipoPergunta) tipoPerguntaDAO.procuraId(id, TipoPergunta.class);
+		if (tipoPerguntaDAO.exclui(tipoPergunta)){
+			Messagebox.show("Excluido com sucesso!");
+		}
 	}
-
-	public TipoPergunta getTipoPergunta() {
-		return tipoPergunta;
-	}
-
-	public void setTipoPergunta(TipoPergunta tipoPergunta) {
-		this.tipoPergunta = tipoPergunta;
-	}
-
+	
 	public List<TipoPergunta> getLista() {
 		return lista;
 	}
@@ -30,6 +30,7 @@ public class TiposPerguntasController {
 	public void setLista(List<TipoPergunta> lista) {
 		this.lista = lista;
 	}
+	
 	
 	
 }

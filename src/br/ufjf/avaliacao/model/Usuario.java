@@ -73,7 +73,7 @@ public class Usuario implements Serializable{
 	 * quando retornarmos o {@link Usuario}.
 	 * 
 	 */
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idCurso", nullable = true)
 	private Curso curso;
 
@@ -83,7 +83,7 @@ public class Usuario implements Serializable{
 	 * {@code @Column(name = "tipoUsuario", nullable = false)}.
 	 */
 	@Column(name = "tipoUsuario", nullable = false)
-	private int tipoUsuario;
+	private Integer tipoUsuario;
 	
 	/**
 	 * Relacionamento 1 para N entre usuário e avaliação. Mapeada em
@@ -137,11 +137,11 @@ public class Usuario implements Serializable{
 		this.curso = curso;
 	}
 
-	public int getTipoUsuario() {
+	public Integer getTipoUsuario() {
 		return tipoUsuario;
 	}
 
-	public void setTipoUsuario(int tipoUsuario) {
+	public void setTipoUsuario(Integer tipoUsuario) {
 		this.tipoUsuario = tipoUsuario;
 	}
 

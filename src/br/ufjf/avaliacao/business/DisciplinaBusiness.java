@@ -8,7 +8,7 @@ public class DisciplinaBusiness {
 	
 	public boolean cadastrado(String codDisciplina, String nomeDisciplina) throws HibernateException, Exception{
 		DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
-		if (disciplinaDAO.retornaDisciplina(codDisciplina, nomeDisciplina) != null)
+		if ((disciplinaDAO.retornaDisciplinaCod(codDisciplina) != null || disciplinaDAO.retornaDisciplinaNome(nomeDisciplina) != null))
 			return true;
 		else return false;	
 	}

@@ -1,5 +1,8 @@
 package br.ufjf.avaliacao.persistent.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.criterion.Restrictions;
@@ -51,5 +54,14 @@ public class UsuarioDAO extends GenericoDAO implements IUsuarioDAO {
 		}
 	}
 	
+	public List<Usuario> retornaProfessores() {
+		List <Usuario> usuarios = (List<Usuario>) procuraTodos(Usuario.class, -1, -1);
+		List <Usuario> professores = new ArrayList<Usuario>();
+		for(Usuario usuario : usuarios) {  
+			  if (usuario.getTipoUsuario() == 1)
+					  professores.add(usuario);
+		}  
+		return professores;
+	}
 
 }

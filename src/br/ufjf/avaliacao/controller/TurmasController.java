@@ -28,17 +28,10 @@ public class TurmasController extends GenericController{
 	private Disciplina disciplina = new Disciplina();
 	private Usuario professor = new Usuario();
 	private List<Disciplina> disciplinas = (List<Disciplina>) disciplinaDAO.procuraTodos(Disciplina.class, -1, -1);
+	private List<Usuario> professores = (List<Usuario>) usuarioDAO.retornaProfessores();
+	
 	
 	@Init
-	public void init() throws HibernateException, Exception{
-		testaLogado();
-		lista();
-	}
-	
-	public void lista(){
-		turmas = (List<Turma>) turmaDAO.procuraTodos(Turma.class, -1, -1);
-	}
-	
 	public void testaLogado() throws HibernateException, Exception {
 		usuario = (Usuario) session.getAttribute("usuario");
 		usuarioBusiness = new UsuarioBusiness();
@@ -49,17 +42,17 @@ public class TurmasController extends GenericController{
 	}
 	
 	@Command
+	@NotifyChange({"turmas","turma"})
 	public void cadastra() throws HibernateException, Exception{
-		turma.setDisciplina(disciplinaDAO.retornaDisciplina(disciplina.getNomeDisciplina()));
-		turma.setProfessor(usuarioDAO.retornaUsuario(professor.getNome()));
 		turmaDAO.salvar(turma);
-		Executions.sendRedirect("/turmas.zul");
+		turmas.add(turma);
+		turma = new Turma();
 	}
 	
 	@Command
 	public void exclui(@BindingParam("turma") Turma turma){
 		turmaDAO.exclui(turma);
-		Executions.sendRedirect("/turmas.zul");
+		turmas.remove(turma);
 		
 	}
 	
@@ -74,7 +67,7 @@ public class TurmasController extends GenericController{
 	
 	@Command
 	public void modifica () throws HibernateException, Exception{
-		turma.setDisciplina(disciplinaDAO.retornaDisciplina(disciplina.getNomeDisciplina()));
+		turma.setDisciplina(disciplinaDAO.retornaDisciplinaNome(disciplina.getNomeDisciplina()));
 		turma.setProfessor(usuarioDAO.retornaUsuario(professor.getNome()));
 		turmaDAO.editar(turma);
 		Executions.sendRedirect("/turmas.zul");
@@ -121,6 +114,14 @@ public class TurmasController extends GenericController{
 
 	public void setDisciplinas(List<Disciplina> disciplinas) {
 		this.disciplinas = disciplinas;
+	}
+
+	public List<Usuario> getProfessores() {
+		return professores;
+	}
+
+	public void setProfessores(List<Usuario> professores) {
+		this.professores = professores;
 	}
 	
 	

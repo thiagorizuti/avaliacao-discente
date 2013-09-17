@@ -1,6 +1,7 @@
 <?page title="Gerenciar Turmas" contentType="text/html;charset=UTF-8"?>
 <zk>
-<div apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('br.ufjf.avaliacao.controller.TurmasController')">
+<div apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('br.ufjf.avaliacao.controller.TurmasController')"
+	form="@id('fm') @load(vm.turma) @save(vm.turma, before='cadastra')" id="form">
 	
 	<include src="/menuCoordenador.zul"/>
 	
@@ -16,7 +17,7 @@
 				<template name="model">
 			            <listitem>
 			               	<listcell label="@load(each.semestre)" ></listcell>
-			               	<listcell label="@load(each.disciplina.nomeDisciplina)"></listcell>
+			               	<listcell label="@load(each.disciplina.codDisciplina)"></listcell>
 			               	<listcell label="@load(each.letraTurma)"></listcell>
 			               	<listcell label="@load(each.professor.nome)"></listcell>
 			               	<listcell><button label="Editar" onClick="@command('edita', turma=each)" />
@@ -24,14 +25,23 @@
 			            </listitem>
 			    </template>	
 			    <listfoot>
-			    	<listfooter><textbox value="@bind(vm.turma.semestre)" /></listfooter>
-			    	<listfooter><combobox model="@load(vm.disciplinas)" selectedItem="@bind(vm.disciplina.nomeDisciplina)" >
+			    	<listfooter><combobox  selectedItem="@bind(fm.semestre)" readonly="true">
+                   	 		<comboitem label="2013.1" value="2013.1"/>
+                   	 		<comboitem label="2013.2" value="2013.2"/>
+                   	 		<comboitem label="2013.3" value="2013.3"/>
+                   	 		<comboitem label="2013.4" value="2013.4"/>
+            		</combobox></listfooter>
+			    	<listfooter><combobox model="@load(vm.disciplinas)" selectedItem="@bind(fm.disciplina)" autodrop="true" >
 						<template name="model">
                    	 		<comboitem label="@load(each.nomeDisciplina)" />
                 		</template>
             		</combobox></listfooter>
-			    	<listfooter><textbox value="@bind(vm.turma.letraTurma)" /></listfooter>
-			    	<listfooter><textbox value="@bind(vm.professor.nome)" /></listfooter>
+			    	<listfooter><textbox value="@bind(fm.letraTurma)" /></listfooter>
+			    	<listfooter><combobox model="@load(vm.professores)" selectedItem="@bind(fm.professor)" autodrop="true">
+						<template name="model">
+                   	 		<comboitem label="@load(each.nome)" />
+                		</template>
+            		</combobox></listfooter>
 			    	<listfooter><button label="Cadastrar" onClick="@command('cadastra')"/></listfooter>
 			    </listfoot>	    
 			</listbox>
