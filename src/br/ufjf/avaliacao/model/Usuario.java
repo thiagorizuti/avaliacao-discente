@@ -39,7 +39,7 @@ public class Usuario implements Serializable{
 	@Column(name = "idUsuario", unique = true, nullable = false)
 	@GeneratedValue(generator = "increment")
 	@GenericGenerator(name = "increment", strategy = "increment")
-	private int idUsuario;
+	private Integer idUsuario;
 	
 	/**
 	 * Campo com a senha do usuario. Relaciona com a coluna

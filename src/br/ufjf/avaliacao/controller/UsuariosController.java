@@ -8,6 +8,7 @@ import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zul.Window;
 
 import br.ufjf.avaliacao.business.UsuarioBusiness;
 import br.ufjf.avaliacao.model.Curso;
@@ -33,6 +34,21 @@ public class UsuariosController extends GenericController {
 			Executions.sendRedirect("/index.zul");
 			usuario = new Usuario();
 		}
+	}
+	
+	@Command
+	public void cadastrar(){
+		Window window = (Window) Executions.createComponents(
+                "/cadastrarUsuario.zul", null, null);
+		window.doModal();
+	}
+	
+	@Command
+	public void cancelar(@BindingParam("window") Window x) {
+		usuarioBusiness = null;
+		usuario = null;
+		x.detach();
+		Executions.sendRedirect("/usuarios.zul");
 	}
 	
 	@Command

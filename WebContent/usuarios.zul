@@ -9,36 +9,23 @@
 			<listbox  model="@load(vm.usuarios)">
 				<listhead>
 						<listheader label="Nome" align="center" sort="auto(nome)" />
-						<listheader label="Senha" align="center" sort="auto(senha)" />
 			        	<listheader label="Email" align="center" sort="auto(email)" />
 			        	<listheader label="Curso" align="center" sort="auto(curso.nomeCurso)" />
-			        	<listheader label="Tipo" align="center" sort="auto(tipoUsuario)" />
+			        	<listheader label="Tipo de Usuário" align="center" sort="auto(tipoUsuario)" />
 			        	<listheader label="Opções" align="center" />
 			   	</listhead>
 				<template name="model">
 			            <listitem>
-			               	<listcell label="@load(each.nome)" ></listcell>
-			               	<listcell label="@load(each.senha)" ></listcell>
+			               	<listcell label="@load(each.nome)" ></listcell>			            
 			               	<listcell label="@load(each.email)" ></listcell>
 			               	<listcell label="@load(each.curso.nomeCurso)" ></listcell>
 			               	<listcell label="@load(each.tipoUsuario)" ></listcell>
 			               	<listcell ><button label="Excluir" onClick="@command('exclui',usuario=each)"/></listcell>
 			            </listitem>
-			    </template>	
-			    <listfoot>
-			    	<listfooter><textbox value="@bind(fm.nome)"/></listfooter>
-			    	<listfooter><textbox value="@bind(fm.senha)"/></listfooter>
-			    	<listfooter><textbox value="@bind(fm.email)"/></listfooter>
-			    	<listfooter><combobox model="@load(vm.cursos)" selectedItem="@bind(fm.curso)" autodrop="true" >
-						<template name="model">
-                   	 		<comboitem label="@load(each.nomeCurso)" />
-                		</template>
-            		</combobox></listfooter>
-			    	<listfooter><textbox value="@bind(fm.tipoUsuario)"/></listfooter>
-			    	<listfooter><button label="Cadastrar" onClick="@command('cadastra')"/></listfooter>
-			    </listfoot>	    
+			    </template>
 			</listbox>
+			<div align="center"><button label="Cadastrar novo usuário" onClick="@command('cadastrar')"/></div>
 		</div>	
-		
+			
 </div>
 </zk>

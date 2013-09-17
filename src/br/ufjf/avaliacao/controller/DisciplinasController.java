@@ -31,6 +31,13 @@ public class DisciplinasController extends GenericController{
 		}
 		
 		@Command
+		public void cancelar(@BindingParam("window") Window x) {
+			disciplina = null;
+			x.detach();
+			Executions.sendRedirect("/disciplinas.zul");
+		}
+		
+		@Command
 		@NotifyChange({"disciplinas","disciplina"})
 		public void cadastra() throws HibernateException, Exception{
 			DisciplinaBusiness disciplinaBussines = new DisciplinaBusiness();
@@ -42,7 +49,6 @@ public class DisciplinasController extends GenericController{
 			} 
 			else if (disciplinaDAO.salvar(disciplina)){
 					disciplinas.add(disciplina);
-					Executions.sendRedirect("/disciplinas.zul");
 			}
 			disciplina = new Disciplina();
 		}

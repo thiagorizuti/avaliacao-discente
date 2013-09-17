@@ -19,10 +19,8 @@
 			               	<listcell ><button label="Excluir" onClick="@command('exclui',disciplina=each)"/></listcell>
 			            </listitem>
 			    </template>	
-			    <listfoot>
-			    	<listfooter span="2"><button label="Cadastrar" onClick="@command('cadastrar')"/></listfooter>
-			    </listfoot>	    
 			</listbox>
+			<div align="center"><button label="Cadastrar nova disciplina" onClick="@command('cadastrar')"/></div>
 		</div>	
 		
 </div>
