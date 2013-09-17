@@ -9,6 +9,7 @@ import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zul.Window;
 
 import br.ufjf.avaliacao.business.UsuarioBusiness;
 import br.ufjf.avaliacao.model.Disciplina;
@@ -23,6 +24,13 @@ public class DisciplinasController extends GenericController{
 		private Disciplina disciplina = new Disciplina();
 		
 		@Command
+		public void cadastrar(){
+			Window window = (Window) Executions.createComponents(
+	                "/cadastrarDisciplina.zul", null, null);
+			window.doModal();
+		}
+		
+		@Command
 		@NotifyChange({"disciplinas","disciplina"})
 		public void cadastra() throws HibernateException, Exception{
 			DisciplinaBusiness disciplinaBussines = new DisciplinaBusiness();
@@ -34,6 +42,7 @@ public class DisciplinasController extends GenericController{
 			} 
 			else if (disciplinaDAO.salvar(disciplina)){
 					disciplinas.add(disciplina);
+					Executions.sendRedirect("/disciplinas.zul");
 			}
 			disciplina = new Disciplina();
 		}

@@ -1,0 +1,13 @@
+<?page title="Cadastrar Disciplina" contentType="text/html;charset=UTF-8"?>
+<window title="Editar Turma" closable="true">
+	<div apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('br.ufjf.avaliacao.controller.DisciplinasController')"
+		form="@id('fm') @load(vm.disciplina) @save(vm.disciplina, before='cadastra')" id="form">
+		
+		<label value="Código: " /><textbox value="@bind(fm.codDisciplina)" />
+		<separator/>
+		<label value="Disciplina: " /><textbox value="@bind(fm.nomeDisciplina)" />
+		<separator/>
+		<button label="Cadastrar" onClick="@command('cadastra')"/>	
+	</div>
+</window>
+

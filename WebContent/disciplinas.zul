@@ -20,9 +20,7 @@
 			            </listitem>
 			    </template>	
 			    <listfoot>
-			    	<listfooter><textbox value="@bind(fm.codDisciplina)"/></listfooter>
-			    	<listfooter><textbox value="@bind(fm.nomeDisciplina)"/></listfooter>
-			    	<listfooter><button label="Cadastrar" onClick="@command('cadastra')"/></listfooter>
+			    	<listfooter span="2"><button label="Cadastrar" onClick="@command('cadastrar')"/></listfooter>
 			    </listfoot>	    
 			</listbox>
 		</div>	
