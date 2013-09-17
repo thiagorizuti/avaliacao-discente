@@ -17,13 +17,23 @@ import br.ufjf.avaliacao.model.Usuario;
 import br.ufjf.avaliacao.persistent.impl.CursoDAO;
 import br.ufjf.avaliacao.persistent.impl.UsuarioDAO;
 
-public class UsuariosController {
+public class UsuariosController extends GenericController {
 	
 	private UsuarioDAO usuarioDAO = new UsuarioDAO();
 	private Usuario usuario = new Usuario();
 	private CursoDAO cursoDAO = new CursoDAO();
 	private List<Usuario> usuarios = (List<Usuario>) usuarioDAO.procuraTodos(Usuario.class, -1, -1);
 	private List<Curso> cursos = (List<Curso>) cursoDAO.procuraTodos(Curso.class, -1, -1);
+	
+	@Init
+	public void testaLogado() throws HibernateException, Exception {
+		Usuario usuario = (Usuario) session.getAttribute("usuario");
+		usuarioBusiness = new UsuarioBusiness();
+		if (!usuarioBusiness.checaLogin(usuario)|| usuario.getTipoUsuario()!= 0) {
+			Executions.sendRedirect("/index.zul");
+			usuario = new Usuario();
+		}
+	}
 	
 	@Command
 	@NotifyChange({"usuarios","usuario"})

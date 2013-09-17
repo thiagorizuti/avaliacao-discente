@@ -26,10 +26,10 @@
 			    </template>	
 			    <listfoot>
 			    	<listfooter><combobox  selectedItem="@bind(fm.semestre)" readonly="true">
-                   	 		<comboitem label="2013.1" value="2013.1"/>
-                   	 		<comboitem label="2013.2" value="2013.2"/>
-                   	 		<comboitem label="2013.3" value="2013.3"/>
-                   	 		<comboitem label="2013.4" value="2013.4"/>
+                   	 	<comboitem label="2013.1" value="2013.1"/>
+                   	 	<comboitem label="2013.2" value="2013.2"/>
+                   	 	<comboitem label="2013.3" value="2013.3"/>
+                   	 	<comboitem label="2013.4" value="2013.4"/>
             		</combobox></listfooter>
 			    	<listfooter><combobox model="@load(vm.disciplinas)" selectedItem="@bind(fm.disciplina)" autodrop="true" >
 						<template name="model">

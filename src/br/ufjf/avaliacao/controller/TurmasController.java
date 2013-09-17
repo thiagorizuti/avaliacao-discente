@@ -23,10 +23,10 @@ public class TurmasController extends GenericController{
 	private TurmaDAO turmaDAO = new TurmaDAO();
 	private DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
 	private UsuarioDAO usuarioDAO = new UsuarioDAO();
-	private List<Turma> turmas;
 	private Turma turma = new Turma();
 	private Disciplina disciplina = new Disciplina();
 	private Usuario professor = new Usuario();
+	private List<Turma> turmas = (List<Turma>) turmaDAO.procuraTodos(Turma.class, -1, -1);
 	private List<Disciplina> disciplinas = (List<Disciplina>) disciplinaDAO.procuraTodos(Disciplina.class, -1, -1);
 	private List<Usuario> professores = (List<Usuario>) usuarioDAO.retornaProfessores();
 	
@@ -50,6 +50,7 @@ public class TurmasController extends GenericController{
 	}
 	
 	@Command
+	@NotifyChange("turmas")
 	public void exclui(@BindingParam("turma") Turma turma){
 		turmaDAO.exclui(turma);
 		turmas.remove(turma);
