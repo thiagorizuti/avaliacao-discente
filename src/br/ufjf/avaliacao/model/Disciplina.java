@@ -60,7 +60,7 @@ public class Disciplina implements Serializable{
 	 */
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "disciplina")
 	private List<Turma> turmas = new ArrayList<Turma>();
-
+	
 	public int getIdDisciplina() {
 		return idDisciplina;
 	}
@@ -91,6 +91,10 @@ public class Disciplina implements Serializable{
 
 	public void setTurmas(List<Turma> turmas) {
 		this.turmas = turmas;
+	}
+	
+	public String getCodNomeDisciplina (){
+		return (codDisciplina+" - "+nomeDisciplina);
 	}
 
 }

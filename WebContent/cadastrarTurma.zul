@@ -22,7 +22,7 @@
 					<label value="Disciplina: " />
 					<combobox model="@load(vm.disciplinas)" selectedItem="@bind(fm.disciplina)" autodrop="true" >
 						<template name="model">
-                   	 		<comboitem label="@load(each.nomeDisciplina)" />
+                   	 		<comboitem label="@load(each.codNomeDisciplina)" />
                 		</template>
             		</combobox>
 				</row>
