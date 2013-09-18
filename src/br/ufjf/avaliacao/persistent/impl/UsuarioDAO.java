@@ -55,6 +55,7 @@ public class UsuarioDAO extends GenericoDAO implements IUsuarioDAO {
 	}
 	
 	public List<Usuario> retornaProfessores() {
+		@SuppressWarnings("unchecked")
 		List <Usuario> usuarios = (List<Usuario>) procuraTodos(Usuario.class, -1, -1);
 		List <Usuario> professores = new ArrayList<Usuario>();
 		for(Usuario usuario : usuarios) {  
@@ -62,6 +63,26 @@ public class UsuarioDAO extends GenericoDAO implements IUsuarioDAO {
 					  professores.add(usuario);
 		}  
 		return professores;
+	}
+	
+	@SuppressWarnings("finally")
+	@Override
+	public Usuario retornaUsuarioEmail(String email) throws HibernateException, Exception {
+		Usuario usuario = null;
+		try {
+
+			Criteria criteria = getSession()
+					.createCriteria(Usuario.class, "usuario")
+					.add(Restrictions.eq("usuario.email", email))
+					.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+
+			usuario = (Usuario) criteria.uniqueResult();
+		} catch (HibernateException e) {
+			System.err.println(e.fillInStackTrace());
+		} finally {
+			getSession().close();
+			return usuario;
+		}
 	}
 
 }

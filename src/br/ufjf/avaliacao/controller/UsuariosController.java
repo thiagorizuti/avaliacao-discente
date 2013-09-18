@@ -7,13 +7,12 @@ import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
+import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zul.Window;
 
-import br.ufjf.avaliacao.business.UsuarioBusiness;
+import br.ufjf.avaliacao.business.UsuariosBusiness;
 import br.ufjf.avaliacao.model.Curso;
-import br.ufjf.avaliacao.model.Disciplina;
-import br.ufjf.avaliacao.model.Turma;
 import br.ufjf.avaliacao.model.Usuario;
 import br.ufjf.avaliacao.persistent.impl.CursoDAO;
 import br.ufjf.avaliacao.persistent.impl.UsuarioDAO;
@@ -29,8 +28,8 @@ public class UsuariosController extends GenericController {
 	@Init
 	public void testaLogado() throws HibernateException, Exception {
 		Usuario usuario = (Usuario) session.getAttribute("usuario");
-		usuarioBusiness = new UsuarioBusiness();
-		if (!usuarioBusiness.checaLogin(usuario)|| usuario.getTipoUsuario()!= 0) {
+		usuarioBusiness = new UsuariosBusiness();
+		if (!usuarioBusiness.checaLogin(usuario) || usuario.getTipoUsuario()!= 0) {
 			Executions.sendRedirect("/index.zul");
 			usuario = new Usuario();
 		}
@@ -53,9 +52,18 @@ public class UsuariosController extends GenericController {
 	@Command
 	@NotifyChange({"usuarios","usuario"})
 	public void cadastra() throws HibernateException, Exception{
-		usuarioDAO.salvar(usuario);
-		usuarios.add(usuario);
-		usuario = new Usuario();
+		UsuariosBusiness  usuarioBusiness = new UsuariosBusiness();
+		if(!usuarioBusiness.cadastroValido(usuario.getNome(), usuario.getEmail(), usuario.getSenha(), usuario.getCurso(), usuario.getTipoUsuario())) {
+			Messagebox.show("Preencha todos os campos!");
+		}
+		else if(usuarioBusiness.cadastrado(usuario.getEmail(), usuario.getNome())){
+			Messagebox.show("Nome e/ou email já cadastrado!");
+		}
+		else if(usuarioDAO.salvar(usuario)){
+			usuarios.add(usuario);
+			Messagebox.show("Usuario Cadastrado");
+			usuario = new Usuario();
+		}
 	}
 
 	@Command

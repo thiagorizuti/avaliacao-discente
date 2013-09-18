@@ -5,14 +5,14 @@ import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
 
-import br.ufjf.avaliacao.business.UsuarioBusiness;
+import br.ufjf.avaliacao.business.UsuariosBusiness;
 import br.ufjf.avaliacao.model.Usuario;
 
 public class GenericController {
 	
 	protected Usuario usuario;
 	protected Session session = Sessions.getCurrent();
-	protected UsuarioBusiness usuarioBusiness;
+	protected UsuariosBusiness usuarioBusiness;
 	
 	
 	@Command

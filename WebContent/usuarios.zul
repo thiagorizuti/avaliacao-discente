@@ -20,8 +20,8 @@
 			               	<label value="@load(each.curso.nomeCurso)" />
 			               	<label value="@load(each.tipoUsuario)" />
 			               	<div>
-			               		<button label="Editar" onClick="@command('edita', turma=each)" />
-			              		<button label="Excluir" onClick="@command('exclui', turma=each)"/>
+			               		<button label="Editar" onClick="@command('edita', usuario=each)" />
+			              		<button label="Excluir" onClick="@command('exclui', usuario=each)"/>
 			               	</div>
 			            </row>
 			    </template>

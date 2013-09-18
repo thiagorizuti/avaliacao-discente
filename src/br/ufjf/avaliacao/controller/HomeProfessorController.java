@@ -6,7 +6,7 @@ import org.zkoss.bind.annotation.Init;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zul.Window;
 
-import br.ufjf.avaliacao.business.UsuarioBusiness;
+import br.ufjf.avaliacao.business.UsuariosBusiness;
 import br.ufjf.avaliacao.model.Usuario;
 
 public class HomeProfessorController extends GenericController  {
@@ -16,7 +16,7 @@ public class HomeProfessorController extends GenericController  {
 	@Init
 	public void testaLogado() throws HibernateException, Exception {
 		usuario = (Usuario) session.getAttribute("usuario");
-		usuarioBusiness = new UsuarioBusiness();
+		usuarioBusiness = new UsuariosBusiness();
 		if (!usuarioBusiness.checaLogin(usuario) || usuario.getTipoUsuario()!= 1) {
 			Executions.sendRedirect("/index.zul");
 			usuario = new Usuario();

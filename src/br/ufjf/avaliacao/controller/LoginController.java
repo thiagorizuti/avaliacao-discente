@@ -8,7 +8,7 @@ import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
 
-import br.ufjf.avaliacao.business.UsuarioBusiness;
+import br.ufjf.avaliacao.business.UsuariosBusiness;
 import br.ufjf.avaliacao.model.Usuario;
 
 
@@ -17,11 +17,11 @@ public class LoginController {
 	
 	Usuario usuario = new Usuario();
 	private Session session = Sessions.getCurrent();
-	private UsuarioBusiness usuarioBusiness = new UsuarioBusiness();
+	private UsuariosBusiness usuarioBusiness = new UsuariosBusiness();
 	
 	@Init
 	public void testaLogado() throws HibernateException, Exception {
-		usuarioBusiness = new UsuarioBusiness();
+		usuarioBusiness = new UsuariosBusiness();
 		usuario = (Usuario) session.getAttribute("usuario");
 		if (usuarioBusiness.checaLogin(usuario)) {
 			if (usuario.getTipoUsuario() == 0) {

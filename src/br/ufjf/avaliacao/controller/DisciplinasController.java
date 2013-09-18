@@ -11,7 +11,7 @@ import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zul.Window;
 
-import br.ufjf.avaliacao.business.UsuarioBusiness;
+import br.ufjf.avaliacao.business.UsuariosBusiness;
 import br.ufjf.avaliacao.model.Disciplina;
 import br.ufjf.avaliacao.model.Usuario;
 import br.ufjf.avaliacao.persistent.impl.DisciplinaDAO;
@@ -23,11 +23,10 @@ public class DisciplinasController extends GenericController{
 		private List<Disciplina> disciplinas = (List<Disciplina>) disciplinaDAO.procuraTodos(Disciplina.class, -1, -1);
 		private Disciplina disciplina = new Disciplina();
 		
-		
 		@Init
 		public void testaLogado() throws HibernateException, Exception {
 			usuario = (Usuario) session.getAttribute("usuario");
-			usuarioBusiness = new UsuarioBusiness();
+			usuarioBusiness = new UsuariosBusiness();
 			if (!usuarioBusiness.checaLogin(usuario)|| usuario.getTipoUsuario()!= 0) {
 				Executions.sendRedirect("/index.zul");
 				usuario = new Usuario();
@@ -46,22 +45,26 @@ public class DisciplinasController extends GenericController{
 		public void exclui(@BindingParam("disciplina") Disciplina disciplina) {
 			disciplinaDAO.exclui(disciplina);
 			disciplinas.remove(disciplina);
+			Messagebox.show("Disciplina Excluida");
 		}
 		
 		@Command
 		@NotifyChange({"disciplinas","disciplina"})
 		public void cadastra() throws HibernateException, Exception{
 			DisciplinaBusiness disciplinaBussines = new DisciplinaBusiness();
-			if (disciplinaBussines.camposEmBranco(disciplina.getCodDisciplina(), disciplina.getNomeDisciplina()) ){
+			if (!disciplinaBussines.cadastroValido(disciplina.getCodDisciplina(), disciplina.getNomeDisciplina())) {
 				Messagebox.show("Preencha todos os campos!");
 			}
-			else if (disciplinaBussines.cadastrado(disciplina.getCodDisciplina(),disciplina.getNomeDisciplina())){
-					Messagebox.show("Disciplina já cadastrada!");	
+			else if (disciplinaBussines.cadastrado(disciplina.getCodDisciplina(),disciplina.getNomeDisciplina())) {
+					Messagebox.show("Disciplina já cadastrada!");
+					disciplina = new Disciplina();
 			} 
 			else if (disciplinaDAO.salvar(disciplina)){
 					disciplinas.add(disciplina);
+					Messagebox.show("Disciplina Cadastrada");
+					disciplina = new Disciplina();
 			}
-			disciplina = new Disciplina();
+			
 		}
 		
 		@Command

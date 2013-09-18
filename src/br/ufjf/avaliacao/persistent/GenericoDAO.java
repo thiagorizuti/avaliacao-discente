@@ -67,6 +67,7 @@ public class GenericoDAO implements IGenericoDAO {
 		}
 		return objeto;
 	}
+	
 
 	@SuppressWarnings("rawtypes")
 	@Override
