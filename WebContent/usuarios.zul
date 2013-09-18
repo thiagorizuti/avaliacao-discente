@@ -1,30 +1,32 @@
 <?page title="Gerenciar Usuários" contentType="text/html;charset=UTF-8"?>
 <zk>
-<div apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('br.ufjf.avaliacao.controller.UsuariosController')"
-	form="@id('fm') @load(vm.usuario) @save(vm.usuario, before='cadastra')" id="form">
+<div apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('br.ufjf.avaliacao.controller.UsuariosController')">
 	
 		<include src="/menuCoordenador.zul"/>
 
 		<div style="position: absolute; margin-left:10%; height:100%; width:85%">
-			<listbox  model="@load(vm.usuarios)">
-				<listhead>
-						<listheader label="Nome" align="center" sort="auto(nome)" />
-			        	<listheader label="Email" align="center" sort="auto(email)" />
-			        	<listheader label="Curso" align="center" sort="auto(curso.nomeCurso)" />
-			        	<listheader label="Tipo de Usuário" align="center" sort="auto(tipoUsuario)" />
-			        	<listheader label="Opções" align="center" />
-			   	</listhead>
+			<grid  model="@load(vm.usuarios)">
+				<columns>
+						<column label="Nome" align="center" sort="auto(nome)" />
+			        	<column label="Email" align="center" sort="auto(email)" />
+			        	<column label="Curso" align="center" sort="auto(curso.nomeCurso)" />
+			        	<column label="Tipo de Usuário" align="center" sort="auto(tipoUsuario)" />
+			        	<column label="Opções" align="center" />
+			   	</columns>
 				<template name="model">
-			            <listitem>
-			               	<listcell label="@load(each.nome)" ></listcell>			            
-			               	<listcell label="@load(each.email)" ></listcell>
-			               	<listcell label="@load(each.curso.nomeCurso)" ></listcell>
-			               	<listcell label="@load(each.tipoUsuario)" ></listcell>
-			               	<listcell ><button label="Excluir" onClick="@command('exclui',usuario=each)"/></listcell>
-			            </listitem>
+			            <row>
+			               	<label value="@load(each.nome)" />			            
+			               	<label value="@load(each.email)" />
+			               	<label value="@load(each.curso.nomeCurso)" />
+			               	<label value="@load(each.tipoUsuario)" />
+			               	<div>
+			               		<button label="Editar" onClick="@command('edita', turma=each)" />
+			              		<button label="Excluir" onClick="@command('exclui', turma=each)"/>
+			               	</div>
+			            </row>
 			    </template>
-			</listbox>
-			<div align="center"><button label="Cadastrar novo usuário" onClick="@command('cadastrar')"/></div>
+			</grid>
+			<div align="center"><button label="Cadastrar novo usuário" onClick="@command('abreCadastro')"/></div>
 		</div>	
 			
 </div>

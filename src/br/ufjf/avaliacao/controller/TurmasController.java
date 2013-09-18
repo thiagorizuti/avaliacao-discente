@@ -3,6 +3,7 @@ package br.ufjf.avaliacao.controller;
 import java.util.List;
 
 import org.hibernate.HibernateException;
+import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
@@ -42,11 +43,17 @@ public class TurmasController extends GenericController{
 	}
 	
 	@Command
-	@NotifyChange({"turmas","turma"})
-	public void cadastra() throws HibernateException, Exception{
-		turmaDAO.salvar(turma);
-		turmas.add(turma);
-		turma = new Turma();
+	public void abreCadastro(){
+		Window window = (Window) Executions.createComponents(
+                "/cadastrarTurma.zul", null, null);
+		window.doModal();
+	}
+	
+	@Command
+	@NotifyChange("turmas")
+	public void edita(@BindingParam("turma") Turma turma){
+		BindUtils.postNotifyChange(null, null, turma, "editingStatus");
+		
 	}
 	
 	@Command
@@ -58,25 +65,21 @@ public class TurmasController extends GenericController{
 	}
 	
 	@Command
-	@NotifyChange("turma")
-	public void edita(@BindingParam("turma") Turma turma) {
-		this.setTurma(turma);
-		Window window = (Window) Executions.createComponents(
-                "/edicaoTurma.zul", null, null);
-		window.doModal();
-    }
+	@NotifyChange({"turmas","turma"})
+	public void cadastra() throws HibernateException, Exception{
+		turmaDAO.salvar(turma);
+		turmas.add(turma);
+		turma = new Turma();
+	}
 	
 	@Command
-	public void modifica () throws HibernateException, Exception{
-		turma.setDisciplina(disciplinaDAO.retornaDisciplinaNome(disciplina.getNomeDisciplina()));
-		turma.setProfessor(usuarioDAO.retornaUsuario(professor.getNome()));
-		turmaDAO.editar(turma);
+	public void cancela(@BindingParam("window") Window x) {
+		disciplina = null;
+		x.detach();
 		Executions.sendRedirect("/turmas.zul");
-		
 	}
 	
 	
-
 	public List<Turma> getTurmas() {
 		return turmas;
 	}

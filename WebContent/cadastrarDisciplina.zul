@@ -1,7 +1,7 @@
 <?page title="Cadastrar Disciplina" contentType="text/html;charset=UTF-8"?>
 <window id="win" title="Cadastrar Disciplina" border="normal">
 	<div style="width:350px;" apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('br.ufjf.avaliacao.controller.DisciplinasController')"
-		form="@id('fm') @load(vm.disciplina) @save(vm.disciplina, before='cadastra')" id="form">
+		form="@id('fm') @load(vm.disciplina) @save(vm.disciplina, before='cadastrar')" id="form">
 		<grid>
 			<columns>
 				<column align="center" />
@@ -15,7 +15,7 @@
 		<separator />
 		<div align="center">
 			<button label="Cadastrar" onClick="@command('cadastra')"/>
-			<button label="Cancelar" onClick="@command('cancelar',window=win)"/>
+			<button label="Cancelar" onClick="@command('cancela',window=win)"/>
 		</div>			
 		<separator />
 	</div>

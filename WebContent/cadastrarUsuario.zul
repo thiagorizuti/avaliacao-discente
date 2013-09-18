@@ -8,27 +8,43 @@
 				<column align="center" />
 			</columns>
 			<rows>
-				<row><label value="Nome: " /><textbox value="@bind(fm.nome)" /></row>
-				<row><label value="Email: " /><textbox value="@bind(fm.email)" /></row>
-				<row><label value="Senha: "/><textbox value="@bind(fm.senha)" /></row>
-				<row><label value="Curso: "/>
-							<combobox model="@load(vm.cursos)" selectedItem="@bind(fm.curso)" autodrop="true" >
+				<row>
+					<label value="Nome: " />
+					<textbox value="@bind(fm.nome)" />
+				</row>
+				<row>
+					<label value="Email: " />
+					<textbox value="@bind(fm.email)" />
+				</row>
+				<row>
+					<label value="Senha: " />
+					<textbox value="@bind(fm.senha)" />
+				</row>
+				<row>
+					<label value="Curso: " />
+					<combobox model="@load(vm.cursos)"
+						selectedItem="@bind(fm.curso)" autodrop="true">
 						<template name="model">
-                   	 		<comboitem label="@load(each.nomeCurso)" />
-                		</template>
-            		</combobox></row>
-            	<row><label value="Tipo de Usuário: "/><combobox selectedItem="@bind(fm.tipoUsuario)" readonly="true">
-            													<comboitem label="Aluno" value="2"></comboitem>
-            													<comboitem label="Coordenador" value="0"></comboitem>
-            													<comboitem label="Professor" value="1"></comboitem>
-            																 </combobox></row>
+							<comboitem label="@load(each.nomeCurso)" />
+						</template>
+					</combobox>
+				</row>
+				<row>
+					<label value="Tipo de Usuário: " />
+					<combobox selectedItem="@bind(fm.tipoUsuario)"
+						readonly="true">
+						<comboitem label="Aluno" value="2"></comboitem>
+						<comboitem label="Coordenador" value="0"></comboitem>
+						<comboitem label="Professor" value="1"></comboitem>
+					</combobox>
+				</row>
 			</rows>
 		</grid>
 		<separator />
 		<div align="center">
-			<button label="Cadastrar" onClick="@command('cadastra')"/>
-			<button label="Cancelar" onClick="@command('cancelar',window=win)"/>
-		</div>			
+			<button label="Cadastrar" onClick="@command('cadastra')" />
+			<button label="Cancelar" onClick="@command('cancela',window=win)" />
+		</div>
 		<separator />
 	</div>
 </window>

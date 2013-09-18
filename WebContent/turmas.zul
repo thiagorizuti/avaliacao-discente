@@ -1,50 +1,33 @@
 <?page title="Gerenciar Turmas" contentType="text/html;charset=UTF-8"?>
 <zk>
-<div apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('br.ufjf.avaliacao.controller.TurmasController')"
-	form="@id('fm') @load(vm.turma) @save(vm.turma, before='cadastra')" id="form">
+<div apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('br.ufjf.avaliacao.controller.TurmasController')">
 	
 	<include src="/menuCoordenador.zul"/>
 	
 	<div style="position: absolute; margin-left:10%; height:100%; width:85%">
-			<listbox  model="@load(vm.turmas)">
-				<listhead>
-			    		<listheader label="Semestre" sort="auto(semestre)" />
-			        	<listheader label="Disciplina" sort="auto(disciplina.nomeDisciplina)" />
-			        	<listheader label="Turma" sort="auto(letraTurma)" />
-			        	<listheader label="Professor" sort="auto(professor.nome)" />
-			        	<listheader label="Opções" />
-			   	</listhead>
+			<grid  model="@load(vm.turmas)">
+				<columns>
+			    		<column label="Semestre" align="center" sort="auto(semestre)" />
+			        	<column label="Disciplina" align="center" sort="auto(disciplina.nomeDisciplina)" />
+			        	<column label="Turma" align="center" sort="auto(letraTurma)" />
+			        	<column label="Professor" align="center" sort="auto(professor.nome)" />
+			        	<column label="Opções" align="center" />
+			   	</columns>
+			   	
 				<template name="model">
-			            <listitem>
-			               	<listcell label="@load(each.semestre)" ></listcell>
-			               	<listcell label="@load(each.disciplina.codDisciplina)"></listcell>
-			               	<listcell label="@load(each.letraTurma)"></listcell>
-			               	<listcell label="@load(each.professor.nome)"></listcell>
-			               	<listcell><button label="Editar" onClick="@command('edita', turma=each)" />
-			               		<button label="Excluir" onClick="@command('exclui', turma=each)"/></listcell>
-			            </listitem>
+			            <row>
+			               	<label value="@load(each.semestre)"/>
+			               	<label value="@load(each.disciplina.nomeDisciplina)"/>            
+			               	<label value="@bind(each.letraTurma)"/>
+			               	<label value="@load(each.professor.nome)"/>
+			               	<div>
+			               		<button label="Editar" onClick="@command('abre', turma=each)" />
+			              		<button label="Excluir" onClick="@command('exclui', turma=each)"/>
+			               	</div>
+			            </row>
 			    </template>	
-			    <listfoot>
-			    	<listfooter><combobox  selectedItem="@bind(fm.semestre)" readonly="true">
-                   	 	<comboitem label="2013.1" value="2013.1"/>
-                   	 	<comboitem label="2013.2" value="2013.2"/>
-                   	 	<comboitem label="2013.3" value="2013.3"/>
-                   	 	<comboitem label="2013.4" value="2013.4"/>
-            		</combobox></listfooter>
-			    	<listfooter><combobox model="@load(vm.disciplinas)" selectedItem="@bind(fm.disciplina)" autodrop="true" >
-						<template name="model">
-                   	 		<comboitem label="@load(each.nomeDisciplina)" />
-                		</template>
-            		</combobox></listfooter>
-			    	<listfooter><textbox value="@bind(fm.letraTurma)" /></listfooter>
-			    	<listfooter><combobox model="@load(vm.professores)" selectedItem="@bind(fm.professor)" autodrop="true">
-						<template name="model">
-                   	 		<comboitem label="@load(each.nome)" />
-                		</template>
-            		</combobox></listfooter>
-			    	<listfooter><button label="Cadastrar" onClick="@command('cadastra')"/></listfooter>
-			    </listfoot>	    
-			</listbox>
+			</grid>
+			<div align="center"><button label="Cadastrar nova turma" onClick="@command('abreCadastro')"/></div>
 		</div>	
 
 </div>	

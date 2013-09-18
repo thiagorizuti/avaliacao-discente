@@ -37,18 +37,17 @@ public class UsuariosController extends GenericController {
 	}
 	
 	@Command
-	public void cadastrar(){
+	public void abreCadastro(){
 		Window window = (Window) Executions.createComponents(
                 "/cadastrarUsuario.zul", null, null);
 		window.doModal();
 	}
 	
 	@Command
-	public void cancelar(@BindingParam("window") Window x) {
-		usuarioBusiness = null;
-		usuario = null;
-		x.detach();
-		Executions.sendRedirect("/usuarios.zul");
+	@NotifyChange("usuarios")
+	public void exclui(@BindingParam("usuario") Usuario usuario) {
+		usuarioDAO.exclui(usuario);
+		usuarios.remove(usuario);
 	}
 	
 	@Command
@@ -58,13 +57,15 @@ public class UsuariosController extends GenericController {
 		usuarios.add(usuario);
 		usuario = new Usuario();
 	}
-	
+
 	@Command
-	@NotifyChange("usuarios")
-	public void exclui(@BindingParam("usuario") Usuario usuario) {
-		usuarioDAO.exclui(usuario);
-		usuarios.remove(usuario);
+	public void cancela(@BindingParam("window") Window x) {
+		usuarioBusiness = null;
+		usuario = null;
+		x.detach();
+		Executions.sendRedirect("/usuarios.zul");
 	}
+	
 	
 	public Usuario getUsuario() {
 		return usuario;

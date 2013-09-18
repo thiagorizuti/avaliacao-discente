@@ -23,18 +23,29 @@ public class DisciplinasController extends GenericController{
 		private List<Disciplina> disciplinas = (List<Disciplina>) disciplinaDAO.procuraTodos(Disciplina.class, -1, -1);
 		private Disciplina disciplina = new Disciplina();
 		
+		
+		@Init
+		public void testaLogado() throws HibernateException, Exception {
+			usuario = (Usuario) session.getAttribute("usuario");
+			usuarioBusiness = new UsuarioBusiness();
+			if (!usuarioBusiness.checaLogin(usuario)|| usuario.getTipoUsuario()!= 0) {
+				Executions.sendRedirect("/index.zul");
+				usuario = new Usuario();
+			}
+		}
+		
 		@Command
-		public void cadastrar(){
+		public void abreCadastro(){
 			Window window = (Window) Executions.createComponents(
 	                "/cadastrarDisciplina.zul", null, null);
 			window.doModal();
 		}
 		
 		@Command
-		public void cancelar(@BindingParam("window") Window x) {
-			disciplina = null;
-			x.detach();
-			Executions.sendRedirect("/disciplinas.zul");
+		@NotifyChange("disciplinas")
+		public void exclui(@BindingParam("disciplina") Disciplina disciplina) {
+			disciplinaDAO.exclui(disciplina);
+			disciplinas.remove(disciplina);
 		}
 		
 		@Command
@@ -53,24 +64,13 @@ public class DisciplinasController extends GenericController{
 			disciplina = new Disciplina();
 		}
 		
-		
 		@Command
-		@NotifyChange("disciplinas")
-		public void exclui(@BindingParam("disciplina") Disciplina disciplina) {
-			disciplinaDAO.exclui(disciplina);
-			disciplinas.remove(disciplina);
+		public void cancela(@BindingParam("window") Window x) {
+			disciplina = null;
+			x.detach();
+			Executions.sendRedirect("/disciplinas.zul");
 		}
 		
-		
-		@Init
-		public void testaLogado() throws HibernateException, Exception {
-			usuario = (Usuario) session.getAttribute("usuario");
-			usuarioBusiness = new UsuarioBusiness();
-			if (!usuarioBusiness.checaLogin(usuario)|| usuario.getTipoUsuario()!= 0) {
-				Executions.sendRedirect("/index.zul");
-				usuario = new Usuario();
-			}
-		}
 		
 		public List<Disciplina> getDisciplinas() {
 			return disciplinas;
