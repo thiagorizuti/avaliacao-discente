@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -61,6 +62,9 @@ public class Disciplina implements Serializable{
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "disciplina")
 	private List<Turma> turmas = new ArrayList<Turma>();
 	
+	@Transient
+	private boolean editingStatus;
+	
 	public int getIdDisciplina() {
 		return idDisciplina;
 	}
@@ -97,4 +101,12 @@ public class Disciplina implements Serializable{
 		return (codDisciplina+" - "+nomeDisciplina);
 	}
 
+	public boolean isEditingStatus() {
+		return editingStatus;
+	}
+
+	public void setEditingStatus(boolean editingStatus) {
+		this.editingStatus = editingStatus;
+	}
+	
 }

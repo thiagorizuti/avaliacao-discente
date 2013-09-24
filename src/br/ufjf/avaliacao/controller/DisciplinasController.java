@@ -3,6 +3,7 @@ package br.ufjf.avaliacao.controller;
 import java.util.List;
 
 import org.hibernate.HibernateException;
+import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
@@ -48,6 +49,29 @@ public class DisciplinasController extends GenericController{
 			Messagebox.show("Disciplina Excluida");
 		}
 		
+		@Command
+		public void changeEditableStatus(@BindingParam("disciplina") Disciplina disciplina) {
+			disciplina.setEditingStatus(!disciplina.isEditingStatus());
+			refreshRowTemplate(disciplina);
+		}
+		
+		@Command
+		public void confirm(@BindingParam("disciplina") Disciplina disciplina) throws HibernateException, Exception {
+			DisciplinaBusiness business = new DisciplinaBusiness();
+			if (business.cadastroValido(disciplina.getCodDisciplina(), disciplina.getNomeDisciplina()) && !business.cadastrado(disciplina.getCodDisciplina(), disciplina.getNomeDisciplina())) {
+				changeEditableStatus(disciplina);
+				DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
+				disciplinaDAO.editar(disciplina);
+				refreshRowTemplate(disciplina);
+			}
+			else {
+				Messagebox.show("Disciplina já cadastrada ou inválida");
+			}
+		}
+		
+		public void refreshRowTemplate(Disciplina disciplina) {
+			BindUtils.postNotifyChange(null, null, disciplina, "editingStatus");
+		}
 		@Command
 		@NotifyChange({"disciplinas","disciplina"})
 		public void cadastra() throws HibernateException, Exception{
