@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -90,7 +91,10 @@ public class Turma implements Serializable{
 	 */
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "turma")
 	private List<Avaliacao> avaliacoes = new ArrayList<Avaliacao>();
-
+	
+	@Transient
+	private boolean editingStatus;
+	
 	public int getIdTurma() {
 		return idTurma;
 	}
@@ -138,5 +142,14 @@ public class Turma implements Serializable{
 	public void setAvaliacoes(List<Avaliacao> avaliacoes) {
 		this.avaliacoes = avaliacoes;
 	}
+
+	public boolean isEditingStatus() {
+		return editingStatus;
+	}
+
+	public void setEditingStatus(boolean editingStatus) {
+		this.editingStatus = editingStatus;
+	}
+	
 	
 }

@@ -87,6 +87,26 @@ public class TurmasController extends GenericController{
 	}
 	
 	@Command
+	public void changeEditableStatus(@BindingParam("turma") Turma turma) {
+		turma.setEditingStatus(!turma.isEditingStatus());
+		refreshRowTemplate(turma);
+	}
+	
+	@Command
+	public void confirm(@BindingParam("turma") Turma turma) throws HibernateException, Exception {
+		TurmaBusiness turmaBusiness = new TurmaBusiness();
+		changeEditableStatus(turma);
+		TurmaDAO turmaDAO = new TurmaDAO();
+		turmaDAO.editar(turma);
+		refreshRowTemplate(turma);
+		
+	}
+	
+	public void refreshRowTemplate(Turma turma) {
+		BindUtils.postNotifyChange(null, null, turma, "editingStatus");
+	}
+	
+	@Command
 	public void cancela(@BindingParam("window") Window x) {
 		disciplina = null;
 		x.detach();
