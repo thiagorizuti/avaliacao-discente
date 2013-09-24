@@ -8,9 +8,12 @@ import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
+import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zul.Window;
 
+import br.ufjf.avaliacao.business.DisciplinaBusiness;
+import br.ufjf.avaliacao.business.TurmaBusiness;
 import br.ufjf.avaliacao.business.UsuariosBusiness;
 import br.ufjf.avaliacao.model.Disciplina;
 import br.ufjf.avaliacao.model.Turma;
@@ -67,9 +70,20 @@ public class TurmasController extends GenericController{
 	@Command
 	@NotifyChange({"turmas","turma"})
 	public void cadastra() throws HibernateException, Exception{
-		turmaDAO.salvar(turma);
-		turmas.add(turma);
-		turma = new Turma();
+		TurmaBusiness turmaBusiness = new TurmaBusiness();
+		if (!turmaBusiness.cadastroValido(turma.getLetraTurma(),turma.getSemestre())) {
+			Messagebox.show("Preencha todos os campos!");
+		}
+		else if (turmaBusiness.cadastrado(turma.getLetraTurma(),turma.getSemestre(),turma.getDisciplina())) {
+				Messagebox.show("Turma já cadastrada!");
+				turma = new Turma();
+		} 
+		else if (turmaDAO.salvar(turma)){
+				disciplinas.add(disciplina);
+				turmas.add(turma);
+				turma = new Turma();
+		}
+		
 	}
 	
 	@Command
