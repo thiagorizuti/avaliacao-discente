@@ -21,13 +21,13 @@
                    	 			<comboitem label="2013.3" value="2013.3"/>
                    	 			<comboitem label="2013.4" value="2013.4"/>
             				</combobox>
-            				<combobox model="@load(vm.disciplinas)" selectedItem="@load(each.disciplina) @save(each.disciplina, before='confirm')" autodrop="true" >
+            				<combobox model="@load(vm.disciplinas)" value="@load(each.disciplina.nomeDisciplina)" selectedItem="@load(each.disciplina) @save(each.disciplina, before='confirm')" autodrop="true" >
 								<template name="model">
                    	 				<comboitem label="@load(each.codNomeDisciplina)" />
                 				</template>
             				</combobox>
             				<textbox value="@load(each.letraTurma) @save(each.letraTurma, before='confirm')" />
-            				<combobox model="@load(vm.professores)" selectedItem="@load(each.professor) @save(each.professor, before='confirm')" autodrop="true">
+            				<combobox model="@load(vm.professores)" value="@load(each.professor.nome)" selectedItem="@load(each.professor) @save(each.professor, before='confirm')" autodrop="true">
 								<template name="model">
                    	 				<comboitem label="@load(each.nome)" />
                 				</template>

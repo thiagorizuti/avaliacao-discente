@@ -72,6 +72,7 @@ public class DisciplinasController extends GenericController{
 		public void refreshRowTemplate(Disciplina disciplina) {
 			BindUtils.postNotifyChange(null, null, disciplina, "editingStatus");
 		}
+		
 		@Command
 		@NotifyChange({"disciplinas","disciplina"})
 		public void cadastra() throws HibernateException, Exception{

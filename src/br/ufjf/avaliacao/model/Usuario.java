@@ -1,6 +1,5 @@
 package br.ufjf.avaliacao.model;
 
-import java.beans.Transient;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -96,7 +96,11 @@ public class Usuario implements Serializable{
 	private List<Avaliacao> avaliacoes = new ArrayList<Avaliacao>();
 	
 	@Transient
-
+	private String nomeTipoUsuario;
+	
+	@Transient
+	private boolean editingStatus;
+	
 	public int getIdUsuario() {
 		return idUsuario;
 	}
@@ -153,9 +157,23 @@ public class Usuario implements Serializable{
 		this.avaliacoes = avaliacoes;
 	}
 
-	
+	public String getNomeTipoUsuario() {
+		if(tipoUsuario==0)
+			return "Coordenador";
+		else if (tipoUsuario==1)
+			return "Professor";
+		else return "Aluno";
+	}
 
-	
-	
-	
+	public void setNomeTipoUsuario(String nomeTipoUsuario) {
+		this.nomeTipoUsuario = nomeTipoUsuario;
+	}
+
+	public boolean isEditingStatus() {
+		return editingStatus;
+	}
+
+	public void setEditingStatus(boolean editingStatus) {
+		this.editingStatus = editingStatus;
+	}
 }

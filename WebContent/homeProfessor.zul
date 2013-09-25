@@ -3,6 +3,8 @@
 	<div apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('br.ufjf.avaliacao.controller.HomeProfessorController')">
 		
 		<include src="/menuProfessor.zul" />
-		<separator />Bem Vindo, <label value="@bind(vm.usuario.email)" style="font-weight:bold"/>!<separator />
+		<div align="center">
+			Bem Vindo, <label value="@bind(vm.usuario.nome)" style="font-weight:bold"/>!
+		</div>
 	</div>
 </zk>

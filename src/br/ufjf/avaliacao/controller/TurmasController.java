@@ -64,7 +64,7 @@ public class TurmasController extends GenericController{
 	public void exclui(@BindingParam("turma") Turma turma){
 		turmaDAO.exclui(turma);
 		turmas.remove(turma);
-		
+		Messagebox.show("Turma excluida com sucesso!");
 	}
 	
 	@Command
@@ -82,6 +82,7 @@ public class TurmasController extends GenericController{
 				disciplinas.add(disciplina);
 				turmas.add(turma);
 				turma = new Turma();
+				Messagebox.show("Turma cadastrada com sucesso!");
 		}
 		
 	}

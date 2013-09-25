@@ -3,6 +3,7 @@ package br.ufjf.avaliacao.controller;
 import java.util.List;
 
 import org.hibernate.HibernateException;
+import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
@@ -11,10 +12,13 @@ import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zul.Window;
 
+import br.ufjf.avaliacao.business.DisciplinaBusiness;
 import br.ufjf.avaliacao.business.UsuariosBusiness;
 import br.ufjf.avaliacao.model.Curso;
+import br.ufjf.avaliacao.model.Disciplina;
 import br.ufjf.avaliacao.model.Usuario;
 import br.ufjf.avaliacao.persistent.impl.CursoDAO;
+import br.ufjf.avaliacao.persistent.impl.DisciplinaDAO;
 import br.ufjf.avaliacao.persistent.impl.UsuarioDAO;
 
 public class UsuariosController extends GenericController {
@@ -74,6 +78,29 @@ public class UsuariosController extends GenericController {
 		Executions.sendRedirect("/usuarios.zul");
 	}
 	
+	@Command
+	public void changeEditableStatus(@BindingParam("usuario") Usuario usuario) {
+		usuario.setEditingStatus(!usuario.isEditingStatus());
+		refreshRowTemplate(usuario);
+	}
+	
+	public void refreshRowTemplate(Usuario usuario) {
+		BindUtils.postNotifyChange(null, null, usuario, "editingStatus");
+	}
+	
+	@Command
+	public void confirm(@BindingParam("usuario") Usuario usuario) throws HibernateException, Exception {
+		UsuariosBusiness business = new UsuariosBusiness();
+		if (business.cadastroValido(usuario.getNome(), usuario.getEmail(), usuario.getSenha(), usuario.getCurso(), usuario.getTipoUsuario())){
+			changeEditableStatus(usuario);
+			UsuarioDAO usuarioDAO = new UsuarioDAO();
+			usuarioDAO.editar(usuario);
+			refreshRowTemplate(usuario);
+		}
+		else {
+			Messagebox.show("Usuário já cadastrado ou inválido");
+		}
+	}
 	
 	public Usuario getUsuario() {
 		return usuario;
@@ -98,7 +125,4 @@ public class UsuariosController extends GenericController {
 	public void setCursos(List<Curso> cursos) {
 		this.cursos = cursos;
 	}
-	
-	
-	
 }
