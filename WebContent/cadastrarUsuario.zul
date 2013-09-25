@@ -23,7 +23,7 @@
 				<row>
 					<label value="Curso: " />
 					<combobox model="@load(vm.cursos)"
-						selectedItem="@bind(fm.curso)" autodrop="true">
+						selectedItem="@bind(fm.curso)" autodrop="true" readonly="true">
 						<template name="model">
 							<comboitem label="@load(each.nomeCurso)" />
 						</template>

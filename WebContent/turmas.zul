@@ -4,7 +4,7 @@
 	
 	<include src="/menuCoordenador.zul"/>
 	
-	<div style="position: absolute; margin-left:10%; height:100%; width:85%">
+	<div style="margin-left:15%; width:85%;margin-top:5px;">
 			<grid  model="@load(vm.turmas) @template(each.editingStatus ? 'editable' : 'noneditable')">
 				<columns>
 			    		<column label="Semestre" align="center" sort="auto(semestre)" />

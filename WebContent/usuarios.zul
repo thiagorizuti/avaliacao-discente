@@ -4,7 +4,7 @@
 	
 		<include src="/menuCoordenador.zul"/>
 
-		<div style="position: absolute; margin-left:10%; height:100%; width:85%">
+		<div style="margin-left:15%; width:85%;margin-top:5px;">
 			<grid  model="@load(vm.usuarios) @template(each.editingStatus ? 'editable' : 'noneditable')">
 				<columns>
 						<column label="Nome" align="center" sort="auto(nome)" />
@@ -17,12 +17,12 @@
 			   			<row>
 			   				<textbox value="@load(each.nome) @save(each.nome, before='confirm')" />
 			   				<textbox value="@load(each.email) @save(each.email, befora='confirm')" />
-			   				<combobox width="150px" value="@load(each.curso.nomeCurso)" model="@load(vm.cursos)" selectedItem="@bind(each.curso)">
+			   				<combobox readonly="true" width="150px" value="@load(each.curso.nomeCurso)" model="@load(vm.cursos)" selectedItem="@bind(each.curso)">
 			   					<template name="model">
 			   						<comboitem label="@load(each.nomeCurso)" />
 			   					</template>
 			   				</combobox>
-			   				<combobox width="150px" value="@load(each.nomeTipoUsuario)" selectedItem="@load(each.nomeTipoUsuario) @save(each.tipoUsuario, before='confirm')">			   					
+			   				<combobox readonly="true" width="150px" value="@load(each.nomeTipoUsuario)" selectedItem="@load(each.nomeTipoUsuario) @save(each.tipoUsuario, before='confirm')">			   					
 			   						<comboitem label="Aluno" value="2" />
 			   						<comboitem label="Coordenador" value="0" />
 			   						<comboitem label="Professor" value="1" />

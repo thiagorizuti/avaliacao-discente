@@ -2,12 +2,12 @@
 <zk>
 	<div apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('br.ufjf.avaliacao.controller.DisciplinasController')">
 		<include src="/menuCoordenador.zul"/>
-		<div style="position: absolute; margin-left:10%; height:100%; width:85%">
+		<div style="margin-left:15%; width:85%;margin-top:5px;">
 			<grid id="demoGrid" model="@load(vm.disciplinas) @template(each.editingStatus ? 'editable' : 'noneditable')">
 				<columns>
-						<column label="Código" align="center" sort="auto(codDisciplina)" />
-			        	<column label="Disciplina" align="center" sort="auto(nomeDisciplina)" />
-			        	<column label="Opções" align="center" />
+						<column style="width:150px;" label="Código" align="center" sort="auto(codDisciplina)" />
+			        	<column style="width:350px;" label="Disciplina" align="center" sort="auto(nomeDisciplina)" />
+			        	<column style="width:200px;" label="Opções" align="center" />
 			   	</columns>
 				<template name="editable">
 			            <row>
