@@ -3,7 +3,7 @@
 	<div apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('br.ufjf.avaliacao.controller.DisciplinasController')">
 		<include src="/menuCoordenador.zul"/>
 		<div style="margin-left:15%; width:85%;margin-top:5px;">
-			<grid id="demoGrid" model="@load(vm.disciplinas) @template(each.editingStatus ? 'editable' : 'noneditable')">
+			<grid model="@load(vm.disciplinas) @template(each.editingStatus ? 'editable' : 'noneditable')">
 				<columns>
 						<column style="width:150px;" label="Código" align="center" sort="auto(codDisciplina)" />
 			        	<column style="width:350px;" label="Disciplina" align="center" sort="auto(nomeDisciplina)" />

@@ -40,24 +40,16 @@ public class Pergunta implements Serializable {
 	
 	
 	/**
-	 * Campo com a descrição pergunta. Relaciona com a coluna
+	 * Campo com o título da pergunta. Relaciona com a coluna
 	 * {@code pergunta} do banco através da anotação
 	 * {@code @Column(name = "pergunta", length = 45, nullable = false)}.
 	 */
-	@Column(name = "pergunta", length = 45, nullable = false)
-	private String pergunta;
+	@Column(name = "tituloPergunta", length = 45, nullable = false)
+	private String tituloPergunta;
 
 	
-	/**
-	 * Relacionamento N para 1 entre pergunta e tipo de pergunta. Mapeando
-	 * {@link TipoPergunta} na variável {@code tipoPergunta} e retorno do tipo
-	 * {@code LAZY} que indica que não será carregado automáticamente este dado
-	 * quando retornarmos a {@link Pergunta}.
-	 * 
-	 */
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "idTipo_Pergunta", nullable = false)
-	private TipoPergunta tipoPergunta;
+	@Column(name = "tipoPergunta", nullable = false)
+	private Integer tipoPergunta;
 
 	
 	/**
@@ -82,22 +74,22 @@ public class Pergunta implements Serializable {
 	}
 
 
-	public String getPergunta() {
-		return pergunta;
+	public String getTituloPergunta() {
+		return tituloPergunta;
 	}
 
 
-	public void setPergunta(String pergunta) {
-		this.pergunta = pergunta;
+	public void setTituloPergunta(String tituloPergunta) {
+		this.tituloPergunta = tituloPergunta;
 	}
 
 
-	public TipoPergunta getTipoPergunta() {
+	public Integer getTipoPergunta() {
 		return tipoPergunta;
 	}
 
 
-	public void setTipoPergunta(TipoPergunta tipoPergunta) {
+	public void setTipoPergunta(Integer tipoPergunta) {
 		this.tipoPergunta = tipoPergunta;
 	}
 

@@ -9,11 +9,10 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -41,13 +40,11 @@ public class Questionario implements Serializable {
 	@GenericGenerator(name = "increment", strategy = "increment")
 	private int idQuestionario;
 	
-	/**
-	 * Campo com a descrição do questionário. Relaciona com a coluna
-	 * {@code nome} do banco através da anotação
-	 * {@code @Column(name = "descricao", length = 45, nullable = false)}.
-	 */
-	@Column(name = "descricao", length = 45, nullable = false)
-	private String descricao;
+	@Column(name = "tituloQuestionario", length = 45, nullable = false)
+	private String tituloQuestionario;
+	
+	@Column(name = "tipoQuestionario", length = 45, nullable = false)
+	private int tipoQuestionario;
 	
 	/**
 	 * Campo com a situação do questionário(ativo ou inativo). Relaciona com a
@@ -87,18 +84,12 @@ public class Questionario implements Serializable {
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "questionarios")
 	private List<Curso> cursos = new ArrayList<Curso>();
 	
+	@Transient
+	private String nomeTipoQuestionario;
 	
-	/**
-	 * Relacionamento N para 1 entre questionário e tipo de questionário. Mapeando
-	 * {@link Tipo_Questionario} na variável {@code tipoQuestionario} e retorno do tipo
-	 * {@code LAZY} que indica que não será carregado automáticamente este dado
-	 * quando retornarmos o {@link Questionario}.
-	 * 
-	 */
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "idTipo_Questionario", nullable = false)
-	private TipoQuestionario tipoQuestionario;
-
+	@Transient
+	private boolean editingStatus;
+	
 	public int getIdQuestionario() {
 		return idQuestionario;
 	}
@@ -107,12 +98,12 @@ public class Questionario implements Serializable {
 		this.idQuestionario = idQuestionario;
 	}
 
-	public String getDescricao() {
-		return descricao;
+	public String getTituloQuestionario() {
+		return tituloQuestionario;
 	}
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setTituloQuestionario(String tituloQuestionario) {
+		this.tituloQuestionario = tituloQuestionario;
 	}
 
 	public boolean isAtivo() {
@@ -147,14 +138,34 @@ public class Questionario implements Serializable {
 		this.cursos = cursos;
 	}
 
-	public TipoQuestionario getTipoQuestionario() {
+	public int getTipoQuestionario() {
 		return tipoQuestionario;
 	}
 
-	public void setTipoQuestionario(TipoQuestionario tipoQuestionario) {
+	public void setTipoQuestionario(int tipoQuestionario) {
 		this.tipoQuestionario = tipoQuestionario;
 	}
-	
+
+	public String getNomeTipoQuestionario() {
+		if(tipoQuestionario==0)
+			return "Avaliação de Coordenador";
+		else if (tipoQuestionario==1)
+			return "Avaliação de Professor";
+		else return "Auto-Avaliação";
+	}
+
+	public void setNomeTipoQuestionario(String nomeTipoQuestionario) {
+		this.nomeTipoQuestionario = nomeTipoQuestionario;
+	}
+
+	public boolean isEditingStatus() {
+		return editingStatus;
+	}
+
+	public void setEditingStatus(boolean editingStatus) {
+		this.editingStatus = editingStatus;
+	}
+
 	
 		
 }

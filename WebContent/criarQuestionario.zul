@@ -1,0 +1,33 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<div apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('br.ufjf.avaliacao.controller.QuestionariosController')">
+		<include src="/menuCoordenador.zul"/>
+		<div style="margin-left:15%; width:85%;margin-top:5px;">
+			<grid model="@load(vm.perguntas)">
+				<auxhead>
+					<auxheader label="Título:" colspan="3"><textbox/></auxheader>
+				</auxhead>
+				<auxhead>
+					<auxheader label="Curso:" colspan="3"><textbox/></auxheader>
+				</auxhead>
+				<auxhead>
+					<auxheader label="Pergunta" colspan="2"/>
+					<auxheader label="Opções" rowspan="2"/>
+				</auxhead>
+				<columns>
+					<column label="Título"/>
+					<column label="Tipo"/>
+					<column/>
+			   	</columns>
+			   	<template name="model">
+			   		<row>
+			   			<label value="@load(each.tituloPergunta)"/>
+			   			<label value="@load(each.tipoPergunta)"/>
+			   		</row>
+			   	</template>
+				
+			</grid>
+			<div align="center"><button label="Adicionar Pergunta" onClick="@command('abreJanela')"/></div>
+		</div>	
+	</div>
+</zk>

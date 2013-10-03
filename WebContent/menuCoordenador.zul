@@ -7,6 +7,7 @@
  				<menuitem label="Gerenciar Usuários" style="padding:10%" href="/usuarios.zul"/> 
  				<menuitem label="Gerenciar Disciplinas" style="padding:10%" href="/disciplinas.zul"/> 
  				<menuitem label="Gerenciar Turmas" style="padding:10%" href="/turmas.zul"/> 
+ 				<menuitem label="Gerenciar Questionários" style="padding:10%" href="/questionarios.zul"/> 
  				<menuitem label="Opções" style="padding:10%"/>
  				<menuitem label="Sair" onClick="@command('exit')" style="padding:10%"/>
 		</menubar>

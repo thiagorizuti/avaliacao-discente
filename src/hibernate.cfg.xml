@@ -25,8 +25,6 @@
 		<mapping class="br.ufjf.avaliacao.model.Pergunta" />
 		<mapping class="br.ufjf.avaliacao.model.Questionario" />
 		<mapping class="br.ufjf.avaliacao.model.Resposta" />
-		<mapping class="br.ufjf.avaliacao.model.TipoPergunta" />
-		<mapping class="br.ufjf.avaliacao.model.TipoQuestionario" />
 		<mapping class="br.ufjf.avaliacao.model.Turma" />
 		<mapping class="br.ufjf.avaliacao.model.Usuario" />
 	</session-factory>

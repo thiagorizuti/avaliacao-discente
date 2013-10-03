@@ -1,0 +1,32 @@
+<window id="win" title="Criar Pergunta" border="normal">
+	<div>
+		<grid style="width:350px;" apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('br.ufjf.avaliacao.controller.QuestionariosController')"
+		form="@id('fm') @load(vm.pergunta) @save(vm.pergunta, before='adiciona')">
+			<columns>
+				<column align="center" />
+				<column align="center" />
+			</columns>
+			<rows>
+				<row>
+					<label value="Título" />
+					<textbox value="@bind(fm.tituloPergunta)"/>
+				</row>
+				<row>
+					<label value="Tipo: " />
+					<combobox readonly="true" selectedItem="@bind(fm.tipoPergunta)">
+                   	 	<comboitem label="Texto" value="0" />
+                   	 	<comboitem label="Escala conceitual" value="1"/>
+                   	 	<comboitem label="Escala numérica" value="2"/>
+                   	 	<comboitem label="Sim/Não" value="3"/>
+            		</combobox>
+				</row>
+			</rows>
+		</grid>
+		<separator />
+		<div align="center">
+			<button label="Adicionar" onClick="@command('adiciona')"/>
+			<button label="Cancelar" onClick="@command('cancela', window=win)"/>
+		</div>			
+		<separator />
+	</div>
+</window>
