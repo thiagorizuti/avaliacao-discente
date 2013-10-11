@@ -37,9 +37,14 @@ public class DisciplinasController extends GenericController{
 		@Command
 		@NotifyChange("disciplinas")
 		public void exclui(@BindingParam("disciplina") Disciplina disciplina) {
-			disciplinaDAO.exclui(disciplina);
-			disciplinas.remove(disciplina);
-			Messagebox.show("Disciplina Excluida");
+			DisciplinaBusiness disciplinaBusiness = new DisciplinaBusiness();
+			if (!disciplinaBusiness.disciplinaUsada(disciplina)) {
+				disciplinaDAO.exclui(disciplina);
+				disciplinas.remove(disciplina);
+				Messagebox.show("Disciplina Excluida");
+			}
+			else
+				Messagebox.show("Impossível excluir. A disciplina está associada a alguma turma.");			
 		}
 		
 		@Command
