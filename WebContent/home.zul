@@ -1,8 +1,8 @@
 <?page title="Home" contentType="text/html;charset=UTF-8"?>
 <zk>
-<div style="margin-top:5px;"  apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('br.ufjf.avaliacao.controller.HomeCoordenadorController')">
+<div style="margin-top:5px;"  apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('br.ufjf.avaliacao.controller.HomeController')">
 	
-	<include src="/menuCoordenador.zul" />
+	<include src="@load(vm.menu)" />
 	
 	<div align="center">
 		Bem Vindo(a), <label value="@bind(vm.usuario.nome)" style="font-weight:bold"/>!

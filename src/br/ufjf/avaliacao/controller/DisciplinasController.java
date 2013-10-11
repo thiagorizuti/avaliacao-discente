@@ -12,9 +12,7 @@ import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zul.Window;
 
-import br.ufjf.avaliacao.business.UsuariosBusiness;
 import br.ufjf.avaliacao.model.Disciplina;
-import br.ufjf.avaliacao.model.Usuario;
 import br.ufjf.avaliacao.persistent.impl.DisciplinaDAO;
 import br.ufjf.avaliacao.business.DisciplinaBusiness;
 
@@ -25,13 +23,8 @@ public class DisciplinasController extends GenericController{
 		private Disciplina disciplina = new Disciplina();
 		
 		@Init
-		public void testaLogado() throws HibernateException, Exception {
-			usuario = (Usuario) session.getAttribute("usuario");
-			usuarioBusiness = new UsuariosBusiness();
-			if (!usuarioBusiness.checaLogin(usuario)|| usuario.getTipoUsuario()!= 0) {
-				Executions.sendRedirect("/index.zul");
-				usuario = new Usuario();
-			}
+		public void init() throws HibernateException, Exception {
+			testaPermissao(0);
 		}
 		
 		@Command

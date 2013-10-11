@@ -1,14 +1,11 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
-<zk>
-	<div apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('br.ufjf.avaliacao.controller.QuestionariosController')">
-		<include src="/menuCoordenador.zul"/>
+<window>
+	<div apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('br.ufjf.avaliacao.controller.QuestionariosController')"
+		form="@id('fm') @load(vm.pergunta) @save(vm.pergunta, before='adiciona')" id="form">
 		<div style="margin-left:15%; width:85%;margin-top:5px;">
 			<grid model="@load(vm.perguntas)">
 				<auxhead>
 					<auxheader label="Título:" colspan="3"><textbox/></auxheader>
-				</auxhead>
-				<auxhead>
-					<auxheader label="Curso:" colspan="3"><textbox/></auxheader>
 				</auxhead>
 				<auxhead>
 					<auxheader label="Pergunta" colspan="2"/>
@@ -22,12 +19,20 @@
 			   	<template name="model">
 			   		<row>
 			   			<label value="@load(each.tituloPergunta)"/>
-			   			<label value="@load(each.tipoPergunta)"/>
+			   			<label value="@load(each.nomeTipoPergunta)"/>
+			   			<button label="Excluir" onClick="@command('exclui',pergunta=each)"/>
 			   		</row>
-			   	</template>
-				
+			   	</template>	
 			</grid>
-			<div align="center"><button label="Adicionar Pergunta" onClick="@command('abreJanela')"/></div>
+			<textbox value="@bind(fm.tituloPergunta)"/>
+			<combobox  selectedItem="@bind(fm.tipoPergunta)" readonly="true">
+                   	 	<comboitem label="Texto" value="0"/>
+                   	 	<comboitem label="Escala numérica" value="1"/>
+                   	 	<comboitem label="Escala conceitual" value="2"/>
+                   	 	<comboitem label="Sim/Não" value="3"/>
+            		</combobox>
+			<button label="Adicionar Pergunta" onClick="@command('adiciona')"/>
+			<button label="Cancelar" onClick="@command('cancela')"/>
 		</div>	
 	</div>
-</zk>
+</window>

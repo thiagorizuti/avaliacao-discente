@@ -8,13 +8,12 @@ import br.ufjf.avaliacao.model.Curso;
 import br.ufjf.avaliacao.model.Usuario;
 import br.ufjf.avaliacao.persistent.impl.UsuarioDAO;
 
-public class UsuariosBusiness extends GenericBusiness {
+public class UsuarioBusiness extends GenericBusiness {
 
 	
 	public boolean login(String email, String senha) throws HibernateException, Exception {
-		Usuario usuario;
 		UsuarioDAO usuarioDAO = new UsuarioDAO();
-		usuario = usuarioDAO.retornaUsuario(email, senha);
+		Usuario usuario = usuarioDAO.retornaUsuario(email, senha);
 
 		if (usuario != null) {
 			Session session = Sessions.getCurrent();

@@ -19,4 +19,5 @@ public class DisciplinaBusiness extends GenericBusiness {
 			return true;
 		else return false;
 	}
+	
 }

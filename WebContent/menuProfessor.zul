@@ -3,7 +3,7 @@
 <div style="position:absolute; margin-right:92%; height:100%">
 		
 		<menubar scrollable="true" orient="vertical" autodrop="true" style="height:100%" >
- 				<menuitem label="Inicial" style="padding:10%" href="/homeProfessor.zul"/>
+ 				<menuitem label="Inicial" style="padding:10%" href="/home.zul"/>
  				<menuitem label="Consultar Avaliações" style="padding:10%" onClick="@command('consultarAva')"/> 
  				<menuitem label="Sair" onClick="@command('exit')" style="padding:10%"/>
 		</menubar>

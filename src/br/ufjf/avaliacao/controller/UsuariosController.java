@@ -13,7 +13,7 @@ import org.zkoss.zk.ui.Executions;
 import org.zkoss.zul.Window;
 
 import br.ufjf.avaliacao.business.DisciplinaBusiness;
-import br.ufjf.avaliacao.business.UsuariosBusiness;
+import br.ufjf.avaliacao.business.UsuarioBusiness;
 import br.ufjf.avaliacao.model.Curso;
 import br.ufjf.avaliacao.model.Disciplina;
 import br.ufjf.avaliacao.model.Usuario;
@@ -32,7 +32,7 @@ public class UsuariosController extends GenericController {
 	@Init
 	public void testaLogado() throws HibernateException, Exception {
 		Usuario usuario = (Usuario) session.getAttribute("usuario");
-		usuarioBusiness = new UsuariosBusiness();
+		usuarioBusiness = new UsuarioBusiness();
 		if (!usuarioBusiness.checaLogin(usuario) || usuario.getTipoUsuario()!= 0) {
 			Executions.sendRedirect("/index.zul");
 			usuario = new Usuario();
@@ -56,7 +56,7 @@ public class UsuariosController extends GenericController {
 	@Command
 	@NotifyChange({"usuarios","usuario"})
 	public void cadastra() throws HibernateException, Exception{
-		UsuariosBusiness  usuarioBusiness = new UsuariosBusiness();
+		UsuarioBusiness  usuarioBusiness = new UsuarioBusiness();
 		if(!usuarioBusiness.cadastroValido(usuario.getNome(), usuario.getEmail(), usuario.getSenha(), usuario.getCurso(), usuario.getTipoUsuario())) {
 			Messagebox.show("Preencha todos os campos!");
 		}
@@ -90,7 +90,7 @@ public class UsuariosController extends GenericController {
 	
 	@Command
 	public void confirm(@BindingParam("usuario") Usuario usuario) throws HibernateException, Exception {
-		UsuariosBusiness business = new UsuariosBusiness();
+		UsuarioBusiness business = new UsuarioBusiness();
 		if (business.cadastroValido(usuario.getNome(), usuario.getEmail(), usuario.getSenha(), usuario.getCurso(), usuario.getTipoUsuario())){
 			changeEditableStatus(usuario);
 			UsuarioDAO usuarioDAO = new UsuarioDAO();

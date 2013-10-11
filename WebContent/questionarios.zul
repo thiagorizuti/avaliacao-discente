@@ -20,7 +20,7 @@
 			    	</row>			    
 			    </template>
 			</grid>
-			<div align="center"><button label="Criar novo questionario" href="/criarQuestionario.zul"/></div>
+			<div align="center"><button label="Criar novo questionario" onClick="@command('abreJanela')"/></div>
 		</div>	
 	</div>
 </zk>

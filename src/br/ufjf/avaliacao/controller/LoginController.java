@@ -8,31 +8,24 @@ import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
 
-import br.ufjf.avaliacao.business.UsuariosBusiness;
+import br.ufjf.avaliacao.business.UsuarioBusiness;
 import br.ufjf.avaliacao.model.Usuario;
 
 
 
 public class LoginController {
 	
-	Usuario usuario = new Usuario();
+	
+	private Usuario usuario = new Usuario();
+	private UsuarioBusiness usuarioBusiness = new UsuarioBusiness();
 	private Session session = Sessions.getCurrent();
-	private UsuariosBusiness usuarioBusiness = new UsuariosBusiness();
 	
 	@Init
 	public void testaLogado() throws HibernateException, Exception {
-		usuarioBusiness = new UsuariosBusiness();
+		usuarioBusiness = new UsuarioBusiness();
 		usuario = (Usuario) session.getAttribute("usuario");
 		if (usuarioBusiness.checaLogin(usuario)) {
-			if (usuario.getTipoUsuario() == 0) {
-				Executions.sendRedirect("/homeCoordenador.zul");
-			}
-			else if (usuario.getTipoUsuario() == 1){
-				Executions.sendRedirect("/homeProfessor.zul");
-			}
-			else if (usuario.getTipoUsuario() == 2){
-				Executions.sendRedirect("/homeAluno.zul");
-			}
+				Executions.sendRedirect("/home.zul");
 		}
 		else {
 			usuario = new Usuario();
@@ -45,15 +38,7 @@ public class LoginController {
 		if (usuario != null && usuario.getEmail() != null && usuario.getSenha() != null) {
 			if (usuarioBusiness.login(usuario.getEmail(), usuario.getSenha())) {
 				usuario = (Usuario) session.getAttribute("usuario");
-				if (usuario.getTipoUsuario() == 0) {
-					Executions.sendRedirect("/homeCoordenador.zul");
-				}
-				else if (usuario.getTipoUsuario() == 1){
-					Executions.sendRedirect("/homeProfessor.zul");
-				}
-				else if (usuario.getTipoUsuario() == 2){
-					Executions.sendRedirect("/homeAluno.zul");
-				}
+				Executions.sendRedirect("/home.zul");
 			}	
 			else {
 				Messagebox.show("Usuário ou Senha inválidos!", "Error", Messagebox.OK, Messagebox.ERROR);

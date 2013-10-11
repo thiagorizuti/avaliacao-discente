@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -63,6 +64,8 @@ public class Pergunta implements Serializable {
 	@JoinColumn(name = "idQuestionario", nullable = false)
 	private Questionario questionario;
 
+	@Transient
+	private String nomeTipoPergunta;
 
 	public int getIdPergunta() {
 		return idPergunta;
@@ -102,5 +105,23 @@ public class Pergunta implements Serializable {
 	public void setQuestionario(Questionario questionario) {
 		this.questionario = questionario;
 	}
+
+
+	public String getNomeTipoPergunta() {
+		if (tipoPergunta==0)
+			return "Texto";
+		else if (tipoPergunta==1)
+			return "Escala numérica";
+		else if (tipoPergunta == 2)
+			return "Escala conceitual";
+		else return "Sim/Não";
+	}
+
+	
+	public void setNomeTipoPergunta(String nomeTipoPergunta) {
+		this.nomeTipoPergunta = nomeTipoPergunta;
+	}
+	
+	
 	
 }

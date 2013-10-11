@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import br.ufjf.avaliacao.business.UsuariosBusiness;
+import br.ufjf.avaliacao.business.UsuarioBusiness;
 import br.ufjf.avaliacao.model.Usuario;
 
 public class UsuarioBusinessTest {
@@ -33,19 +33,19 @@ public class UsuarioBusinessTest {
 
 	@Test
 	public void testLoginTrue() throws HibernateException, Exception {
-		UsuariosBusiness usuarioBusiness = new UsuariosBusiness();
+		UsuarioBusiness usuarioBusiness = new UsuarioBusiness();
 		assertTrue("Deve retornar true",usuarioBusiness.login("t.rizuti@gmail.com", "123"));
 	}
 	
 	@Test
 	public void testLoginFalse() throws HibernateException, Exception {
-		UsuariosBusiness usuarioBusiness = new UsuariosBusiness();
+		UsuarioBusiness usuarioBusiness = new UsuarioBusiness();
 		assertFalse("Deve retornar false",usuarioBusiness.login("t.rizuti@gmail.com", "senhaincorreta"));
 	}
 
 	@Test
 	public void testChecaLoginTrue() throws HibernateException, Exception {
-		UsuariosBusiness usuarioBusiness = new UsuariosBusiness();
+		UsuarioBusiness usuarioBusiness = new UsuarioBusiness();
 		Usuario usuario = new Usuario();
 		usuario.setEmail("t.rizuti@gmail.com");
 		usuario.setSenha("123");
@@ -54,7 +54,7 @@ public class UsuarioBusinessTest {
 	
 	@Test
 	public void testChecaLoginFalse() throws HibernateException, Exception {
-		UsuariosBusiness usuarioBusiness = new UsuariosBusiness();
+		UsuarioBusiness usuarioBusiness = new UsuarioBusiness();
 		Usuario usuario = new Usuario();
 		usuario.setEmail("t.rizuti@gmail.com");
 		usuario.setSenha("senhaincorreta");
