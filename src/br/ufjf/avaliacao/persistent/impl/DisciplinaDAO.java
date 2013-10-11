@@ -1,53 +1,49 @@
 package br.ufjf.avaliacao.persistent.impl;
 
-import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
-import org.hibernate.criterion.Restrictions;
-
+import org.hibernate.Query;
 import br.ufjf.avaliacao.model.Disciplina;
 import br.ufjf.avaliacao.persistent.GenericoDAO;
 import br.ufjf.avaliacao.persistent.IDisciplinaDAO;
 
 public class DisciplinaDAO extends GenericoDAO implements IDisciplinaDAO{
 	
-	@SuppressWarnings("finally")
 	@Override
-	public Disciplina retornaDisciplinaCod(String codDisciplina) throws HibernateException, Exception {
-		Disciplina disciplina = null;
+	public Disciplina retornaDisciplinaCod(String codDisciplina) {
 		try {
-
-			Criteria criteria = getSession()
-					.createCriteria(Disciplina.class, "disciplina")
-					.add(Restrictions.eq("disciplina.codDisciplina", codDisciplina))
-					.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-
-			disciplina = (Disciplina) criteria.uniqueResult();
-		} catch (HibernateException e) {
-			System.err.println(e.fillInStackTrace());
-		} finally {
+			Query query = 
+				getSession().createQuery("SELECT disciplina FROM Disciplina AS disciplina WHERE u.codDisciplina = :codDisciplina");
+			query.setParameter("codDisciplina", codDisciplina);
+			
+			Disciplina disciplina = (Disciplina) query.uniqueResult();
+			
 			getSession().close();
-			return disciplina;
+			
+			if (disciplina!=null)
+				return disciplina;
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		return null;
 	}
 	
-	@SuppressWarnings("finally")
 	@Override
 	public Disciplina retornaDisciplinaNome(String nomeDisciplina) throws HibernateException, Exception {
-		Disciplina disciplina = null;
 		try {
-
-			Criteria criteria = getSession()
-					.createCriteria(Disciplina.class, "disciplina")
-					.add(Restrictions.eq("disciplina.nomeDisciplina", nomeDisciplina))
-					.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-
-			disciplina = (Disciplina) criteria.uniqueResult();
-		} catch (HibernateException e) {
-			System.err.println(e.fillInStackTrace());
-		} finally {
+			Query query = 
+				getSession().createQuery("SELECT disciplina FROM Disciplina AS disciplina WHERE u.nomeDisciplina = :nomeDisciplina");
+			query.setParameter("nomeDisciplina", nomeDisciplina);
+			
+			Disciplina disciplina = (Disciplina) query.uniqueResult();
+			
 			getSession().close();
-			return disciplina;
+			
+			if (disciplina!=null)
+				return disciplina;
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		return null;
 	}
 	
 }
