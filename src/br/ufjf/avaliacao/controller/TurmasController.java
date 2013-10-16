@@ -29,8 +29,8 @@ public class TurmasController extends GenericController{
 	private Turma turma = new Turma();
 	private Disciplina disciplina = new Disciplina();
 	private Usuario professor = new Usuario();
-	private List<Turma> turmas = (List<Turma>) turmaDAO.procuraTodos(Turma.class, -1, -1);
-	private List<Disciplina> disciplinas = (List<Disciplina>) disciplinaDAO.procuraTodos(Disciplina.class, -1, -1);
+	private List<Turma> turmas = (List<Turma>) turmaDAO.getTodasTurmas();
+	private List<Disciplina> disciplinas = (List<Disciplina>) disciplinaDAO.getTodasDisciplinas();
 	private List<Usuario> professores = (List<Usuario>) usuarioDAO.retornaProfessores();
 	
 	

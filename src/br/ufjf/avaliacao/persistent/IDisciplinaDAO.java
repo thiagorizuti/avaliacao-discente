@@ -1,17 +1,16 @@
 package br.ufjf.avaliacao.persistent;
 
-import org.hibernate.HibernateException;
+import java.util.List;
 
 import br.ufjf.avaliacao.model.Disciplina;
 
 public interface IDisciplinaDAO {
 
+	public Disciplina retornaDisciplinaNome(String nomeDisciplina);
 
-	Disciplina retornaDisciplinaNome(String nomeDisciplina)
-			throws HibernateException, Exception;
+	public Disciplina retornaDisciplinaCod(String codDisciplina);
 
-	Disciplina retornaDisciplinaCod(String codDisciplina)
-			throws HibernateException, Exception;
+	public List<Disciplina> getTodasDisciplinas();
 	
 
 }

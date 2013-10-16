@@ -46,10 +46,19 @@ public class UsuarioBusiness extends GenericBusiness {
 	}
 	
 	
-	public boolean cadastroValido(String nome, String email, String senha, Curso curso, Integer tipoUsuario){
-		if(campoStrValido(nome) && campoStrValido(email) && campoStrValido(senha) && (curso!=null) && (tipoUsuario!=null))
-			return true;
-		else
-			return false;
+	public boolean cadastroValido(Usuario usuario){
+		if (usuario.getTipoUsuario()!=null)
+			if (usuario.getTipoUsuario()==1)
+				if(campoStrValido(usuario.getNome()) && campoStrValido(usuario.getEmail()) && campoStrValido(usuario.getSenha()))
+					return true;
+				else
+					return false;
+			else
+				if(campoStrValido(usuario.getNome()) && campoStrValido(usuario.getEmail()) && campoStrValido(usuario.getSenha()) && (usuario.getCurso()!=null))
+					return true;
+				else
+					return false;
+		return false;
 	}
+	
 }

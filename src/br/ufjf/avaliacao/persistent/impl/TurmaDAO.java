@@ -1,7 +1,9 @@
 package br.ufjf.avaliacao.persistent.impl;
 
-import org.hibernate.HibernateException;
+import java.util.List;
+
 import org.hibernate.Query;
+
 import br.ufjf.avaliacao.model.Disciplina;
 import br.ufjf.avaliacao.model.Turma;
 import br.ufjf.avaliacao.persistent.GenericoDAO;
@@ -11,7 +13,7 @@ public class TurmaDAO extends GenericoDAO implements ITurmaDAO {
 	
 	
 	@Override
-	public Turma retornaTurma(String letraTurma, String semestre, Disciplina disciplina) throws HibernateException, Exception {
+	public Turma retornaTurma(String letraTurma, String semestre, Disciplina disciplina) {
 		try {
 			Query query = 
 				getSession().createQuery("SELECT turma FROM Turma AS turma LEFT JOIN FETCH u.usuario JOIN FETCH u.disciplina WHERE u.letraTurma = :letraTurma AND u.semestre = :semestre AND u.disciplina = :disciplina");
@@ -25,6 +27,24 @@ public class TurmaDAO extends GenericoDAO implements ITurmaDAO {
 			
 			if (turma != null)
 				return turma;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<Turma> getTodasTurmas(){
+		try {
+			Query query = 
+					getSession().createQuery("SELECT t FROM Turma AS t LEFT JOIN FETCH t.usuario JOIN FETCH u.disciplina");
+			List<Turma> turmas = query.list();
+			
+			getSession().close();
+			
+			if(turmas!=null)
+				return turmas;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

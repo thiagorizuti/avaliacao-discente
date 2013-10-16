@@ -10,15 +10,14 @@ import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zul.Combobox;
+import org.zkoss.zul.Comboitem;
 import org.zkoss.zul.Window;
 
-import br.ufjf.avaliacao.business.DisciplinaBusiness;
 import br.ufjf.avaliacao.business.UsuarioBusiness;
 import br.ufjf.avaliacao.model.Curso;
-import br.ufjf.avaliacao.model.Disciplina;
 import br.ufjf.avaliacao.model.Usuario;
 import br.ufjf.avaliacao.persistent.impl.CursoDAO;
-import br.ufjf.avaliacao.persistent.impl.DisciplinaDAO;
 import br.ufjf.avaliacao.persistent.impl.UsuarioDAO;
 
 public class UsuariosController extends GenericController {
@@ -26,8 +25,9 @@ public class UsuariosController extends GenericController {
 	private UsuarioDAO usuarioDAO = new UsuarioDAO();
 	private Usuario usuario = new Usuario();
 	private CursoDAO cursoDAO = new CursoDAO();
-	private List<Usuario> usuarios = (List<Usuario>) usuarioDAO.procuraTodos(Usuario.class, -1, -1);
-	private List<Curso> cursos = (List<Curso>) cursoDAO.procuraTodos(Curso.class, -1, -1);
+	private List<Usuario> usuarios = (List<Usuario>) usuarioDAO.getTodosUsuarios();
+	private List<Curso> cursos = (List<Curso>) cursoDAO.getTodosCursos();
+	private boolean podeSelecionar = true;
 	
 	@Init
 	public void testaLogado() throws HibernateException, Exception {
@@ -55,9 +55,9 @@ public class UsuariosController extends GenericController {
 	
 	@Command
 	@NotifyChange({"usuarios","usuario"})
-	public void cadastra() throws HibernateException, Exception{
-		UsuarioBusiness  usuarioBusiness = new UsuarioBusiness();
-		if(!usuarioBusiness.cadastroValido(usuario.getNome(), usuario.getEmail(), usuario.getSenha(), usuario.getCurso(), usuario.getTipoUsuario())) {
+	public void cadastra() throws HibernateException, Exception {
+		UsuarioBusiness usuarioBusiness = new UsuarioBusiness();
+		if(!usuarioBusiness.cadastroValido(usuario)) {
 			Messagebox.show("Preencha todos os campos!");
 		}
 		else if(usuarioBusiness.cadastrado(usuario.getEmail(), usuario.getNome())){
@@ -91,7 +91,7 @@ public class UsuariosController extends GenericController {
 	@Command
 	public void confirm(@BindingParam("usuario") Usuario usuario) throws HibernateException, Exception {
 		UsuarioBusiness business = new UsuarioBusiness();
-		if (business.cadastroValido(usuario.getNome(), usuario.getEmail(), usuario.getSenha(), usuario.getCurso(), usuario.getTipoUsuario())){
+		if (business.cadastroValido(usuario)){
 			changeEditableStatus(usuario);
 			UsuarioDAO usuarioDAO = new UsuarioDAO();
 			usuarioDAO.editar(usuario);
@@ -100,6 +100,19 @@ public class UsuariosController extends GenericController {
 		else {
 			Messagebox.show("Usuário já cadastrado ou inválido");
 		}
+	}
+	
+	@Command
+	public void verifica(@BindingParam("tipo") Comboitem tipo, Combobox cmb){
+		podeSelecionar = tipo.getIndex() != 2;
+	}
+	
+	public boolean getPodeSelecionar(){
+		return this.podeSelecionar;
+	}
+	
+	public void setPodeSelecionar(boolean podeSelecionar){
+		this.podeSelecionar = podeSelecionar;
 	}
 	
 	public Usuario getUsuario() {

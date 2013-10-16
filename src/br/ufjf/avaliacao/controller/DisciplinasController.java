@@ -19,7 +19,7 @@ import br.ufjf.avaliacao.business.DisciplinaBusiness;
 public class DisciplinasController extends GenericController{
 	
 		private DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
-		private List<Disciplina> disciplinas = (List<Disciplina>) disciplinaDAO.procuraTodos(Disciplina.class, -1, -1);
+		private List<Disciplina> disciplinas = (List<Disciplina>) disciplinaDAO.getTodasDisciplinas();
 		private Disciplina disciplina = new Disciplina();
 		
 		@Init
@@ -86,8 +86,7 @@ public class DisciplinasController extends GenericController{
 					disciplinas.add(disciplina);
 					Messagebox.show("Disciplina Cadastrada");
 					disciplina = new Disciplina();
-			}
-			
+			}	
 		}
 		
 		@Command
@@ -109,9 +108,6 @@ public class DisciplinasController extends GenericController{
 		}
 		public void setDisciplina(Disciplina disciplina) {
 			this.disciplina = disciplina;
-		}
-		
-		
-		
+		}		
 		
 }
