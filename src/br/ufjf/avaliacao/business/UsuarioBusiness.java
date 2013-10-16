@@ -5,6 +5,7 @@ import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
 
 import br.ufjf.avaliacao.model.Curso;
+import br.ufjf.avaliacao.model.Disciplina;
 import br.ufjf.avaliacao.model.Usuario;
 import br.ufjf.avaliacao.persistent.impl.UsuarioDAO;
 
@@ -59,6 +60,12 @@ public class UsuarioBusiness extends GenericBusiness {
 				else
 					return false;
 		return false;
+	}
+	
+	public boolean usuarioUsado(Usuario usuario) {
+		if(usuario.getTurmas().isEmpty())
+			return false;
+		return true;
 	}
 	
 }

@@ -29,6 +29,7 @@ public class UsuariosController extends GenericController {
 	private List<Curso> cursos = (List<Curso>) cursoDAO.getTodosCursos();
 	private boolean podeSelecionar = true;
 	
+	
 	@Init
 	public void testaLogado() throws HibernateException, Exception {
 		Usuario usuario = (Usuario) session.getAttribute("usuario");
@@ -49,8 +50,14 @@ public class UsuariosController extends GenericController {
 	@Command
 	@NotifyChange("usuarios")
 	public void exclui(@BindingParam("usuario") Usuario usuario) {
-		usuarioDAO.exclui(usuario);
-		usuarios.remove(usuario);
+		UsuarioBusiness usuarioBusiness = new UsuarioBusiness();
+		if (!usuarioBusiness.usuarioUsado(usuario)){
+			usuarioDAO.exclui(usuario);
+			usuarios.remove(usuario);
+		}
+		else{
+			Messagebox.show("Impossível excluir. O professor está associado a alguma turma.");
+		}
 	}
 	
 	@Command

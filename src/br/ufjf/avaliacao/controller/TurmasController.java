@@ -77,8 +77,7 @@ public class TurmasController extends GenericController{
 				Messagebox.show("Turma já cadastrada!");
 				turma = new Turma();
 		} 
-		else if (turmaDAO.salvar(turma)){
-				disciplinas.add(disciplina);
+		else if (turmaDAO.salvar(turma)) {
 				turmas.add(turma);
 				turma = new Turma();
 				Messagebox.show("Turma cadastrada com sucesso!");

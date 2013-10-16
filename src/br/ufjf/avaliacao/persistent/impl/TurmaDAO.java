@@ -16,7 +16,7 @@ public class TurmaDAO extends GenericoDAO implements ITurmaDAO {
 	public Turma retornaTurma(String letraTurma, String semestre, Disciplina disciplina) {
 		try {
 			Query query = 
-				getSession().createQuery("SELECT turma FROM Turma AS turma LEFT JOIN FETCH u.usuario JOIN FETCH u.disciplina WHERE u.letraTurma = :letraTurma AND u.semestre = :semestre AND u.disciplina = :disciplina");
+				getSession().createQuery("SELECT turma FROM Turma AS turma LEFT JOIN FETCH turma.professor JOIN FETCH turma.disciplina WHERE turma.letraTurma = :letraTurma AND u.semestre = :semestre AND u.disciplina = :disciplina");
 			query.setParameter("letraTurma",letraTurma);
 			query.setParameter("semestre", semestre);
 			query.setParameter("disciplina", disciplina);
@@ -38,7 +38,7 @@ public class TurmaDAO extends GenericoDAO implements ITurmaDAO {
 	public List<Turma> getTodasTurmas(){
 		try {
 			Query query = 
-					getSession().createQuery("SELECT t FROM Turma AS t LEFT JOIN FETCH t.usuario JOIN FETCH u.disciplina");
+					getSession().createQuery("SELECT t FROM Turma AS t LEFT JOIN FETCH t.professor JOIN FETCH t.disciplina");
 			List<Turma> turmas = query.list();
 			
 			getSession().close();

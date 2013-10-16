@@ -11,15 +11,18 @@ import org.zkoss.zul.Window;
 
 import br.ufjf.avaliacao.model.Pergunta;
 import br.ufjf.avaliacao.model.Questionario;
+import br.ufjf.avaliacao.persistent.impl.PerguntaDAO;
 import br.ufjf.avaliacao.persistent.impl.QuestionarioDAO;
 
 
 public class QuestionariosController extends GenericController{
 	
 	QuestionarioDAO questionarioDAO = new QuestionarioDAO();
+	PerguntaDAO perguntaDAO = new PerguntaDAO();
 	List<Questionario> questionarios = (List<Questionario>) questionarioDAO.procuraTodos(Questionario.class, -1, -1);
 	private List<Pergunta> perguntas = new ArrayList<Pergunta>();
 	private Pergunta pergunta = new Pergunta();
+	private Questionario questionario = new Questionario();
 	
 	
 	@Command
@@ -31,15 +34,24 @@ public class QuestionariosController extends GenericController{
 
 	@Command
 	@NotifyChange({"perguntas","pergunta"})
-	public void adiciona(){
+	public void adicionaPergunta(){
 		perguntas.add(pergunta);
 		pergunta = new Pergunta();
 	}
 	
 	@Command
 	@NotifyChange({"perguntas","pergunta"})
-	public void exclui(@BindingParam("pergunta")Pergunta pergunta){
+	public void excluiPergunta(@BindingParam("pergunta")Pergunta pergunta){
 		perguntas.remove(pergunta);
+	}
+	
+	@Command
+	@NotifyChange({"questionarios","questionario"})
+	public void exclui(@BindingParam("questionario")Questionario questionario){
+		perguntas = questionario.getPerguntas();
+		perguntaDAO	.excluiLista(perguntas);	
+		questionarioDAO.exclui(questionario);
+		questionarios.remove(questionario);
 	}
 
 	@Command
@@ -49,6 +61,17 @@ public class QuestionariosController extends GenericController{
 		Executions.sendRedirect("/questionarios.zul");
 	}
 	
+	@Command
+	@NotifyChange({"perguntas","questionario"})
+	public void cria(){
+		questionarioDAO.salvar(questionario);
+		for (Pergunta pergunta : perguntas){
+			pergunta.setQuestionario(questionario);
+		}
+		perguntaDAO.salvarLista(perguntas);
+		questionario = new Questionario();
+		perguntas = new ArrayList<Pergunta>();
+	}
 	
 	
 	public List<Pergunta> getPerguntas() {
@@ -81,6 +104,14 @@ public class QuestionariosController extends GenericController{
 	
 	public void setQuestionarios(List<Questionario> questionarios) {
 		this.questionarios = questionarios;
+	}
+
+	public Questionario getQuestionario() {
+		return questionario;
+	}
+
+	public void setQuestionario(Questionario questionario) {
+		this.questionario = questionario;
 	}
 	
 	

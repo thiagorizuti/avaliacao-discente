@@ -95,6 +95,16 @@ public class Usuario implements Serializable{
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "avaliando")
 	private List<Avaliacao> avaliacoes = new ArrayList<Avaliacao>();
 	
+	/**
+	 * Relacionamento 1 para N entre usuário e turma. Mapeada em
+	 * {@link Turma} pela variável {@code usuario} e retorno do tipo
+	 * {@code EAGER} que indica que não será carregado automáticamente este dado
+	 * quando retornarmos o {@link Usuario} .
+	 * 
+	 */
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "professor")
+	private List<Turma> turmas = new ArrayList<Turma>();
+	
 	@Transient
 	private String nomeTipoUsuario;
 	
@@ -176,4 +186,18 @@ public class Usuario implements Serializable{
 	public void setEditingStatus(boolean editingStatus) {
 		this.editingStatus = editingStatus;
 	}
+
+	public List<Turma> getTurmas() {
+		return turmas;
+	}
+
+	public void setTurmas(List<Turma> turmas) {
+		this.turmas = turmas;
+	}
+
+	public void setIdUsuario(Integer idUsuario) {
+		this.idUsuario = idUsuario;
+	}
+	
+	
 }

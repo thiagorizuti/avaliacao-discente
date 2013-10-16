@@ -74,7 +74,7 @@ public class Turma implements Serializable{
 	/**
 	 * Relacionamento N para 1 entre turma e disciplina. Mapeando
 	 * {@link Disciplina} na variável {@code disciplina} e retorno do tipo
-	 * {@code LAZY} que indica que não será carregado automáticamente este dado
+	 * {@code EAGER} que indica que será carregado automáticamente este dado
 	 * quando retornarmos o {@link Turma}.
 	 * 
 	 */
@@ -82,6 +82,7 @@ public class Turma implements Serializable{
 	@JoinColumn(name = "idDisciplina", nullable = false)
 	private Disciplina disciplina;
 
+	
 	/**
 	 * Relacionamento 1 para N entre turma e avaliação. Mapeada em
 	 * {@link Avaliaçao} pela variável {@code turma} e retorno do tipo
@@ -94,7 +95,7 @@ public class Turma implements Serializable{
 	
 	@Transient
 	private boolean editingStatus;
-	
+
 	public int getIdTurma() {
 		return idTurma;
 	}
