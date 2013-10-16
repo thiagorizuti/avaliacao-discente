@@ -57,11 +57,11 @@ public class Questionario implements Serializable {
 	/**
 	 * Relacionamento 1 para N entre questionário e pergunta. Mapeada em
 	 * {@link Pergunta} pela variável {@code questionario} e retorno do tipo
-	 * {@code LAZY} que indica que não será carregado automáticamente este dado
+	 * {@code EAGER} que indica que será carregado automáticamente este dado
 	 * quando retornarmos o {@link Questionario} .
 	 * 
 	 */
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "questionario")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "questionario")
 	private List<Pergunta> perguntas = new ArrayList<Pergunta>();
 
 	/**
@@ -151,7 +151,10 @@ public class Questionario implements Serializable {
 			return "Avaliação de Coordenador";
 		else if (tipoQuestionario==1)
 			return "Avaliação de Professor";
-		else return "Auto-Avaliação";
+		else if (tipoQuestionario==2)
+			return "Auto-Avaliação";
+		else
+			return "Avaliação de Infraestrutura";
 	}
 
 	public void setNomeTipoQuestionario(String nomeTipoQuestionario) {

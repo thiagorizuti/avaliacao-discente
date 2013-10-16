@@ -15,7 +15,7 @@
 			    		<label value="@load(each.nomeTipoQuestionario)" />
 			    		<div>
 			    			<button label="Editar"/>
-			    			<button label="Excluir"/>
+			    			<button label="Excluir" onClick="@command('exclui',questionario=each)"/>
 			    		</div>
 			    	</row>			    
 			    </template>

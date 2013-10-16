@@ -1,5 +1,5 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
-<window id="win" title="Criar Questionário" border="normal">
+<window id="win" title="Editar Questionário" border="normal">
 	<div style="width:650px;" apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('br.ufjf.avaliacao.controller.QuestionariosController')"
 		form="@id('fm') @load(vm.pergunta) @save(vm.pergunta, before='adicionaPergunta')"  id="form">
 			<grid model="@load(vm.perguntas)">
