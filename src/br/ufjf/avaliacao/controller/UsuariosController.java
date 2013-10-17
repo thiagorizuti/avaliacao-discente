@@ -21,59 +21,71 @@ import br.ufjf.avaliacao.persistent.impl.CursoDAO;
 import br.ufjf.avaliacao.persistent.impl.UsuarioDAO;
 
 public class UsuariosController extends GenericController {
-	
+
 	private UsuarioDAO usuarioDAO = new UsuarioDAO();
 	private Usuario usuario = new Usuario();
 	private CursoDAO cursoDAO = new CursoDAO();
 	private List<Usuario> usuarios = (List<Usuario>) usuarioDAO.getTodosUsuarios();
 	private List<Curso> cursos = (List<Curso>) cursoDAO.getTodosCursos();
-	private boolean podeSelecionar = true;
-	
-	
+	private Combobox cmbCurso;
+
+	public Combobox getCmbCurso() {
+		return cmbCurso;
+	}
+
+	@Command
+	public void setCmbCurso(@BindingParam("cmbCurso") Combobox cmbCurso) {
+		this.cmbCurso = cmbCurso;
+	}
+
 	@Init
 	public void testaLogado() throws HibernateException, Exception {
 		Usuario usuario = (Usuario) session.getAttribute("usuario");
 		usuarioBusiness = new UsuarioBusiness();
-		if (!usuarioBusiness.checaLogin(usuario) || usuario.getTipoUsuario()!= 0) {
+		if (!usuarioBusiness.checaLogin(usuario)
+				|| usuario.getTipoUsuario() != 0) {
 			Executions.sendRedirect("/index.zul");
 			usuario = new Usuario();
 		}
 	}
-	
+
 	@Command
-	public void abreCadastro(){
+	public void abreCadastro() {
 		Window window = (Window) Executions.createComponents(
-                "/cadastrarUsuario.zul", null, null);
+				"/cadastrarUsuario.zul", null, null);
 		window.doModal();
 	}
-	
+
 	@Command
 	@NotifyChange("usuarios")
 	public void exclui(@BindingParam("usuario") Usuario usuario) {
 		UsuarioBusiness usuarioBusiness = new UsuarioBusiness();
-		if (!usuarioBusiness.usuarioUsado(usuario)){
+		if (!usuarioBusiness.usuarioUsado(usuario)) {
 			usuarioDAO.exclui(usuario);
 			usuarios.remove(usuario);
-		}
-		else{
-			Messagebox.show("Impossível excluir. O professor está associado a alguma turma.");
+		} else {
+			Messagebox
+					.show("Impossível excluir. O professor está associado a alguma turma.");
 		}
 	}
-	
+
 	@Command
-	@NotifyChange({"usuarios","usuario"})
+	@NotifyChange({ "usuarios", "usuario" })
 	public void cadastra() throws HibernateException, Exception {
 		UsuarioBusiness usuarioBusiness = new UsuarioBusiness();
-		if(!usuarioBusiness.cadastroValido(usuario)) {
+		if (!usuarioBusiness.cadastroValido(usuario)) {
 			Messagebox.show("Preencha todos os campos!");
-		}
-		else if(usuarioBusiness.cadastrado(usuario.getEmail(), usuario.getNome())){
+		} else if (usuarioBusiness.cadastrado(usuario.getEmail(),
+				usuario.getNome())) {
 			Messagebox.show("Nome e/ou email já cadastrado!");
-		}
-		else if(usuarioDAO.salvar(usuario)){
-			usuarios.add(usuario);
-			Messagebox.show("Usuario Cadastrado");
-			usuario = new Usuario();
+		} else {
+			if (usuario.getTipoUsuario() == 1)
+				usuario.setCurso(null);
+			if (usuarioDAO.salvar(usuario)) {
+				usuarios.add(usuario);
+				Messagebox.show("Usuario Cadastrado");
+				usuario = new Usuario();
+			}
 		}
 	}
 
@@ -84,44 +96,42 @@ public class UsuariosController extends GenericController {
 		x.detach();
 		Executions.sendRedirect("/usuarios.zul");
 	}
-	
+
 	@Command
 	public void changeEditableStatus(@BindingParam("usuario") Usuario usuario) {
 		usuario.setEditingStatus(!usuario.isEditingStatus());
 		refreshRowTemplate(usuario);
 	}
-	
+
 	public void refreshRowTemplate(Usuario usuario) {
 		BindUtils.postNotifyChange(null, null, usuario, "editingStatus");
 	}
-	
+
 	@Command
-	public void confirm(@BindingParam("usuario") Usuario usuario) throws HibernateException, Exception {
+	public void confirm(@BindingParam("usuario") Usuario usuario)
+			throws HibernateException, Exception {
 		UsuarioBusiness business = new UsuarioBusiness();
-		if (business.cadastroValido(usuario)){
+		if (business.cadastroValido(usuario)) {
 			changeEditableStatus(usuario);
 			UsuarioDAO usuarioDAO = new UsuarioDAO();
 			usuarioDAO.editar(usuario);
 			refreshRowTemplate(usuario);
-		}
-		else {
+		} else {
 			Messagebox.show("Usuário já cadastrado ou inválido");
 		}
 	}
-	
+
 	@Command
-	public void verifica(@BindingParam("tipo") Comboitem tipo, Combobox cmb){
-		podeSelecionar = tipo.getIndex() != 2;
+	public void desabilita(@BindingParam("combobox") Combobox cmb) {
+		if (cmb.getValue().contains("Professor")) {
+			cmbCurso.setDisabled(true);
+			cmbCurso.setValue("Não se aplica");
+		} else {
+			cmbCurso.setDisabled(false);
+			cmbCurso.setValue("");
+		}
 	}
-	
-	public boolean getPodeSelecionar(){
-		return this.podeSelecionar;
-	}
-	
-	public void setPodeSelecionar(boolean podeSelecionar){
-		this.podeSelecionar = podeSelecionar;
-	}
-	
+
 	public Usuario getUsuario() {
 		return usuario;
 	}
@@ -145,4 +155,5 @@ public class UsuariosController extends GenericController {
 	public void setCursos(List<Curso> cursos) {
 		this.cursos = cursos;
 	}
+
 }

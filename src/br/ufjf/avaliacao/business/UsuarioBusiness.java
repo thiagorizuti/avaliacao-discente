@@ -4,8 +4,6 @@ import org.hibernate.HibernateException;
 import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
 
-import br.ufjf.avaliacao.model.Curso;
-import br.ufjf.avaliacao.model.Disciplina;
 import br.ufjf.avaliacao.model.Usuario;
 import br.ufjf.avaliacao.persistent.impl.UsuarioDAO;
 
@@ -45,8 +43,7 @@ public class UsuarioBusiness extends GenericBusiness {
 		}
 		else return false;
 	}
-	
-	
+		
 	public boolean cadastroValido(Usuario usuario){
 		if (usuario.getTipoUsuario()!=null)
 			if (usuario.getTipoUsuario()==1)
