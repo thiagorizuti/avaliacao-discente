@@ -44,7 +44,7 @@ public class Questionario implements Serializable {
 	private String tituloQuestionario;
 	
 	@Column(name = "tipoQuestionario", length = 45, nullable = false)
-	private int tipoQuestionario;
+	private Integer tipoQuestionario;
 	
 	/**
 	 * Campo com a situação do questionário(ativo ou inativo). Relaciona com a
@@ -138,11 +138,11 @@ public class Questionario implements Serializable {
 		this.cursos = cursos;
 	}
 
-	public int getTipoQuestionario() {
+	public Integer getTipoQuestionario() {
 		return tipoQuestionario;
 	}
 
-	public void setTipoQuestionario(int tipoQuestionario) {
+	public void setTipoQuestionario(Integer tipoQuestionario) {
 		this.tipoQuestionario = tipoQuestionario;
 	}
 

@@ -1,12 +1,12 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 <window id="win" title="Criar Questionário" border="normal">
 	<div style="width:650px;" apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('br.ufjf.avaliacao.controller.QuestionariosController')"
-		form="@id('fm') @load(vm.pergunta) @save(vm.pergunta, before='adicionaPergunta')"  id="form">
+		form="@id('fm') @load(vm.questionario) @save(vm.questionario, before='cria')"  id="form">
 			<grid model="@load(vm.perguntas)">
 				<auxhead>
-					<auxheader label="Título:" colspan="2"><textbox value="@bind(vm.questionario.tituloQuestionario)"/></auxheader>
+					<auxheader label="Título:" colspan="2"><textbox value="@bind(fm.tituloQuestionario)"/></auxheader>
 					<auxheader label="Tipo:">
-						<combobox  selectedItem="@bind(vm.questionario.tipoQuestionario)" readonly="true">
+						<combobox  selectedItem="@bind(fm.tipoQuestionario)" readonly="true">
                    	 		<comboitem label="Avaliação de Coordenador" value="0"/>
                    	 		<comboitem label="Avaliação de Professor" value="1"/>
                    	 		<comboitem label="Auto-Avaliação" value="2"/>
@@ -30,14 +30,17 @@
 			   		</row>
 			   	</template>	
 			</grid>
-			<textbox value="@bind(fm.tituloPergunta)"/>
-			<combobox  selectedItem="@bind(fm.tipoPergunta)" readonly="true">
-                   	 	<comboitem label="Texto" value="0"/>
-                   	 	<comboitem label="Escala numérica" value="1"/>
-                   	 	<comboitem label="Escala conceitual" value="2"/>
-                   	 	<comboitem label="Sim/Não" value="3"/>
-            		</combobox>
-			<button label="Adicionar Pergunta" onClick="@command('adicionaPergunta')"/>
+			<div form="@id('fx') @load(vm.pergunta) @save(vm.pergunta, before='adicionaPergunta')" id="form2">
+				<textbox value="@bind(fx.tituloPergunta)" />
+				<combobox selectedItem="@bind(fx.tipoPergunta)"
+					readonly="true">
+					<comboitem label="Texto" value="0" />
+					<comboitem label="Escala numérica" value="1" />
+					<comboitem label="Escala conceitual" value="2" />
+					<comboitem label="Sim/Não" value="3" />
+				</combobox>
+				<button label="Adicionar Pergunta" onClick="@command('adicionaPergunta')" />
+			</div>
 			<separator/>
 			<button label="Crar Questionário" onClick="@command('cria')"/>
 			<button label="Cancelar" onClick="@command('cancela',window=win)"/>

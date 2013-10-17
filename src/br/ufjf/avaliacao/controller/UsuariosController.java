@@ -11,7 +11,6 @@ import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zul.Combobox;
-import org.zkoss.zul.Comboitem;
 import org.zkoss.zul.Window;
 
 import br.ufjf.avaliacao.business.UsuarioBusiness;
