@@ -2,6 +2,7 @@ package br.ufjf.avaliacao.controller;
 
 import org.hibernate.HibernateException;
 import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.Init;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
@@ -15,14 +16,17 @@ public class GenericController {
 	protected Session session = Sessions.getCurrent();
 	protected UsuarioBusiness usuarioBusiness;
 	
-	public void testaLogado() throws HibernateException, Exception {
+	public boolean testaLogado() throws HibernateException, Exception {
 		usuario = (Usuario) session.getAttribute("usuario");
 		usuarioBusiness = new UsuarioBusiness();
 		if (!usuarioBusiness.checaLogin(usuario)) {
 			Executions.sendRedirect("/index.zul");
 			usuario = new Usuario();
+			return false;
 		}
+		return true;
 	}
+	
 	
 	public void testaPermissao(int tipoUsuario) throws HibernateException, Exception {
 		usuario = (Usuario) session.getAttribute("usuario");
@@ -40,12 +44,17 @@ public class GenericController {
 	
 	public String getMenu() {
 		usuario = (Usuario) session.getAttribute("usuario");
+		if (usuario!=null) {
 		int tipoUsuario = usuario.getTipoUsuario();
 		if (tipoUsuario == 0)
 			return "/menuCoordenador.zul";
 		if (tipoUsuario == 1)
 			return "/menuProfessor.zul";
-		return "/menuAluno.zul";
+		if (tipoUsuario == 2)
+			return "/menuAluno.zul";
+		return "/menuAdministrador.zul";
+		}
+		return null;
 	} 
 	
 	@Command

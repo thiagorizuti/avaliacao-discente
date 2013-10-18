@@ -35,13 +35,9 @@ public class TurmasController extends GenericController{
 	
 	
 	@Init
-	public void testaLogado() throws HibernateException, Exception {
-		usuario = (Usuario) session.getAttribute("usuario");
-		usuarioBusiness = new UsuarioBusiness();
-		if (!usuarioBusiness.checaLogin(usuario)|| usuario.getTipoUsuario()!= 0) {
-			Executions.sendRedirect("/index.zul");
-			usuario = new Usuario();
-		}
+	public void init() throws HibernateException, Exception {
+		if(testaLogado())
+			testaPermissao(3);
 	}
 	
 	@Command

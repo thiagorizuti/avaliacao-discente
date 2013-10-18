@@ -1,7 +1,7 @@
 <?page title="Gerenciar Disciplinas" contentType="text/html;charset=UTF-8"?>
 <zk>
 	<div apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('br.ufjf.avaliacao.controller.DisciplinasController')">
-		<include src="/menuCoordenador.zul"/>
+		<include src="@load(vm.menu)"/>
 		<div style="margin-left:15%; width:85%;margin-top:5px;">
 			<grid model="@load(vm.disciplinas) @template(each.editingStatus ? 'editable' : 'noneditable')">
 				<columns>

@@ -2,7 +2,7 @@
 <zk>
 <div apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('br.ufjf.avaliacao.controller.TurmasController')">
 	
-	<include src="/menuCoordenador.zul"/>
+	<include src="@load(vm.menu)"/>
 	
 	<div style="margin-left:15%; width:85%;margin-top:5px;">
 			<grid  model="@load(vm.turmas) @template(each.editingStatus ? 'editable' : 'noneditable')">

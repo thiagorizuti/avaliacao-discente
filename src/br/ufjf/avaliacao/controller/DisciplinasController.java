@@ -24,7 +24,8 @@ public class DisciplinasController extends GenericController{
 		
 		@Init
 		public void init() throws HibernateException, Exception {
-			testaPermissao(0);
+			if(testaLogado())
+				testaPermissao(3);
 		}
 		
 		@Command

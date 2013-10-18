@@ -3,8 +3,10 @@ package br.ufjf.avaliacao.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.HibernateException;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zul.Window;
@@ -24,6 +26,11 @@ public class QuestionariosController extends GenericController{
 	private Pergunta pergunta = new Pergunta();
 	private Questionario questionario = new Questionario();
 	
+	@Init
+	public void init() throws HibernateException, Exception {
+		if(testaLogado())
+			testaPermissao(0);
+	}
 	
 	@Command
 	public void abreJanela(){
