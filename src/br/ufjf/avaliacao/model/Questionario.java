@@ -9,7 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -61,7 +62,7 @@ public class Questionario implements Serializable {
 	 * quando retornarmos o {@link Questionario} .
 	 * 
 	 */
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "questionario")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "questionario")
 	private List<Pergunta> perguntas = new ArrayList<Pergunta>();
 
 	/**
@@ -71,18 +72,19 @@ public class Questionario implements Serializable {
 	 * quando retornarmos o {@link Questionario} .
 	 * 
 	 */
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "questionario")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "questionario")
 	private List<Avaliacao> avaliacoes = new ArrayList<Avaliacao>();
 	
 	/**
-	 * Relacionamento N para N entre questionário e curso. Mapeada em
-	 * {@link Curso} pela variável {@code questionarios} e retorno do tipo
+	 * Relacionamento N para 1 entre questionario e curso. Mapeando
+	 * {@link Curso} na variável {@code curso} e retorno do tipo
 	 * {@code LAZY} que indica que não será carregado automáticamente este dado
-	 * quando retornarmos as {@link Questionario} .
+	 * quando retornarmos o {@link Questionario}.
 	 * 
 	 */
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "questionarios")
-	private List<Curso> cursos = new ArrayList<Curso>();
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "idCurso", nullable = false)
+	private Curso curso;
 	
 	@Transient
 	private String nomeTipoQuestionario;
@@ -130,20 +132,20 @@ public class Questionario implements Serializable {
 		this.avaliacoes = avaliacoes;
 	}
 
-	public List<Curso> getCursos() {
-		return cursos;
-	}
-
-	public void setCursos(List<Curso> cursos) {
-		this.cursos = cursos;
-	}
-
 	public Integer getTipoQuestionario() {
 		return tipoQuestionario;
 	}
 
 	public void setTipoQuestionario(Integer tipoQuestionario) {
 		this.tipoQuestionario = tipoQuestionario;
+	}
+	
+	public Curso getCurso() {
+		return curso;
+	}
+
+	public void setCurso(Curso curso) {
+		this.curso = curso;
 	}
 
 	public String getNomeTipoQuestionario() {

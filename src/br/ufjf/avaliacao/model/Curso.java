@@ -9,9 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -51,14 +49,13 @@ public class Curso implements Serializable{
 	
 	
 	/**
-	 * Relacionamento N para N entre curso e questionário. Mapeando
-	 * {@link Questionario} na variável {@code questionarios} e retorno do tipo
-	 * {@code LAZY} que indica que não será carregado automáticamente este dado
-	 * quando retornarmos o {@link Curso}.
+	 * Relacionamento 1 para N entre curso e questionário. Mapeada em
+	 * {@link Questionario} pela variável {@code curso} e retorno do tipo
+	 * {@code EAGER} que indica que não será carregado automáticamente este dado
+	 * quando retornarmos a {@link Curso} .
 	 * 
 	 */
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "Questionario_has_Curso", joinColumns = { @JoinColumn(name = "idCurso", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "idQuestionario", nullable = false, updatable = false) })
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "curso")
 	private List<Questionario> questionarios = new ArrayList<Questionario>();
 
 
