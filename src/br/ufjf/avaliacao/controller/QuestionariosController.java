@@ -71,6 +71,7 @@ public class QuestionariosController extends GenericController{
 	@Command
 	@NotifyChange({"perguntas","questionario"})
 	public void cria(){
+		questionario.setCurso(usuario.getCurso());
 		questionarioDAO.salvar(questionario);
 		for (Pergunta pergunta : perguntas){
 			pergunta.setQuestionario(questionario);
@@ -80,6 +81,41 @@ public class QuestionariosController extends GenericController{
 		perguntas = new ArrayList<Pergunta>();
 	}
 	
+	@Command
+	@NotifyChange({"perguntas","pergunta"})
+	public void top(@BindingParam("pergunta")Pergunta pergunta){
+		int index = perguntas.indexOf(pergunta);
+		Pergunta aux = perguntas.get(0);
+		perguntas.set(0, pergunta);
+		perguntas.set(index,aux);
+	}
+	
+	@Command
+	@NotifyChange("perguntas")
+	public void down(@BindingParam("pergunta")Pergunta pergunta){
+		int index = perguntas.indexOf(pergunta);
+		Pergunta aux = perguntas.get(index+1);
+		perguntas.set(index+1, pergunta);
+		perguntas.set(index,aux);
+	}
+	
+	@Command
+	@NotifyChange({"perguntas","pergunta"})
+	public void up(@BindingParam("pergunta")Pergunta pergunta){
+		int index = perguntas.indexOf(pergunta);
+		Pergunta aux = perguntas.get(index-1);
+		perguntas.set(index-1, pergunta);
+		perguntas.set(index,aux);
+	}
+	
+	@Command
+	@NotifyChange({"perguntas","pergunta"})
+	public void bottom(@BindingParam("pergunta")Pergunta pergunta){
+		int index = perguntas.indexOf(pergunta);
+		Pergunta aux = perguntas.get(perguntas.size()-1);
+		perguntas.set(perguntas.size()-1, pergunta);
+		perguntas.set(index,aux);
+	}
 	
 	public List<Pergunta> getPerguntas() {
 		return perguntas;
