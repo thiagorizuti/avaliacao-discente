@@ -21,7 +21,7 @@ public class QuestionariosController extends GenericController{
 	
 	QuestionarioDAO questionarioDAO = new QuestionarioDAO();
 	PerguntaDAO perguntaDAO = new PerguntaDAO();
-	List<Questionario> questionarios = (List<Questionario>) questionarioDAO.procuraTodos(Questionario.class, -1, -1);
+	List<Questionario> questionarios = (List<Questionario>) questionarioDAO.retornaQuestinariosCurso(usuario.getCurso());
 	private List<Pergunta> perguntas = new ArrayList<Pergunta>();
 	private Pergunta pergunta = new Pergunta();
 	private Questionario questionario = new Questionario();

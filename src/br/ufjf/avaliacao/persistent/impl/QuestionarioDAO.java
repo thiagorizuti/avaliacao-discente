@@ -14,7 +14,7 @@ public class QuestionarioDAO extends GenericoDAO implements IQuestionarioDAO {
 	@SuppressWarnings("unchecked")
 	public List<Questionario> retornaQuestinariosCurso(Curso curso) {
 	try {
-			Query query = getSession().createQuery("SELECT questionario FROM Questionario AS questionario WHERE questionario.curso = :curso");
+			Query query = getSession().createQuery("SELECT q FROM Questionario AS q WHERE q.curso = :curso");
 			query.setParameter("curso", curso);
 			
 			List<Questionario> questionarios = query.list();
