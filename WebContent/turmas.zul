@@ -1,17 +1,17 @@
-<?page title="Gerenciar Turmas" contentType="text/html;charset=UTF-8"?>
+<?page title="Sistema de Avaliação Discente - Gerenciar Turmas" contentType="text/html;charset=UTF-8"?>
 <zk>
 <div apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('br.ufjf.avaliacao.controller.TurmasController')">
 	
 	<include src="@load(vm.menu)"/>
 	
 	<div style="margin-left:15%; width:85%;margin-top:5px;">
-			<grid  model="@load(vm.turmas) @template(each.editingStatus ? 'editable' : 'noneditable')">
+			<grid model="@load(vm.turmas) @template(each.editingStatus ? 'editable' : 'noneditable')">
 				<columns>
-			    		<column label="Semestre" align="center" sort="auto(semestre)" />
+			    		<column style="width:120px;" label="Semestre" align="center" sort="auto(semestre)" />
 			        	<column label="Disciplina" align="center" sort="auto(disciplina.nomeDisciplina)" />
-			        	<column label="Turma" align="center" sort="auto(letraTurma)" />
+			        	<column style="width:90px;" label="Turma" align="center" sort="auto(letraTurma)" />
 			        	<column label="Professor" align="center" sort="auto(professor.nome)" />
-			        	<column label="Opções" align="center" />
+			        	<column style="width:90px;" label="Opções" align="center" />
 			   	</columns>
 				<template name="editable">
 			            <row>
@@ -45,8 +45,8 @@
 			               	<label value="@bind(each.letraTurma)"/>
 			               	<label value="@load(each.professor.nome)"/>
 			               	<div>
-			               		<button label="Editar" onClick="@command('changeEditableStatus', turma=each)" />
-			              		<button label="Excluir" onClick="@command('exclui', turma=each)"/>
+			               		<button image="/img/edit.png" onClick="@command('changeEditableStatus', turma=each)" />
+			              		<button image="/img/delete.png" onClick="@command('exclui', turma=each)"/>
 			               	</div>
 			            </row>
 			    </template>	

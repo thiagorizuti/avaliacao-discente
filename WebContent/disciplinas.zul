@@ -1,4 +1,4 @@
-<?page title="Gerenciar Disciplinas" contentType="text/html;charset=UTF-8"?>
+<?page title="Sistema de Avaliação Discente - Gerenciar Disciplinas" contentType="text/html;charset=UTF-8"?>
 <zk>
 	<div apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('br.ufjf.avaliacao.controller.DisciplinasController')">
 		<include src="@load(vm.menu)"/>
@@ -6,8 +6,8 @@
 			<grid model="@load(vm.disciplinas) @template(each.editingStatus ? 'editable' : 'noneditable')">
 				<columns>
 						<column style="width:150px;" label="Código" align="center" sort="auto(codDisciplina)" />
-			        	<column style="width:350px;" label="Disciplina" align="center" sort="auto(nomeDisciplina)" />
-			        	<column style="width:200px;" label="Opções" align="center" />
+			        	<column label="Disciplina" align="center" sort="auto(nomeDisciplina)" />
+			        	<column style="width:100px;" label="Opções" align="center" />
 			   	</columns>
 				<template name="editable">
 			            <row>
@@ -24,8 +24,8 @@
 			    		<label value="@load(each.codDisciplina)" />
 			    		<label value="@load(each.nomeDisciplina)" />
 			    		<div>
-			    			<button label="Editar" onClick="@command('changeEditableStatus', disciplina=each)" />
-			    			<button label="Excluir" onClick="@command('exclui', disciplina=each)" />
+			    			<button image="/img/edit.png" onClick="@command('changeEditableStatus', disciplina=each)" />
+			    			<button image="/img/delete.png" onClick="@command('exclui', disciplina=each)" />
 			    		</div>
 			    	</row>			    
 			    </template>

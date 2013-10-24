@@ -62,7 +62,7 @@ public class Questionario implements Serializable {
 	 * quando retornarmos o {@link Questionario} .
 	 * 
 	 */
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "questionario")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "questionario")
 	private List<Pergunta> perguntas = new ArrayList<Pergunta>();
 
 	/**

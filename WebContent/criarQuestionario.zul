@@ -1,6 +1,6 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 <window id="win" title="Criar Questionário" border="normal">
-	<div style="width:650px;" apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('br.ufjf.avaliacao.controller.QuestionariosController')"
+	<div style="width:800px;" apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('br.ufjf.avaliacao.controller.QuestionariosController')"
 		form="@id('fm') @load(vm.questionario) @save(vm.questionario, before='cria')"  id="form">
 			<grid model="@load(vm.perguntas)">
 				<auxhead>
@@ -26,11 +26,13 @@
 			   		<row>
 			   			<label value="@load(each.tituloPergunta)"/>
 			   			<label value="@load(each.nomeTipoPergunta)"/>
-			   			<div>
-			   				<button label="Excluir" onClick="@command('excluiPergunta',pergunta=each)"/>
+			   			<div style="text-align:center">
+			   				<button image="/img/delete.png" onClick="@command('excluiPergunta',pergunta=each)"/>
 			   				<button label="top" onClick="@command('top',pergunta=each)"/>
-			   				<button label="up" onClick="@command('up',pergunta=each)"/>
-			   				<button label="down" onClick="@command('down',pergunta=each)" />
+			   				<button image="/img/up.png" onClick="@command('up',pergunta=each)"
+			   				disabled="@load(not (forEachStatus.index eq forEachStatus.begin) ? 'false' : 'true')" />
+			   				<button image="/img/down.png" onClick="@command('down',pergunta=each)" 
+			   				disabled="@load(not (forEachStatus.index + 1 eq forEachStatus.end) ? 'false' : 'true')"/>
 			   				<button label="bottom" onClick="@command('bottom',pergunta=each)" />
 			   			</div>	
 			   		</row>

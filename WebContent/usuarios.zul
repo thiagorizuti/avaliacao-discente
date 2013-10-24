@@ -1,4 +1,4 @@
-<?page title="Gerenciar Usuários" contentType="text/html;charset=UTF-8"?>
+<?page title="Sistema de Avaliação Discente - Gerenciar Usuários" contentType="text/html;charset=UTF-8"?>
 <zk>
 <div apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('br.ufjf.avaliacao.controller.UsuariosController')">
 	
@@ -9,9 +9,9 @@
 				<columns>
 						<column label="Nome" align="center" sort="auto(nome)" />
 			        	<column label="Email" align="center" sort="auto(email)" />
-			        	<column label="Curso" align="center" sort="auto(curso.nomeCurso)" />
-			        	<column label="Tipo de Usuário" align="center" sort="auto(tipoUsuario)" />
-			        	<column label="Opções" align="center" />
+			        	<column style="width:170px" label="Curso" align="center" sort="auto(curso.nomeCurso)" />
+			        	<column style="width:120px" label="Tipo de Usuário" align="center" sort="auto(tipoUsuario)" />
+			        	<column style="width:100px" label="Opções" align="center" />
 			   	</columns>
 			   	<template name="editable">
 			   			<row>
@@ -40,8 +40,8 @@
 			               	<label value="@load(each.curso.nomeCurso)" />
 			               	<label value="@load(each.nomeTipoUsuario)" />
 			               	<div>
-			               		<button label="Editar" onClick="@command('changeEditableStatus', usuario=each)" />
-			              		<button label="Excluir" onClick="@command('exclui', usuario=each)" />
+			               		<button image="/img/edit.png" onClick="@command('changeEditableStatus', usuario=each)" />
+			              		<button image="/img/delete.png" onClick="@command('exclui', usuario=each)" />
 			               	</div>
 			            </row>
 			    </template>
