@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.hibernate.Query;
 
+import br.ufjf.avaliacao.model.Turma;
 import br.ufjf.avaliacao.model.Usuario;
 import br.ufjf.avaliacao.persistent.GenericoDAO;
 import br.ufjf.avaliacao.persistent.IUsuarioDAO;
+
 
 public class UsuarioDAO extends GenericoDAO implements IUsuarioDAO {
 	
@@ -96,4 +98,24 @@ public class UsuarioDAO extends GenericoDAO implements IUsuarioDAO {
 		}
 		return null;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Usuario> retornaProfessoresTurma(Turma turma) {
+		try {
+			Query query = getSession().createQuery("SELECT u FROM Usuario AS u LEFT JOIN FETCH u.curso WHERE u.turma = :turma AND u.tipoUsuario = :tipoUsuario");
+			query.setParameter("turma", turma);
+			query.setParameter("tipoUsuario", 1);
+			
+			List<Usuario> professores = query.list();
+			getSession().close();
+			if (professores!=null)
+				return professores;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	
+	
 }

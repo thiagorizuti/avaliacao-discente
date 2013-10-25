@@ -38,7 +38,7 @@ public class TurmaDAO extends GenericoDAO implements ITurmaDAO {
 	public List<Turma> getTodasTurmas(){
 		try {
 			Query query = 
-					getSession().createQuery("SELECT t FROM Turma AS t LEFT JOIN FETCH t.professor JOIN FETCH t.disciplina");
+					getSession().createQuery("SELECT t FROM Turma AS t LEFT JOIN FETCH t.usuarios JOIN FETCH t.disciplina");
 			List<Turma> turmas = query.list();
 			
 			getSession().close();
@@ -50,4 +50,8 @@ public class TurmaDAO extends GenericoDAO implements ITurmaDAO {
 		}
 		return null;
 	}
+	
+
+	
+	
 }

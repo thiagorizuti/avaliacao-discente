@@ -2,6 +2,7 @@ package br.ufjf.avaliacao.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -86,11 +87,26 @@ public class Questionario implements Serializable {
 	@JoinColumn(name = "idCurso", nullable = false)
 	private Curso curso;
 	
+	@Column(name = "dataInicial", nullable = false)
+	private Calendar dataInicial;
+	
+	@Column(name = "dataFinal", nullable = false)
+	private Calendar dataFinal;
+	
 	@Transient
 	private String nomeTipoQuestionario;
 	
 	@Transient
 	private boolean editingStatus;
+	
+	@Transient
+	private String status;
+	
+	@Transient
+	private String dataFinalFormatada;
+	
+	@Transient
+	private String dataInicialFormatada;
 	
 	public int getIdQuestionario() {
 		return idQuestionario;
@@ -171,6 +187,56 @@ public class Questionario implements Serializable {
 		this.editingStatus = editingStatus;
 	}
 
+	public Calendar getDataInicial() {
+		return dataInicial;
+	}
+
+	public void setDataInicial(Calendar dataInicial) {
+		this.dataInicial = dataInicial;
+	}
+
+	public Calendar getDataFinal() {
+		return dataFinal;
+	}
+
+	public void setDataFinal(Calendar dataFinal) {
+		this.dataFinal = dataFinal;
+	}
+
+	public String getStatus() {
+		if(isAtivo()){
+			return"Ativo";
+		}
+		return "Inativo";
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
+	public String getDataFormatada(Calendar calendar){
+		return (calendar.get(Calendar.DAY_OF_MONTH)+"/"+calendar.get(Calendar.MONTH)+"/"+calendar.get(Calendar.YEAR));
+	}
+
+	public String getDataFinalFormatada() {
+		return (dataFinal.get(Calendar.DAY_OF_MONTH)+"/"+dataFinal.get(Calendar.MONTH)+"/"+dataFinal.get(Calendar.YEAR));
+	}
+
+	public void setDataFinalFormatada(String dataFinalFormatada) {
+		this.dataFinalFormatada = dataFinalFormatada;
+	}
+
+	public String getDataInicialFormatada() {
+		return (dataInicial.get(Calendar.DAY_OF_MONTH)+"/"+dataInicial.get(Calendar.MONTH)+"/"+dataInicial.get(Calendar.YEAR));
+	}
+
+	public void setDataInicialFormatada(String dataInicialFormatada) {
+		this.dataInicialFormatada = dataInicialFormatada;
+	}
+	
+	
+	
+	
 	
 		
 }

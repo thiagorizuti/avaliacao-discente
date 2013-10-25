@@ -17,4 +17,5 @@ public interface IUsuarioDAO {
 	public List<Usuario> retornaProfessores();
 
 	public List<Usuario> getTodosUsuarios();
+
 }

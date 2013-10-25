@@ -10,12 +10,16 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
+
+import br.ufjf.avaliacao.persistent.impl.UsuarioDAO;
 
 
 /**
@@ -61,17 +65,6 @@ public class Turma implements Serializable{
 	private String semestre;
 	
 	/**
-	 * Relacionamento N para 1 entre turma e usuário Mapeando
-	 * {@link Usuario} na variável {@code professor} e retorno do tipo
-	 * {@code LAZY} que indica que não será carregado automáticamente este dado
-	 * quando retornarmos o {@link Turma}.
-	 * 
-	 */
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "idUsuario", nullable = false)
-	private Usuario professor;
-	
-	/**
 	 * Relacionamento N para 1 entre turma e disciplina. Mapeando
 	 * {@link Disciplina} na variável {@code disciplina} e retorno do tipo
 	 * {@code EAGER} que indica que será carregado automáticamente este dado
@@ -82,7 +75,6 @@ public class Turma implements Serializable{
 	@JoinColumn(name = "idDisciplina", nullable = false)
 	private Disciplina disciplina;
 
-	
 	/**
 	 * Relacionamento 1 para N entre turma e avaliação. Mapeada em
 	 * {@link Avaliaçao} pela variável {@code turma} e retorno do tipo
@@ -93,8 +85,25 @@ public class Turma implements Serializable{
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "turma")
 	private List<Avaliacao> avaliacoes = new ArrayList<Avaliacao>();
 	
+	/**
+	 * Relacionamento N para N entre turma e usuário. Mapeando
+	 * {@link Usuario} na variável {@code turmas} e retorno do tipo
+	 * {@code LAZY} que indica que não será carregado automáticamente este dado
+	 * quando retornarmos o {@link Turma}.
+	 * 
+	 */
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "Usuario_has_Turma", joinColumns = { @JoinColumn(name = "idTurma", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "idUsuario", nullable = false, updatable = false) })
+	private List<Usuario> usuarios = new ArrayList<Usuario>();
+	
 	@Transient
 	private boolean editingStatus;
+	
+	@Transient
+	private String professor;
+	
+	@Transient 
+	private List<Usuario> professores = new ArrayList<Usuario>();
 
 	public int getIdTurma() {
 		return idTurma;
@@ -120,11 +129,13 @@ public class Turma implements Serializable{
 		this.semestre = semestre;
 	}
 
-	public Usuario getProfessor() {
+	public String getProfessor(){
+		for (int i=0;i<professores.size();i++)
+			professor = professores.get(i).getNome();
 		return professor;
 	}
 
-	public void setProfessor(Usuario professor) {
+	public void setProfessor(String professor) {
 		this.professor = professor;
 	}
 
@@ -150,6 +161,24 @@ public class Turma implements Serializable{
 
 	public void setEditingStatus(boolean editingStatus) {
 		this.editingStatus = editingStatus;
+	}
+
+	public List<Usuario> getUsuarios() {
+		return usuarios;
+	}
+
+	public void setUsuarios(List<Usuario> usuarios) {
+		this.usuarios = usuarios;
+	}
+
+	public List<Usuario> getProfessores() {
+		UsuarioDAO usuarioDAO = new UsuarioDAO();
+		professores = usuarioDAO.retornaProfessoresTurma(this);
+		return professores;
+	}
+
+	public void setProfessores(List<Usuario> professores) {
+		this.professores = professores;
 	}
 	
 	

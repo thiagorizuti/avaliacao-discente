@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -96,13 +97,13 @@ public class Usuario implements Serializable{
 	private List<Avaliacao> avaliacoes = new ArrayList<Avaliacao>();
 	
 	/**
-	 * Relacionamento 1 para N entre usuário e turma. Mapeada em
-	 * {@link Turma} pela variável {@code usuario} e retorno do tipo
-	 * {@code EAGER} que indica que não será carregado automáticamente este dado
-	 * quando retornarmos o {@link Usuario} .
+	 * Relacionamento N para N entre usuário e turma. Mapeada em
+	 * {@link Turma} pela variável {@code usuários} e retorno do tipo
+	 * {@code LAZY} que indica que não será carregado automáticamente este dado
+	 * quando retornarmos as {@link Usuario} .
 	 * 
 	 */
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "professor")
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "usuarios")
 	private List<Turma> turmas = new ArrayList<Turma>();
 	
 	@Transient
@@ -198,6 +199,8 @@ public class Usuario implements Serializable{
 	public void setIdUsuario(Integer idUsuario) {
 		this.idUsuario = idUsuario;
 	}
+	
+	
 	
 	
 }

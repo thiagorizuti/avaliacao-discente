@@ -28,5 +28,24 @@ public class QuestionarioDAO extends GenericoDAO implements IQuestionarioDAO {
 		}
 		return null;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Questionario> retornaQuestinariosCursoTipo(Curso curso, Integer tipoQuestionario) {
+	try {
+			Query query = getSession().createQuery("SELECT q FROM Questionario AS q WHERE q.curso = :curso AND q.tipoQuestionario = :tipoQuestionario");
+			query.setParameter("curso", curso);
+			query.setParameter("tipoQuestionario", tipoQuestionario);
+			
+			List<Questionario> questionarios = query.list();
+			
+			getSession().close();
+			
+			if (questionarios!=null)
+				return questionarios;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }
 
