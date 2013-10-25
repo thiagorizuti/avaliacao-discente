@@ -27,4 +27,20 @@ public class CursoDAO extends GenericoDAO implements ICursoDAO {
 		}
 		return null;
 	}
+	
+	public Curso getCursoNome(String nomeCurso) {
+		try {
+			Query query = getSession().createQuery("SELECT c FROM Curso AS c WHERE c.nomeCurso = :nomeCurso");
+			query.setParameter("nomeCurso", nomeCurso);
+						
+			Curso curso = (Curso) query.uniqueResult();
+			getSession().close();
+			
+			if(curso!=null)
+				return curso;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }
