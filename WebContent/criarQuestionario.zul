@@ -5,13 +5,21 @@
 			<grid model="@load(vm.perguntas)">
 				<auxhead>
 					<auxheader label="Título:" colspan="2"><textbox value="@bind(fm.tituloQuestionario)"/></auxheader>
+				</auxhead>
+				<auxhead>	
 					<auxheader label="Tipo:">
 						<combobox  selectedItem="@bind(fm.tipoQuestionario)" readonly="true">
                    	 		<comboitem label="Avaliação de Coordenador" value="0"/>
                    	 		<comboitem label="Avaliação de Professor" value="1"/>
                    	 		<comboitem label="Auto-Avaliação" value="2"/>
                    	 		<comboitem label="Avaliação de Infraestrutura" value="3"/>
-            		</combobox>
+            			</combobox>
+            		</auxheader>
+            		<auxheader label="Data Incial:">
+            		 	<datebox value="@bind(fm.dataInicial)" format="dd/MM/yyyy" width="150px" constraint="no past"/>
+            		</auxheader>
+            		<auxheader label="Data Final:">
+            			 <datebox value="@bind(fm.dataFinal)" format="dd/MM/yyyy" width="150px"  constraint="no past"/>
             		</auxheader>
 				</auxhead>
 				<auxhead>
@@ -50,7 +58,9 @@
 				<button label="Adicionar Pergunta" onClick="@command('adicionaPergunta')" />
 			</div>
 			<separator/>
-			<button label="Crar Questionário" onClick="@command('cria')"/>
+			<checkbox label="Definir como ativo" checked="@bind(vm.ativo)" />
+			<separator/>
+			<button label="Criar Questionário" onClick="@command('cria')"/>
 			<button label="Cancelar" onClick="@command('cancela',window=win)"/>
 	</div>
 </window>

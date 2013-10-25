@@ -21,7 +21,12 @@ public class QuestionariosController extends GenericController{
 	
 	QuestionarioDAO questionarioDAO = new QuestionarioDAO();
 	PerguntaDAO perguntaDAO = new PerguntaDAO();
-	List<Questionario> questionarios = (List<Questionario>) questionarioDAO.retornaQuestinariosCurso(usuario.getCurso());
+	List<Questionario> questionarios;
+	List<Questionario> questionariosCoord = questionarioDAO.retornaQuestinariosCursoTipo(usuario.getCurso(),0);
+	List<Questionario> questionariosProf = questionarioDAO.retornaQuestinariosCursoTipo(usuario.getCurso(),1);
+	List<Questionario> questionariosAuto = questionarioDAO.retornaQuestinariosCursoTipo(usuario.getCurso(),2);
+	List<Questionario> questionariosInfra = questionarioDAO.retornaQuestinariosCursoTipo(usuario.getCurso(),3);
+	boolean ativo;
 	private List<Pergunta> perguntas = new ArrayList<Pergunta>();
 	private Pergunta pergunta = new Pergunta();
 	private Questionario questionario = new Questionario();
@@ -53,12 +58,13 @@ public class QuestionariosController extends GenericController{
 	}
 	
 	@Command
-	@NotifyChange({"questionarios","questionario"})
+	@NotifyChange({"questionariosCoord","questionariosProf","questionariosAuto","questionariosInfra","questionario"})
 	public void exclui(@BindingParam("questionario")Questionario questionario){
-		perguntas = questionario.getPerguntas();
-		perguntaDAO	.excluiLista(perguntas);	
-		questionarioDAO.exclui(questionario);
-		questionarios.remove(questionario);
+			perguntas = questionario.getPerguntas();
+			perguntaDAO	.excluiLista(perguntas);	
+			questionarioDAO.exclui(questionario);
+			listaQuestionarios(questionario.getTipoQuestionario()).remove(questionario);
+			
 	}
 
 	@Command
@@ -72,12 +78,20 @@ public class QuestionariosController extends GenericController{
 	@NotifyChange({"perguntas","questionario"})
 	public void cria(){
 		questionario.setCurso(usuario.getCurso());
+		if (isAtivo()){
+			for (Questionario q : listaQuestionarios(questionario.getTipoQuestionario())){
+				q.setAtivo(false);
+				questionarioDAO.editar(q);
+			}
+			questionario.setAtivo(true);
+		}
 		questionarioDAO.salvar(questionario);
 		for (Pergunta pergunta : perguntas){
 			pergunta.setQuestionario(questionario);
 		}
 		perguntaDAO.salvarLista(perguntas);
 		questionario = new Questionario();
+		pergunta = new Pergunta();
 		perguntas = new ArrayList<Pergunta>();
 	}
 	
@@ -117,6 +131,18 @@ public class QuestionariosController extends GenericController{
 		perguntas.set(index,aux);
 	}
 	
+	@Command
+	@NotifyChange({"questionariosCoord","questionariosProf","questionariosAuto","questionariosInfra","questionario"})
+	public void ativa(@BindingParam("questionario")Questionario questionario){
+		for (Questionario q : listaQuestionarios(questionario.getTipoQuestionario())){
+				if (q.equals(questionario))
+					q.setAtivo(true);
+				else q.setAtivo(false);
+				questionarioDAO.editar(q);
+		}
+	}
+	
+	
 	public List<Pergunta> getPerguntas() {
 		return perguntas;
 	}
@@ -141,8 +167,15 @@ public class QuestionariosController extends GenericController{
 		this.questionarioDAO = questionarioDAO;
 	}
 	
-	public List<Questionario> getQuestionarios() {
-		return questionarios;
+	public List<Questionario> listaQuestionarios(Integer tipoQuestionario) {
+		if (tipoQuestionario == 0)
+			return questionariosCoord;
+		else if (tipoQuestionario == 1)
+			return questionariosProf;
+		else if (tipoQuestionario == 2)
+			return questionariosAuto;
+		else
+			return questionariosInfra;
 	}
 	
 	public void setQuestionarios(List<Questionario> questionarios) {
@@ -156,6 +189,54 @@ public class QuestionariosController extends GenericController{
 	public void setQuestionario(Questionario questionario) {
 		this.questionario = questionario;
 	}
+
+	public List<Questionario> getQuestionariosCoord() {
+		return questionariosCoord;
+	}
+
+	public void setQuestionariosCoord(List<Questionario> questionariosCoord) {
+		this.questionariosCoord = questionariosCoord;
+	}
+
+	public List<Questionario> getQuestionariosProf() {
+		return questionariosProf;
+	}
+
+	public void setQuestionariosProf(List<Questionario> questionariosProf) {
+		this.questionariosProf = questionariosProf;
+	}
+
+	public List<Questionario> getQuestionariosAuto() {
+		return questionariosAuto;
+	}
+
+	public void setQuestionariosAuto(List<Questionario> questionariosAuto) {
+		this.questionariosAuto = questionariosAuto;
+	}
+
+	public List<Questionario> getQuestionariosInfra() {
+		return questionariosInfra;
+	}
+
+	public void setQuestionariosInfra(List<Questionario> questionariosInfra) {
+		this.questionariosInfra = questionariosInfra;
+	}
+
+	public List<Questionario> getQuestionarios() {
+		return questionarios;
+	}
+
+	public boolean isAtivo() {
+		return ativo;
+	}
+	
+	@Command
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
+	}
+	
+	
+	
 	
 	
 	

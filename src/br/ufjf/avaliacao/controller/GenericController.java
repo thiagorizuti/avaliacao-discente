@@ -16,6 +16,7 @@ public class GenericController {
 	protected Usuario usuario = (Usuario) session.getAttribute("usuario");
 	protected UsuarioBusiness usuarioBusiness;
 	
+	
 	public boolean testaLogado() throws HibernateException, Exception {
 		usuario = (Usuario) session.getAttribute("usuario");
 		usuarioBusiness = new UsuarioBusiness();
