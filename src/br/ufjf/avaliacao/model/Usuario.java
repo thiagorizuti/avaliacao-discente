@@ -112,6 +112,20 @@ public class Usuario implements Serializable{
 	@Transient
 	private boolean editingStatus;
 	
+	
+	public Usuario() {
+		
+	}
+
+	public Usuario(String nome, String email, String senha, Curso curso,
+			Integer tipoUsuario) {
+		this.nome = nome;
+		this.email = email;
+		this.senha = senha;
+		this.curso = curso;
+		this.tipoUsuario = tipoUsuario;
+	}
+
 	public int getIdUsuario() {
 		return idUsuario;
 	}

@@ -1,5 +1,8 @@
 package br.ufjf.avaliacao.controller;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.HibernateException;
@@ -8,8 +11,11 @@ import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
+import org.zkoss.util.media.Media;
 import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.event.UploadEvent;
+import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Window;
 
@@ -24,7 +30,8 @@ public class UsuariosController extends GenericController {
 	private UsuarioDAO usuarioDAO = new UsuarioDAO();
 	private Usuario usuario = new Usuario();
 	private CursoDAO cursoDAO = new CursoDAO();
-	private List<Usuario> usuarios = (List<Usuario>) usuarioDAO.getTodosUsuarios();
+	private List<Usuario> usuarios = (List<Usuario>) usuarioDAO
+			.getTodosUsuarios();
 	private List<Curso> cursos = (List<Curso>) cursoDAO.getTodosCursos();
 	private Combobox cmbCurso;
 
@@ -122,6 +129,42 @@ public class UsuariosController extends GenericController {
 		} else {
 			cmbCurso.setDisabled(false);
 			cmbCurso.setValue("");
+		}
+	}
+
+	@Command
+	public void desabilitarEdicao(@BindingParam("combo") Combobox cmb) {
+		((Combobox) cmb.getPreviousSibling()).setDisabled(cmb.getValue()
+				.contains("Professor"));
+	}
+
+	@Command("upload")
+	@NotifyChange({ "usuarios", "usuario" })
+	public void upload(@BindingParam("evt") UploadEvent evt) {
+		Media media = evt.getMedia();
+		if (!media.getName().contains(".csv")) {
+			Messagebox
+					.show("Este não é um arquivo válido! Apenas CSV são aceitos.");
+			return;
+		}
+		try {
+			BufferedReader in = new BufferedReader(media.getReaderData());
+			String linha;
+			Usuario usuario;
+			CursoDAO cursoDAO = new CursoDAO();
+			List<Usuario> usuarios = new ArrayList<Usuario>();
+			while ((linha = in.readLine()) != null) {
+				String conteudo[] = linha.split(";");
+				usuario = new Usuario(conteudo[0], conteudo[1], "12345",
+						cursoDAO.getCursoNome(conteudo[2]),
+						Integer.parseInt(conteudo[3]));
+				usuarios.add(usuario);
+			}			
+			if (usuarioDAO.salvarLista(usuarios))
+				Messagebox.show("Usuarios cadastrados com sucesso");
+
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 

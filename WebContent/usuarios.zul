@@ -35,8 +35,8 @@
 									label="@load(each.nomeCurso)" />
 							</template>
 						</combobox>
-						<combobox readonly="true" width="150px"
-							value="@load(each.nomeTipoUsuario)"
+						<combobox readonly="true" width="150px" onSelected="@command('desabilitarEdicao', combo=self)"
+							value="@load(each.nomeTipoUsuario)" onCreate="@command('desabilitarEdicao', combo=self)"
 							selectedItem="@load(each.nomeTipoUsuario) @save(each.tipoUsuario, before='confirm')">
 							<comboitem label="Aluno" value="2" />
 							<comboitem label="Coordenador" value="0" />
@@ -68,6 +68,8 @@
 			<div align="center">
 				<button label="Cadastrar novo usuário"
 					onClick="@command('abreCadastro')" />
+				<button upload="true" label="Cadastrar usuarios por arquivo CSV"
+					onUpload="@command('upload', evt=event)" />
 			</div>
 		</div>
 
