@@ -65,6 +65,16 @@ public class Disciplina implements Serializable{
 	@Transient
 	private boolean editingStatus;
 	
+	public Disciplina() {
+		
+	}
+	
+	public Disciplina(String codDisciplina, String nomeDisciplina) {
+		super();
+		this.nomeDisciplina = nomeDisciplina;
+		this.codDisciplina = codDisciplina;
+	}
+
 	public int getIdDisciplina() {
 		return idDisciplina;
 	}

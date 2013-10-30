@@ -1,5 +1,8 @@
 package br.ufjf.avaliacao.controller;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.HibernateException;
@@ -8,13 +11,16 @@ import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
+import org.zkoss.util.media.Media;
 import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.event.UploadEvent;
+import org.zkoss.zul.Messagebox.ClickEvent;
 import org.zkoss.zul.Window;
 
+import br.ufjf.avaliacao.business.DisciplinaBusiness;
 import br.ufjf.avaliacao.model.Disciplina;
 import br.ufjf.avaliacao.persistent.impl.DisciplinaDAO;
-import br.ufjf.avaliacao.business.DisciplinaBusiness;
 
 public class DisciplinasController extends GenericController{
 	
@@ -97,6 +103,39 @@ public class DisciplinasController extends GenericController{
 			Executions.sendRedirect("/disciplinas.zul");
 		}
 		
+		@Command("upload")
+		public void upload(@BindingParam("evt") UploadEvent evt) {
+			Media media = evt.getMedia();
+			if (!media.getName().contains(".csv")) {
+				Messagebox
+						.show("Este não é um arquivo válido! Apenas CSV são aceitos.");
+				return;
+			}
+			try {
+				BufferedReader in = new BufferedReader(media.getReaderData());
+				String linha;
+				Disciplina disciplina;
+				List<Disciplina> disciplinas = new ArrayList<Disciplina>();
+				while ((linha = in.readLine()) != null) {
+					String conteudo[] = linha.split(";");
+					disciplina = new Disciplina(conteudo[0],conteudo[1]);
+					disciplinas.add(disciplina);
+				}
+				if (disciplinaDAO.salvarLista(disciplinas))
+					Messagebox.show("Disciplinas cadastradas com sucesso", null,
+							new org.zkoss.zk.ui.event.EventListener<ClickEvent>() {
+						public void onEvent(ClickEvent e) {
+							if (e.getButton() == Messagebox.Button.OK)
+								Executions.sendRedirect(null);
+							else
+								Executions.sendRedirect(null);
+						}
+					});
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 		
 		public List<Disciplina> getDisciplinas() {
 			return disciplinas;

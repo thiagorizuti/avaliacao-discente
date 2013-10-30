@@ -15,8 +15,8 @@ import org.zkoss.util.media.Media;
 import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.UploadEvent;
-import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
+import org.zkoss.zul.Messagebox.ClickEvent;
 import org.zkoss.zul.Window;
 
 import br.ufjf.avaliacao.business.UsuarioBusiness;
@@ -139,7 +139,6 @@ public class UsuariosController extends GenericController {
 	}
 
 	@Command("upload")
-	@NotifyChange({ "usuarios", "usuario" })
 	public void upload(@BindingParam("evt") UploadEvent evt) {
 		Media media = evt.getMedia();
 		if (!media.getName().contains(".csv")) {
@@ -159,9 +158,17 @@ public class UsuariosController extends GenericController {
 						cursoDAO.getCursoNome(conteudo[2]),
 						Integer.parseInt(conteudo[3]));
 				usuarios.add(usuario);
-			}			
+			}
 			if (usuarioDAO.salvarLista(usuarios))
-				Messagebox.show("Usuarios cadastrados com sucesso");
+				Messagebox.show("Usuarios cadastrados com sucesso", null,
+						new org.zkoss.zk.ui.event.EventListener<ClickEvent>() {
+					public void onEvent(ClickEvent e) {
+						if (e.getButton() == Messagebox.Button.OK)
+							Executions.sendRedirect(null);
+						else
+							Executions.sendRedirect(null);
+					}
+				});
 
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -68,7 +68,7 @@
 			<div align="center">
 				<button label="Cadastrar novo usuário"
 					onClick="@command('abreCadastro')" />
-				<button upload="true" label="Cadastrar usuarios por arquivo CSV"
+				<button upload="true" label="Cadastrar usuarios via arquivo CSV"
 					onUpload="@command('upload', evt=event)" />
 			</div>
 		</div>

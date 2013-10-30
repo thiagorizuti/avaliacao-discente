@@ -45,6 +45,9 @@
 			<div align="center">
 				<button label="Cadastrar nova disciplina"
 					onClick="@command('abreCadastro')" />
+				<button upload="true"
+					label="Cadastrar disciplinas via arquivo CSV"
+					onUpload="@command('upload', evt=event)" />
 			</div>
 		</div>
 	</div>

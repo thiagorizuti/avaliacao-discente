@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -103,7 +104,7 @@ public class Usuario implements Serializable{
 	 * quando retornarmos as {@link Usuario} .
 	 * 
 	 */
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "usuarios")
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "usuarios", cascade = CascadeType.ALL)
 	private List<Turma> turmas = new ArrayList<Turma>();
 	
 	@Transient
