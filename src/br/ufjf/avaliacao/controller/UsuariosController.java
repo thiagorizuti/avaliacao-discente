@@ -30,7 +30,7 @@ public class UsuariosController extends GenericController {
 	private UsuarioDAO usuarioDAO = new UsuarioDAO();
 	private Usuario usuario = new Usuario();
 	private CursoDAO cursoDAO = new CursoDAO();
-	private List<Usuario> usuarios = (List<Usuario>) usuarioDAO
+	private List<Usuario> usuarios = usuarioDAO
 			.getTodosUsuarios();
 	private List<Curso> cursos = (List<Curso>) cursoDAO.getTodosCursos();
 	private Combobox cmbCurso;

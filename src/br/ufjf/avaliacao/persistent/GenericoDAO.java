@@ -16,7 +16,7 @@ public class GenericoDAO implements IGenericoDAO {
 	public boolean salvar(Object objeto) throws HibernateException {
 		boolean retorno = false;
 		if (objeto != null) {
-			retorno = hibernateUtil.save(objeto);
+			retorno = HibernateUtil.save(objeto);
 		} else {
 			System.out.println("O Objeto enviado está vazio.");
 		}
@@ -27,7 +27,7 @@ public class GenericoDAO implements IGenericoDAO {
 	public boolean salvarLista(List<?> objetos) throws HibernateException {
 		boolean retorno = false;
 		if (objetos != null && !objetos.isEmpty()) {
-			retorno = hibernateUtil.saveList(objetos);
+			retorno = HibernateUtil.saveList(objetos);
 		} else {
 			System.out.println("A lista enviada está vazia.");
 		}
@@ -38,7 +38,7 @@ public class GenericoDAO implements IGenericoDAO {
 	public boolean editar(Object objeto) throws HibernateException {
 		boolean retorno = false;
 		if (objeto != null) {
-			retorno = hibernateUtil.update(objeto);
+			retorno = HibernateUtil.update(objeto);
 		} else {
 			System.out.println("O Objeto enviado está vazio.");
 		}
@@ -49,7 +49,7 @@ public class GenericoDAO implements IGenericoDAO {
 	public boolean salvaOuEdita(Object objeto) throws HibernateException {
 		boolean retorno = false;
 		if (objeto != null) {
-			retorno = hibernateUtil.saveOrUpdate(objeto);
+			retorno = HibernateUtil.saveOrUpdate(objeto);
 		} else {
 			System.out.println("O Objeto enviado está vazio.");
 		}
@@ -61,7 +61,7 @@ public class GenericoDAO implements IGenericoDAO {
 	public Object procuraId(int id, Class classe) throws HibernateException {
 		Object objeto = null;
 		if (id >= 0 && classe != null) {
-			objeto = hibernateUtil.find(classe, id);
+			objeto = HibernateUtil.find(classe, id);
 		} else {
 			System.out.println("O ID ou a Classe enviada está nula.");
 		}
@@ -75,7 +75,7 @@ public class GenericoDAO implements IGenericoDAO {
 			throws HibernateException {
 		List<?> objetos = null;
 		if (classe != null) {
-			objetos = hibernateUtil.findAll(classe, inicio, fim);
+			objetos = HibernateUtil.findAll(classe, inicio, fim);
 		} else {
 			System.out.println("O ID ou a Classe enviada está nula.");
 		}
@@ -86,7 +86,7 @@ public class GenericoDAO implements IGenericoDAO {
 	public boolean exclui(Object objeto) throws HibernateException {
 		boolean retorno = false;
 		if (objeto != null) {
-			retorno = hibernateUtil.delete(objeto);
+			retorno = HibernateUtil.delete(objeto);
 		} else {
 			System.out.println("O Objeto enviado está vazio.");
 		}
@@ -97,7 +97,7 @@ public class GenericoDAO implements IGenericoDAO {
 	public boolean excluiLista(List<?> objetos) throws HibernateException {
 		boolean retorno = false;
 		if (objetos != null && !objetos.isEmpty()) {
-			retorno = hibernateUtil.deleteList(objetos);
+			retorno = HibernateUtil.deleteList(objetos);
 		} else {
 			System.out.println("A lista enviada está vazia.");
 		}

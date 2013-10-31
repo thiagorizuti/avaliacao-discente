@@ -4,10 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -75,7 +73,7 @@ public class Usuario implements Serializable{
 	 * quando retornarmos o {@link Usuario}.
 	 * 
 	 */
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne()
 	@JoinColumn(name = "idCurso", nullable = true)
 	private Curso curso;
 
@@ -94,7 +92,7 @@ public class Usuario implements Serializable{
 	 * quando retornarmos o {@link Usuario} .
 	 * 
 	 */
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "avaliando")
+	@OneToMany(mappedBy = "avaliando")
 	private List<Avaliacao> avaliacoes = new ArrayList<Avaliacao>();
 	
 	/**
@@ -104,7 +102,7 @@ public class Usuario implements Serializable{
 	 * quando retornarmos as {@link Usuario} .
 	 * 
 	 */
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "usuarios", cascade = CascadeType.ALL)
+	@ManyToMany(mappedBy = "usuarios")
 	private List<Turma> turmas = new ArrayList<Turma>();
 	
 	@Transient
@@ -188,7 +186,9 @@ public class Usuario implements Serializable{
 			return "Coordenador";
 		else if (tipoUsuario==1)
 			return "Professor";
-		else return "Aluno";
+		else if (tipoUsuario==2)
+			return "Aluno";
+		return "Coodenador";
 	}
 
 	public void setNomeTipoUsuario(String nomeTipoUsuario) {

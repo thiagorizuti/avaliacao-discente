@@ -131,7 +131,7 @@ public class Turma implements Serializable{
 
 	public String getProfessor(){
 		for (int i=0;i<professores.size();i++)
-			professor = professores.get(i).getNome();
+			professor = professor.concat(professores.get(i).getNome());
 		return professor;
 	}
 

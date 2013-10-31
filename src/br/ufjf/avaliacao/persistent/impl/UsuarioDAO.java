@@ -35,7 +35,7 @@ public class UsuarioDAO extends GenericoDAO implements IUsuarioDAO {
 	@SuppressWarnings("unchecked")
 	public List<Usuario> getTodosUsuarios() {
 		try {
-			Query query = getSession().createQuery("SELECT u FROM Usuario AS u LEFT JOIN FETCH u.curso ORDER BY u.nome");
+			Query query = getSession().createQuery("SELECT u FROM Usuario AS u LEFT JOIN FETCH u.curso LEFT JOIN FETCH u.turmas ORDER BY u.nome");
 			
 			List<Usuario> usuarios = query.list();
 			getSession().close();
