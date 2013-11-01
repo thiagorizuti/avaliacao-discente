@@ -96,13 +96,6 @@ public class DisciplinasController extends GenericController{
 			}	
 		}
 		
-		@Command
-		public void cancela(@BindingParam("window") Window x) {
-			disciplina = null;
-			x.detach();
-			Executions.sendRedirect("/disciplinas.zul");
-		}
-		
 		@Command("upload")
 		public void upload(@BindingParam("evt") UploadEvent evt) {
 			Media media = evt.getMedia();

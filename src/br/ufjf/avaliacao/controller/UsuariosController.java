@@ -90,14 +90,6 @@ public class UsuariosController extends GenericController {
 	}
 
 	@Command
-	public void cancela(@BindingParam("window") Window x) {
-		usuarioBusiness = null;
-		usuario = null;
-		x.detach();
-		Executions.sendRedirect("/usuarios.zul");
-	}
-
-	@Command
 	public void changeEditableStatus(@BindingParam("usuario") Usuario usuario) {
 		usuario.setEditingStatus(!usuario.isEditingStatus());
 		refreshRowTemplate(usuario);

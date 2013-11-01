@@ -18,12 +18,12 @@
 							<columns>
 								<column label="Título" align="center"
 									sort="auto(tituloQuestionario)" />
-								<column style="width:350px;"
-									label="Data Inicial" align="center" sort="auto(dataInicial)" />
-								<column style="width:350px;"
-									label="Data Final" align="center" sort="auto(dataFinal)" />
-								<column style="width:350px;"
-									label="Status" align="center" sort="auto(ativo)" />
+								<column label="Data Inicial"
+									align="center" sort="auto(dataInicial)" />
+								<column label="Data Final"
+									align="center" sort="auto(dataFinal)" />
+								<column label="Status" align="center"
+									sort="auto(ativo)" />
 								<column style="width:100px;"
 									label="Opções" align="center" />
 							</columns>
@@ -52,12 +52,12 @@
 							<columns>
 								<column label="Título" align="center"
 									sort="auto(tituloQuestionario)" />
-								<column style="width:350px;"
-									label="Data Inicial" align="center" sort="auto(dataInicial)" />
-								<column style="width:350px;"
-									label="Data Final" align="center" sort="auto(dataFinal)" />
-								<column style="width:350px;"
-									label="Status" align="center" sort="auto(ativo)" />
+								<column label="Data Inicial"
+									align="center" sort="auto(dataInicial)" />
+								<column label="Data Final"
+									align="center" sort="auto(dataFinal)" />
+								<column label="Status" align="center"
+									sort="auto(ativo)" />
 								<column style="width:100px;"
 									label="Opções" align="center" />
 							</columns>
@@ -86,12 +86,12 @@
 							<columns>
 								<column label="Título" align="center"
 									sort="auto(tituloQuestionario)" />
-								<column style="width:350px;"
-									label="Data Inicial" align="center" sort="auto(dataInicial)" />
-								<column style="width:350px;"
-									label="Data Final" align="center" sort="auto(dataFinal)" />
-								<column style="width:350px;"
-									label="Status" align="center" sort="auto(ativo)" />
+								<column label="Data Inicial"
+									align="center" sort="auto(dataInicial)" />
+								<column label="Data Final"
+									align="center" sort="auto(dataFinal)" />
+								<column label="Status" align="center"
+									sort="auto(ativo)" />
 								<column style="width:100px;"
 									label="Opções" align="center" />
 							</columns>
@@ -120,12 +120,12 @@
 							<columns>
 								<column label="Título" align="center"
 									sort="auto(tituloQuestionario)" />
-								<column style="width:350px;"
-									label="Data Inicial" align="center" sort="auto(dataInicial)" />
-								<column style="width:350px;"
-									label="Data Final" align="center" sort="auto(dataFinal)" />
-								<column style="width:350px;"
-									label="Status" align="center" sort="auto(ativo)" />
+								<column label="Data Inicial"
+									align="center" sort="auto(dataInicial)" />
+								<column label="Data Final"
+									align="center" sort="auto(dataFinal)" />
+								<column label="Status" align="center"
+									sort="auto(ativo)" />
 								<column style="width:100px;"
 									label="Opções" align="center" />
 							</columns>

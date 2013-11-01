@@ -19,14 +19,14 @@ import br.ufjf.avaliacao.persistent.impl.QuestionarioDAO;
 
 public class QuestionariosController extends GenericController{
 	
-	QuestionarioDAO questionarioDAO = new QuestionarioDAO();
-	PerguntaDAO perguntaDAO = new PerguntaDAO();
-	List<Questionario> questionarios;
-	List<Questionario> questionariosCoord = questionarioDAO.retornaQuestinariosCursoTipo(usuario.getCurso(),0);
-	List<Questionario> questionariosProf = questionarioDAO.retornaQuestinariosCursoTipo(usuario.getCurso(),1);
-	List<Questionario> questionariosAuto = questionarioDAO.retornaQuestinariosCursoTipo(usuario.getCurso(),2);
-	List<Questionario> questionariosInfra = questionarioDAO.retornaQuestinariosCursoTipo(usuario.getCurso(),3);
-	boolean ativo;
+	private QuestionarioDAO questionarioDAO = new QuestionarioDAO();
+	private PerguntaDAO perguntaDAO = new PerguntaDAO();
+	private List<Questionario> questionarios;
+	private List<Questionario> questionariosCoord = questionarioDAO.retornaQuestinariosCursoTipo(usuario.getCurso(),0);
+	private List<Questionario> questionariosProf = questionarioDAO.retornaQuestinariosCursoTipo(usuario.getCurso(),1);
+	private List<Questionario> questionariosAuto = questionarioDAO.retornaQuestinariosCursoTipo(usuario.getCurso(),2);
+	private List<Questionario> questionariosInfra = questionarioDAO.retornaQuestinariosCursoTipo(usuario.getCurso(),3);
+	private boolean ativo;
 	private List<Pergunta> perguntas = new ArrayList<Pergunta>();
 	private Pergunta pergunta = new Pergunta();
 	private Questionario questionario = new Questionario();
@@ -65,13 +65,6 @@ public class QuestionariosController extends GenericController{
 			questionarioDAO.exclui(questionario);
 			listaQuestionarios(questionario.getTipoQuestionario()).remove(questionario);
 			
-	}
-
-	@Command
-	public void cancela(@BindingParam("window") Window x) {
-		pergunta = null;
-		x.detach();
-		Executions.sendRedirect("/questionarios.zul");
 	}
 	
 	@Command

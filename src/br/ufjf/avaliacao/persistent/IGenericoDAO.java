@@ -13,7 +13,7 @@ public interface IGenericoDAO {
 	
 	boolean salvaOuEdita(Object objeto) throws HibernateException;
 	
-	Object procuraId(int id, Class classe) throws HibernateException;
+	Object procuraId(int id, Class<?> classe) throws HibernateException;
 	
 	/**
 	 * Retorna uma lista de cursos com quantidade de dados informadas entre o
@@ -26,7 +26,7 @@ public interface IGenericoDAO {
 	 * @return {@link List}<{@link Object}>
 	 * @throws HibernateException
 	 */
-	List<?> procuraTodos(Class classe, int inicio, int fim) throws HibernateException;
+	List<?> procuraTodos(Class<?> classe, int inicio, int fim) throws HibernateException;
 	
 	boolean exclui(Object objeto) throws HibernateException;
 	

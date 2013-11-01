@@ -62,7 +62,7 @@ public class HibernateUtil {
 	 * @param end
 	 * @return List<?>
 	 */
-	@SuppressWarnings({ "finally", "rawtypes", "unchecked" })
+	@SuppressWarnings({ "finally", "rawtypes" })
 	public static List<?> findAll(Class objClass, int begin, int end) {
 		List<?> lista = null;
 		Query query = null;

@@ -103,7 +103,7 @@ public class Turma implements Serializable{
 	private String professor;
 	
 	@Transient 
-	private List<Usuario> professores = new ArrayList<Usuario>();
+	private List<Usuario> professores = new ArrayList<>();
 
 	public int getIdTurma() {
 		return idTurma;
@@ -130,8 +130,6 @@ public class Turma implements Serializable{
 	}
 
 	public String getProfessor(){
-		for (int i=0;i<professores.size();i++)
-			professor = professor.concat(professores.get(i).getNome());
 		return professor;
 	}
 

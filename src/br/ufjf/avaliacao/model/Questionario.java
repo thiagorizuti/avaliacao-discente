@@ -2,7 +2,7 @@ package br.ufjf.avaliacao.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -26,7 +26,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Table(name = "Questionario")
 public class Questionario implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -41,13 +41,13 @@ public class Questionario implements Serializable {
 	@GeneratedValue(generator = "increment")
 	@GenericGenerator(name = "increment", strategy = "increment")
 	private int idQuestionario;
-	
+
 	@Column(name = "tituloQuestionario", length = 45, nullable = false)
 	private String tituloQuestionario;
-	
+
 	@Column(name = "tipoQuestionario", length = 45, nullable = false)
 	private Integer tipoQuestionario;
-	
+
 	/**
 	 * Campo com a situação do questionário(ativo ou inativo). Relaciona com a
 	 * coluna {@code ativo} do banco através da anotação
@@ -55,7 +55,7 @@ public class Questionario implements Serializable {
 	 */
 	@Column(name = "ativo", nullable = false)
 	private boolean ativo;
-	
+
 	/**
 	 * Relacionamento 1 para N entre questionário e pergunta. Mapeada em
 	 * {@link Pergunta} pela variável {@code questionario} e retorno do tipo
@@ -75,39 +75,39 @@ public class Questionario implements Serializable {
 	 */
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "questionario")
 	private List<Avaliacao> avaliacoes = new ArrayList<Avaliacao>();
-	
+
 	/**
 	 * Relacionamento N para 1 entre questionario e curso. Mapeando
-	 * {@link Curso} na variável {@code curso} e retorno do tipo
-	 * {@code LAZY} que indica que não será carregado automáticamente este dado
-	 * quando retornarmos o {@link Questionario}.
+	 * {@link Curso} na variável {@code curso} e retorno do tipo {@code LAZY}
+	 * que indica que não será carregado automáticamente este dado quando
+	 * retornarmos o {@link Questionario}.
 	 * 
 	 */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "idCurso", nullable = false)
 	private Curso curso;
-	
+
 	@Column(name = "dataInicial", nullable = false)
-	private Calendar dataInicial;
-	
+	private Date dataInicial;
+
 	@Column(name = "dataFinal", nullable = false)
-	private Calendar dataFinal;
-	
+	private Date dataFinal;
+
 	@Transient
 	private String nomeTipoQuestionario;
-	
+
 	@Transient
 	private boolean editingStatus;
-	
+
 	@Transient
 	private String status;
-	
+
 	@Transient
 	private String dataFinalFormatada;
-	
+
 	@Transient
 	private String dataInicialFormatada;
-	
+
 	public int getIdQuestionario() {
 		return idQuestionario;
 	}
@@ -155,7 +155,7 @@ public class Questionario implements Serializable {
 	public void setTipoQuestionario(Integer tipoQuestionario) {
 		this.tipoQuestionario = tipoQuestionario;
 	}
-	
+
 	public Curso getCurso() {
 		return curso;
 	}
@@ -165,11 +165,11 @@ public class Questionario implements Serializable {
 	}
 
 	public String getNomeTipoQuestionario() {
-		if(tipoQuestionario==0)
+		if (tipoQuestionario == 0)
 			return "Avaliação de Coordenador";
-		else if (tipoQuestionario==1)
+		else if (tipoQuestionario == 1)
 			return "Avaliação de Professor";
-		else if (tipoQuestionario==2)
+		else if (tipoQuestionario == 2)
 			return "Auto-Avaliação";
 		else
 			return "Avaliação de Infraestrutura";
@@ -187,25 +187,9 @@ public class Questionario implements Serializable {
 		this.editingStatus = editingStatus;
 	}
 
-	public Calendar getDataInicial() {
-		return dataInicial;
-	}
-
-	public void setDataInicial(Calendar dataInicial) {
-		this.dataInicial = dataInicial;
-	}
-
-	public Calendar getDataFinal() {
-		return dataFinal;
-	}
-
-	public void setDataFinal(Calendar dataFinal) {
-		this.dataFinal = dataFinal;
-	}
-
 	public String getStatus() {
-		if(isAtivo()){
-			return"Ativo";
+		if (isAtivo()) {
+			return "Ativo";
 		}
 		return "Inativo";
 	}
@@ -213,30 +197,41 @@ public class Questionario implements Serializable {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
-	public String getDataFormatada(Calendar calendar){
-		return (calendar.get(Calendar.DAY_OF_MONTH)+"/"+calendar.get(Calendar.MONTH)+"/"+calendar.get(Calendar.YEAR));
+
+	public Date getDataInicial() {
+		return dataInicial;
 	}
 
+	public void setDataInicial(Date dataInicial) {
+		this.dataInicial = dataInicial;
+	}
+
+	public Date getDataFinal() {
+		return dataFinal;
+	}
+
+	public void setDataFinal(Date dataFinal) {
+		this.dataFinal = dataFinal;
+	}
+
+	@SuppressWarnings("deprecation")
 	public String getDataFinalFormatada() {
-		return (dataFinal.get(Calendar.DAY_OF_MONTH)+"/"+dataFinal.get(Calendar.MONTH)+"/"+dataFinal.get(Calendar.YEAR));
+		return (dataFinal.getDate() + "/" + dataFinal.getMonth() + "/" + (dataFinal
+				.getYear()+1900));
 	}
 
 	public void setDataFinalFormatada(String dataFinalFormatada) {
 		this.dataFinalFormatada = dataFinalFormatada;
 	}
 
+	@SuppressWarnings("deprecation")
 	public String getDataInicialFormatada() {
-		return (dataInicial.get(Calendar.DAY_OF_MONTH)+"/"+dataInicial.get(Calendar.MONTH)+"/"+dataInicial.get(Calendar.YEAR));
+		return (dataInicial.getDate() + "/" + dataInicial.getMonth() + "/" + (dataInicial
+				.getYear()+1900));
 	}
 
 	public void setDataInicialFormatada(String dataInicialFormatada) {
 		this.dataInicialFormatada = dataInicialFormatada;
 	}
-	
-	
-	
-	
-	
-		
+
 }

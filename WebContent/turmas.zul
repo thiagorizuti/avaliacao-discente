@@ -18,7 +18,7 @@
 						align="center" sort="auto(letraTurma)" />
 					<column label="Professor" align="center"
 						sort="auto(professor.nome)" />
-					<column style="width:90px;" label="Opções"
+					<column style="width:100px;" label="Opções"
 						align="center" />
 				</columns>
 				<template name="editable">
@@ -43,7 +43,7 @@
 						<textbox
 							value="@load(each.letraTurma) @save(each.letraTurma, before='confirm')" />
 						<combobox model="@load(vm.professores)"
-							value="@load(each.professor.nome)"
+							value="@load(each.professor)"
 							selectedItem="@load(each.professor) @save(each.professor, before='confirm')"
 							autodrop="true">
 							<template name="model">
