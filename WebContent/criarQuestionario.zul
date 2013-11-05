@@ -1,4 +1,3 @@
-<?page title="new page title" contentType="text/html;charset=UTF-8"?>
 <?init class="br.ufjf.avaliacao.controller.AuthController"?>
 <window id="win" title="Criar Questionário" border="normal" closable="true" onClose="Executions.sendRedirect(null)">
 	<div style="width:800px;" apply="org.zkoss.bind.BindComposer"

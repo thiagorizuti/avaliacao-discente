@@ -19,8 +19,6 @@ import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import br.ufjf.avaliacao.persistent.impl.UsuarioDAO;
-
 
 /**
  * DTO da Tabela {@code Turma} contém os atributos e relacionamentos da
@@ -92,19 +90,13 @@ public class Turma implements Serializable{
 	 * quando retornarmos o {@link Turma}.
 	 * 
 	 */
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany()
 	@JoinTable(name = "Usuario_has_Turma", joinColumns = { @JoinColumn(name = "idTurma", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "idUsuario", nullable = false, updatable = false) })
 	private List<Usuario> usuarios = new ArrayList<Usuario>();
 	
 	@Transient
 	private boolean editingStatus;
 	
-	@Transient
-	private String professor;
-	
-	@Transient 
-	private List<Usuario> professores = new ArrayList<>();
-
 	public int getIdTurma() {
 		return idTurma;
 	}
@@ -127,14 +119,6 @@ public class Turma implements Serializable{
 
 	public void setSemestre(String semestre) {
 		this.semestre = semestre;
-	}
-
-	public String getProfessor(){
-		return professor;
-	}
-
-	public void setProfessor(String professor) {
-		this.professor = professor;
 	}
 
 	public Disciplina getDisciplina() {
@@ -168,16 +152,5 @@ public class Turma implements Serializable{
 	public void setUsuarios(List<Usuario> usuarios) {
 		this.usuarios = usuarios;
 	}
-
-	public List<Usuario> getProfessores() {
-		UsuarioDAO usuarioDAO = new UsuarioDAO();
-		professores = usuarioDAO.retornaProfessoresTurma(this);
-		return professores;
-	}
-
-	public void setProfessores(List<Usuario> professores) {
-		this.professores = professores;
-	}
-	
 	
 }

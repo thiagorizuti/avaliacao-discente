@@ -31,7 +31,6 @@ public class TurmasController extends GenericController {
 	private List<Turma> turmas = (List<Turma>) turmaDAO.getTodasTurmas();
 	private List<Disciplina> disciplinas = (List<Disciplina>) disciplinaDAO
 			.getTodasDisciplinas();
-	private List<Usuario> professores = (List<Usuario>) usuarioDAO.retornaProfessoresTurma(turma);
 
 	@Init
 	public void init() throws HibernateException, Exception {
@@ -44,6 +43,7 @@ public class TurmasController extends GenericController {
 		Window window = (Window) Executions.createComponents(
 				"/cadastrarTurma.zul", null, null);
 		window.doModal();
+		System.out.println();
 	}
 
 	@Command
@@ -94,7 +94,6 @@ public class TurmasController extends GenericController {
 		TurmaDAO turmaDAO = new TurmaDAO();
 		turmaDAO.editar(turma);
 		refreshRowTemplate(turma);
-
 	}
 
 	public void refreshRowTemplate(Turma turma) {
@@ -141,12 +140,18 @@ public class TurmasController extends GenericController {
 		this.disciplinas = disciplinas;
 	}
 
-	public List<Usuario> getProfessores() {
-		return professores;
+	@Command
+	public String getProfessores(@BindingParam("turma") Turma turma ) {
+		List<Usuario> professores = (List<Usuario>) usuarioDAO.retornaProfessoresTurma(turma);
+		String profs = "";
+		if (professores == null)
+			System.out.println("Professores Vazio!");
+		for(Usuario prof : professores){
+			System.out.println(prof.getNome());
+			profs = profs.concat(prof.getNome() + ", ");
+		}
+		return profs;
 	}
-
-	public void setProfessores(List<Usuario> professores) {
-		this.professores = professores;
-	}
-
+	
+	
 }

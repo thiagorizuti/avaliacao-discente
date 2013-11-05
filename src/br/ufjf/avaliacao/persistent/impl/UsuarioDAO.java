@@ -102,7 +102,7 @@ public class UsuarioDAO extends GenericoDAO implements IUsuarioDAO {
 	@SuppressWarnings("unchecked")
 	public List<Usuario> retornaProfessoresTurma(Turma turma) {
 		try {
-			Query query = getSession().createQuery("SELECT u FROM Usuario AS u LEFT JOIN FETCH u.curso WHERE u.turma = :turma AND u.tipoUsuario = :tipoUsuario");
+			Query query = getSession().createQuery("SELECT u FROM Turma AS t JOIN t.usuarios as u WHERE t = :turma AND u.tipoUsuario = :tipoUsuario");
 			query.setParameter("turma", turma);
 			query.setParameter("tipoUsuario", 1);
 			
@@ -115,7 +115,5 @@ public class UsuarioDAO extends GenericoDAO implements IUsuarioDAO {
 		}
 		return null;
 	}
-	
-	
 	
 }

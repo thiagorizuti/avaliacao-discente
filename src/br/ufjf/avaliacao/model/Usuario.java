@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -102,7 +103,7 @@ public class Usuario implements Serializable{
 	 * quando retornarmos as {@link Usuario} .
 	 * 
 	 */
-	@ManyToMany(mappedBy = "usuarios")
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "usuarios")
 	private List<Turma> turmas = new ArrayList<Turma>();
 	
 	@Transient
@@ -188,7 +189,7 @@ public class Usuario implements Serializable{
 			return "Professor";
 		else if (tipoUsuario==2)
 			return "Aluno";
-		return "Coodenador";
+		return "Administrador";
 	}
 
 	public void setNomeTipoUsuario(String nomeTipoUsuario) {

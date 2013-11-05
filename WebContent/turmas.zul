@@ -64,7 +64,7 @@
 						<label
 							value="@load(each.disciplina.codNomeDisciplina)" />
 						<label value="@bind(each.letraTurma)" />
-						<label value="@load(each.professor.nome)" />
+						<label onCreate="@command('getProfessores', turma=each)" />
 						<div>
 							<button image="/img/edit.png"
 								onClick="@command('changeEditableStatus', turma=each)" />
